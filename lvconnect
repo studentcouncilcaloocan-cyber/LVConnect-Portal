@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>LVConnect Portal</title>
+
+  <meta
+    name="description"
+    content="LVConnect Portal — La Verdad Christian College"
+  >
+
+  <style>
+    /* ==================================================
+       LVCONNECT PORTAL
+       FRONTEND FOUNDATION
+       ================================================== */
+
+    :root {
+      --primary: #183b56;
+      --primary-dark: #102c42;
+      --primary-light: #eaf2f7;
+
+      --accent: #b58b3b;
+      --accent-light: #f5ecd9;
+
+      --background: #f5f7fa;
+      --surface: #ffffff;
+      --surface-soft: #f8fafc;
+
+      --text: #17212b;
+      --muted: #6b7785;
+      --border: #e2e8ee;
+
+      --success: #2e7d5b;
+      --danger: #b84a4a;
+
+      --radius: 14px;
+      --shadow: 0 8px 30px rgba(20, 40, 60, 0.07);
+
+      --transition: 180ms ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+      background: var(--background);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    /* ==================================================
+       LOGIN
+       ================================================== */
+
+    .login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #f7fafc 0%,
+          #edf3f7 100%
+        );
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 430px;
+
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+
+      padding: 42px 38px;
+
+      box-shadow:
+        0 20px 60px rgba(20, 40, 60, 0.10);
+
+      animation: fadeUp 450ms ease both;
+    }
+
+    .login-brand {
+      text-align: center;
+      margin-bottom: 34px;
+    }
+
+    .brand-mark {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 18px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 16px;
+
+      background: var(--primary);
+      color: white;
+
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .login-brand h1 {
+      font-size: 27px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .login-brand p {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 17px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .form-group label {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .form-group input {
+      width: 100%;
+      height: 46px;
+
+      border: 1px solid var(--border);
+      border-radius: 10px;
+
+      padding: 0 14px;
+
+      outline: none;
+
+      background: var(--surface-soft);
+      color: var(--text);
+
+      transition:
+        border-color var(--transition),
+        box-shadow var(--transition),
+        background var(--transition);
+    }
+
+    .form-group input:focus {
+      background: white;
+      border-color: var(--primary);
+
+      box-shadow:
+        0 0 0 3px rgba(24, 59, 86, 0.08);
+    }
+
+    .login-button {
+      height: 47px;
+      margin-top: 5px;
+
+      border: 0;
+      border-radius: 10px;
+
+      background: var(--primary);
+      color: white;
+
+      font-weight: 600;
+
+      transition:
+        transform var(--transition),
+        background var(--transition),
+        box-shadow var(--transition);
+    }
+
+    .login-button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+
+      box-shadow:
+        0 7px 18px rgba(24, 59, 86, 0.18);
+    }
+
+    .login-button:active {
+      transform: translateY(0);
+    }
+
+    .login-note {
+      margin-top: 22px;
+      text-align: center;
+
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    /* ==================================================
+       APPLICATION
+       ================================================== */
+
+    .app {
+      display: none;
+      min-height: 100vh;
+    }
+
+    .app.active {
+      display: flex;
+    }
+
+    /* ==================================================
+       SIDEBAR
+       ================================================== */
+
+    .sidebar {
+      width: 250px;
+      min-height: 100vh;
+
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+
+      display: flex;
+      flex-direction: column;
+
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+
+      z-index: 100;
+
+      transition:
+        transform 250ms ease;
+    }
+
+    .sidebar-brand {
+      height: 82px;
+
+      display: flex;
+      align-items: center;
+
+      padding: 0 22px;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar-brand-mark {
+      width: 40px;
+      height: 40px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 10px;
+
+      background: var(--primary);
+      color: white;
+
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .sidebar-brand-text {
+      margin-left: 11px;
+    }
+
+    .sidebar-brand-text strong {
+      display: block;
+      font-size: 15px;
+    }
+
+    .sidebar-brand-text span {
+      display: block;
+      margin-top: 2px;
+
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .nav {
+      flex: 1;
+      padding: 20px 12px;
+    }
+
+    .nav-section {
+      margin: 0 10px 9px;
+
+      color: #9aa5af;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .nav-item {
+      width: 100%;
+      height: 44px;
+
+      display: flex;
+      align-items: center;
+
+      padding: 0 12px;
+      margin-bottom: 4px;
+
+      border: 0;
+      border-radius: 9px;
+
+      background: transparent;
+      color: var(--muted);
+
+      text-align: left;
+      font-size: 13px;
+      font-weight: 500;
+
+      transition:
+        background var(--transition),
+        color var(--transition),
+        transform var(--transition);
+    }
+
+    .nav-item:hover {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .nav-item.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .nav-icon {
+      width: 24px;
+      margin-right: 9px;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    .sidebar-footer {
+      padding: 15px;
+      border-top: 1px solid var(--border);
+    }
+
+    .user-mini {
+      display: flex;
+      align-items: center;
+      padding: 9px;
+      border-radius: 10px;
+    }
+
+    .user-avatar {
+      width: 35px;
+      height: 35px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+
+      background: var(--accent-light);
+      color: var(--accent);
+
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .user-info {
+      margin-left: 9px;
+      min-width: 0;
+    }
+
+    .user-info strong {
+      display: block;
+
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+      font-size: 12px;
+    }
+
+    .user-info span {
+      display: block;
+      margin-top: 2px;
+
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    /* ==================================================
+       MAIN
+       ================================================== */
+
+    .main {
+      width: calc(100% - 250px);
+      margin-left: 250px;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      height: 82px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 0 32px;
+
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .topbar-title h2 {
+      font-size: 19px;
+      font-weight: 700;
+    }
+
+    .topbar-title p {
+      margin-top: 3px;
+
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .icon-button {
+      width: 38px;
+      height: 38px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border: 1px solid var(--border);
+      border-radius: 9px;
+
+      background: white;
+      color: var(--muted);
+
+      transition:
+        background var(--transition),
+        color var(--transition),
+        transform var(--transition);
+    }
+
+    .icon-button:hover {
+      background: var(--surface-soft);
+      color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .menu-button {
+      display: none;
+    }
+
+    /* ==================================================
+       CONTENT
+       ================================================== */
+
+    .content {
+      padding: 32px;
+      max-width: 1500px;
+      margin: 0 auto;
+    }
+
+    .welcome {
+      margin-bottom: 28px;
+      animation: fadeUp 350ms ease both;
+    }
+
+    .welcome h1 {
+      font-size: 27px;
+      letter-spacing: -0.5px;
+    }
+
+    .welcome p {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    /* ==================================================
+       STAT CARDS
+       ================================================== */
+
+    .stats {
+      display: grid;
+      grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+      gap: 17px;
+
+      margin-bottom: 27px;
+    }
+
+    .stat-card {
+      padding: 21px;
+
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+
+      box-shadow: var(--shadow);
+
+      transition:
+        transform var(--transition),
+        box-shadow var(--transition);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 12px 35px rgba(20, 40, 60, 0.10);
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .stat-value {
+      margin-top: 9px;
+
+      font-size: 27px;
+      font-weight: 700;
+    }
+
+    .stat-description {
+      margin-top: 5px;
+
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    /* ==================================================
+       MODULES
+       ================================================== */
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin-bottom: 14px;
+    }
+
+    .section-header h3 {
+      font-size: 16px;
+    }
+
+    .section-header span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .modules {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+      gap: 17px;
+    }
+
+    .module-card {
+      min-height: 175px;
+
+      display: flex;
+      flex-direction: column;
+
+      padding: 23px;
+
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+
+      box-shadow: var(--shadow);
+
+      cursor: pointer;
+
+      transition:
+        transform 200ms ease,
+        box-shadow 200ms ease,
+        border-color 200ms ease;
+    }
+
+    .module-card:hover {
+      transform: translateY(-3px);
+
+      border-color: #ccd7df;
+
+      box-shadow:
+        0 15px 40px rgba(20, 40, 60, 0.11);
+    }
+
+    .module-icon {
+      width: 43px;
+      height: 43px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 11px;
+
+      background: var(--primary-light);
+      color: var(--primary);
+
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .module-card h4 {
+      margin-top: 17px;
+      font-size: 15px;
+    }
+
+    .module-card p {
+      margin-top: 6px;
+
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .module-arrow {
+      margin-top: auto;
+      padding-top: 15px;
+
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* ==================================================
+       PAGE PLACEHOLDER
+       ================================================== */
+
+    .page {
+      display: none;
+      animation: fadeUp 280ms ease both;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .placeholder {
+      padding: 55px 30px;
+
+      text-align: center;
+
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+
+      box-shadow: var(--shadow);
+    }
+
+    .placeholder-icon {
+      width: 55px;
+      height: 55px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      margin: 0 auto 17px;
+
+      border-radius: 14px;
+
+      background: var(--primary-light);
+      color: var(--primary);
+
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .placeholder h2 {
+      font-size: 20px;
+    }
+
+    .placeholder p {
+      max-width: 470px;
+
+      margin: 8px auto 0;
+
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* ==================================================
+       MOBILE
+       ================================================== */
+
+    .sidebar-overlay {
+      display: none;
+
+      position: fixed;
+      inset: 0;
+
+      background: rgba(15, 30, 45, 0.35);
+
+      z-index: 90;
+    }
+
+    @media (max-width: 1050px) {
+
+      .stats {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
+
+      .modules {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .sidebar-overlay.active {
+        display: block;
+      }
+
+      .main {
+        width: 100%;
+        margin-left: 0;
+      }
+
+      .menu-button {
+        display: flex;
+      }
+
+      .topbar {
+        padding: 0 18px;
+      }
+
+      .content {
+        padding: 22px 17px;
+      }
+
+      .stats,
+      .modules {
+        grid-template-columns: 1fr;
+      }
+
+      .welcome h1 {
+        font-size: 23px;
+      }
+    }
+
+    @media (max-width: 480px) {
+
+      .login-card {
+        padding: 32px 23px;
+      }
+
+      .topbar-title p {
+        display: none;
+      }
+
+      .topbar-title h2 {
+        font-size: 17px;
+      }
+    }
+
+    /* ==================================================
+       ANIMATIONS
+       ================================================== */
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- =================================================
+       LOGIN SCREEN
+       ================================================= -->
+
+  <section id="loginScreen" class="login-screen">
+
+    <div class="login-card">
+
+      <div class="login-brand">
+
+        <div class="brand-mark">
+          LV
+        </div>
+
+        <h1>LVConnect</h1>
+
+        <p>
+          La Verdad Christian College
+        </p>
+
+      </div>
+
+      <form
+        id="loginForm"
+        class="login-form"
+      >
+
+        <div class="form-group">
+
+          <label for="username">
+            Account
+          </label>
+
+          <input
+            id="username"
+            type="text"
+            placeholder="Enter your account"
+            autocomplete="username"
+            required
+          >
+
+        </div>
+
+        <div class="form-group">
+
+          <label for="password">
+            Password
+          </label>
+
+          <input
+            id="password"
+            type="password"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            required
+          >
+
+        </div>
+
+        <button
+          type="submit"
+          class="login-button"
+        >
+          Sign In
+        </button>
+
+      </form>
+
+      <p class="login-note">
+        Secure access to LVConnect services and
+        institutional systems.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- =================================================
+       MAIN APPLICATION
+       ================================================= -->
+
+  <section id="app" class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside id="sidebar" class="sidebar">
+
+      <div class="sidebar-brand">
+
+        <div class="sidebar-brand-mark">
+          LV
+        </div>
+
+        <div class="sidebar-brand-text">
+          <strong>LVConnect</strong>
+          <span>Portal</span>
+        </div>
+
+      </div>
+
+
+      <nav class="nav">
+
+        <div class="nav-section">
+          Main
+        </div>
+
+        <button
+          class="nav-item active"
+          data-page="dashboard"
+        >
+          <span class="nav-icon">⌂</span>
+          Dashboard
+        </button>
+
+
+        <div class="nav-section" style="margin-top:20px;">
+          Services
+        </div>
+
+        <button
+          class="nav-item"
+          data-page="talaan"
+        >
+          <span class="nav-icon">▣</span>
+          TALAAN
+        </button>
+
+        <button
+          class="nav-item"
+          data-page="eservices"
+        >
+          <span class="nav-icon">□</span>
+          E-Services
+        </button>
+
+        <button
+          class="nav-item"
+          data-page="drs"
+        >
+          <span class="nav-icon">▤</span>
+          Document Routing
+        </button>
+
+
+        <div class="nav-section" style="margin-top:20px;">
+          Account
+        </div>
+
+        <button
+          class="nav-item"
+          data-page="notifications"
+        >
+          <span class="nav-icon">◌</span>
+          Notifications
+        </button>
+
+        <button
+          class="nav-item"
+          data-page="profile"
+        >
+          <span class="nav-icon">○</span>
+          Profile
+        </button>
+
+      </nav>
+
+
+      <div class="sidebar-footer">
+
+        <div class="user-mini">
+
+          <div class="user-avatar">
+            LV
+          </div>
+
+          <div class="user-info">
+
+            <strong id="sidebarUser">
+              LVConnect User
+            </strong>
+
+            <span id="sidebarRole">
+              Account
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </aside>
+
+
+    <div
+      id="sidebarOverlay"
+      class="sidebar-overlay"
+    ></div>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main">
+
+      <header class="topbar">
+
+        <div
+          class="topbar-title"
+          id="topbarTitle"
+        >
+
+          <h2>
+            Dashboard
+          </h2>
+
+          <p>
+            Welcome to LVConnect Portal
+          </p>
+
+        </div>
+
+
+        <div class="topbar-actions">
+
+          <button
+            id="menuButton"
+            class="icon-button menu-button"
+            type="button"
+            aria-label="Open menu"
+          >
+            ☰
+          </button>
+
+          <button
+            class="icon-button"
+            type="button"
+            title="Notifications"
+          >
+            ◌
+          </button>
+
+        </div>
+
+      </header>
+
+
+      <div class="content">
+
+        <!-- DASHBOARD -->
+
+        <section
+          id="page-dashboard"
+          class="page active"
+        >
+
+          <div class="welcome">
+
+            <h1>
+              Welcome to LVConnect
+            </h1>
+
+            <p>
+              Your unified portal for school services,
+              records, and digital transactions.
+            </p>
+
+          </div>
+
+
+          <div class="stats">
+
+            <div class="stat-card">
+
+              <div class="stat-label">
+                TALAAN
+              </div>
+
+              <div class="stat-value">
+                —
+              </div>
+
+              <div class="stat-description">
+                Attendance overview
+              </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+              <div class="stat-label">
+                E-SERVICES
+              </div>
+
+              <div class="stat-value">
+                —
+              </div>
+
+              <div class="stat-description">
+                Available services
+              </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+              <div class="stat-label">
+                DOCUMENTS
+              </div>
+
+              <div class="stat-value">
+                —
+              </div>
+
+              <div class="stat-description">
+                Active requests
+              </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+              <div class="stat-label">
+                NOTIFICATIONS
+              </div>
+
+              <div class="stat-value">
+                —
+              </div>
+
+              <div class="stat-description">
+                Recent updates
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="section-header">
+
+            <h3>
+              LVConnect Services
+            </h3>
+
+            <span>
+              Select a service to continue
+            </span>
+
+          </div>
+
+
+          <div class="modules">
+
+            <div
+              class="module-card"
+              data-page="talaan"
+            >
+
+              <div class="module-icon">
+                T
+              </div>
+
+              <h4>
+                TALAAN
+              </h4>
+
+              <p>
+                Student attendance monitoring,
+                records, and TALAAN services.
+              </p>
+
+              <div class="module-arrow">
+                Open TALAAN →
+              </div>
+
+            </div>
+
+
+            <div
+              class="module-card"
+              data-page="eservices"
+            >
+
+              <div class="module-icon">
+                E
+              </div>
+
+              <h4>
+                E-Services
+              </h4>
+
+              <p>
+                Access and submit available
+                institutional digital forms.
+              </p>
+
+              <div class="module-arrow">
+                View Services →
+              </div>
+
+            </div>
+
+
+            <div
+              class="module-card"
+              data-page="drs"
+            >
+
+              <div class="module-icon">
+                D
+              </div>
+
+              <h4>
+                Document Routing
+              </h4>
+
+              <p>
+                Track requests, documents,
+                routing, and processing status.
+              </p>
+
+              <div class="module-arrow">
+                Open DRS →
+              </div>
+
+            </div>
+
+
+            <div
+              class="module-card"
+              data-page="notifications"
+            >
+
+              <div class="module-icon">
+                N
+              </div>
+
+              <h4>
+                Notifications
+              </h4>
+
+              <p>
+                View important announcements,
+                updates, and transaction alerts.
+              </p>
+
+              <div class="module-arrow">
+                View Notifications →
+              </div>
+
+            </div>
+
+
+            <div
+              class="module-card"
+              data-page="profile"
+            >
+
+              <div class="module-icon">
+                P
+              </div>
+
+              <h4>
+                My Profile
+              </h4>
+
+              <p>
+                View your account information,
+                role, and connected services.
+              </p>
+
+              <div class="module-arrow">
+                View Profile →
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- TALAAN -->
+
+        <section
+          id="page-talaan"
+          class="page"
+        >
+
+          <div class="placeholder">
+
+            <div class="placeholder-icon">
+              T
+            </div>
+
+            <h2>
+              TALAAN
+            </h2>
+
+            <p>
+              The existing TALAAN system will be
+              integrated here after the LVConnect
+              portal foundation is completed.
+            </p>
+
+          </div>
+
+        </section>
+
+
+        <!-- E-SERVICES -->
+
+        <section
+          id="page-eservices"
+          class="page"
+        >
+
+          <div class="placeholder">
+
+            <div class="placeholder-icon">
+              E
+            </div>
+
+            <h2>
+              E-Services
+            </h2>
+
+            <p>
+              Digital institutional forms and
+              student services will appear here.
+            </p>
+
+          </div>
+
+        </section>
+
+
+        <!-- DRS -->
+
+        <section
+          id="page-drs"
+          class="page"
+        >
+
+          <div class="placeholder">
+
+            <div class="placeholder-icon">
+              D
+            </div>
+
+            <h2>
+              Document Routing System
+            </h2>
+
+            <p>
+              Document requests, routing,
+              processing, tracking, and history
+              will be connected to the LVConnect
+              backend here.
+            </p>
+
+          </div>
+
+        </section>
+
+
+        <!-- NOTIFICATIONS -->
+
+        <section
+          id="page-notifications"
+          class="page"
+        >
+
+          <div class="placeholder">
+
+            <div class="placeholder-icon">
+              N
+            </div>
+
+            <h2>
+              Notifications
+            </h2>
+
+            <p>
+              Your LVConnect notifications and
+              institutional updates will appear here.
+            </p>
+
+          </div>
+
+        </section>
+
+
+        <!-- PROFILE -->
+
+        <section
+          id="page-profile"
+          class="page"
+        >
+
+          <div class="placeholder">
+
+            <div class="placeholder-icon">
+              P
+            </div>
+
+            <h2>
+              My Profile
+            </h2>
+
+            <p>
+              Account information, role assignments,
+              and profile details will be displayed here.
+            </p>
+
+          </div>
+
+        </section>
+
+      </div>
+
+    </main>
+
+  </section>
+
+
+  <script>
+
+    /* ==================================================
+       LVCONNECT FRONTEND FOUNDATION
+       ================================================== */
+
+    const loginScreen =
+      document.getElementById('loginScreen');
+
+    const app =
+      document.getElementById('app');
+
+    const loginForm =
+      document.getElementById('loginForm');
+
+    const sidebar =
+      document.getElementById('sidebar');
+
+    const sidebarOverlay =
+      document.getElementById('sidebarOverlay');
+
+    const menuButton =
+      document.getElementById('menuButton');
+
+    const topbarTitle =
+      document.getElementById('topbarTitle');
+
+    const sidebarUser =
+      document.getElementById('sidebarUser');
+
+    const sidebarRole =
+      document.getElementById('sidebarRole');
+
+
+    /* ==================================================
+       TEMPORARY FRONTEND LOGIN
+       ================================================== */
+
+    loginForm.addEventListener(
+      'submit',
+      function(event) {
+
+        event.preventDefault();
+
+        const username =
+          document
+            .getElementById('username')
+            .value
+            .trim();
+
+        if (!username) return;
+
+        /*
+         * TEMPORARY ONLY.
+         *
+         * Real authentication will be connected
+         * to the LVConnect backend later.
+         */
+
+        sidebarUser.textContent =
+          username;
+
+        sidebarRole.textContent =
+          'LVConnect Account';
+
+        loginScreen.style.display =
+          'none';
+
+        app.classList.add('active');
+
+      }
+    );
+
+
+    /* ==================================================
+       PAGE NAVIGATION
+       ================================================== */
+
+    const pageTitles = {
+
+      dashboard: [
+        'Dashboard',
+        'Welcome to LVConnect Portal'
+      ],
+
+      talaan: [
+        'TALAAN',
+        'Student attendance and records'
+      ],
+
+      eservices: [
+        'E-Services',
+        'Digital institutional services'
+      ],
+
+      drs: [
+        'Document Routing',
+        'Requests and document tracking'
+      ],
+
+      notifications: [
+        'Notifications',
+        'Updates and transaction alerts'
+      ],
+
+      profile: [
+        'My Profile',
+        'Account information and settings'
+      ]
+
+    };
+
+
+    function openPage(pageName) {
+
+      document
+        .querySelectorAll('.page')
+        .forEach(
+          function(page) {
+            page.classList.remove('active');
+          }
+        );
+
+
+      const target =
+        document.getElementById(
+          'page-' + pageName
+        );
+
+      if (target) {
+        target.classList.add('active');
+      }
+
+
+      document
+        .querySelectorAll('.nav-item')
+        .forEach(
+          function(item) {
+
+            item.classList.toggle(
+              'active',
+              item.dataset.page === pageName
+            );
+
+          }
+        );
+
+
+      if (pageTitles[pageName]) {
+
+        topbarTitle.innerHTML = `
+          <h2>
+            ${pageTitles[pageName][0]}
+          </h2>
+
+          <p>
+            ${pageTitles[pageName][1]}
+          </p>
+        `;
+
+      }
+
+
+      closeMobileMenu();
+
+    }
+
+
+    /* ==================================================
+       SIDEBAR NAVIGATION
+       ================================================== */
+
+    document
+      .querySelectorAll(
+        '.nav-item, .module-card'
+      )
+      .forEach(
+        function(element) {
+
+          element.addEventListener(
+            'click',
+            function() {
+
+              const page =
+                this.dataset.page;
+
+              if (page) {
+                openPage(page);
+              }
+
+            }
+          );
+
+        }
+      );
+
+
+    /* ==================================================
+       MOBILE SIDEBAR
+       ================================================== */
+
+    function openMobileMenu() {
+
+      sidebar.classList.add('open');
+
+      sidebarOverlay.classList.add('active');
+
+    }
+
+
+    function closeMobileMenu() {
+
+      sidebar.classList.remove('open');
+
+      sidebarOverlay.classList.remove('active');
+
+    }
+
+
+    menuButton.addEventListener(
+      'click',
+      openMobileMenu
+    );
+
+
+    sidebarOverlay.addEventListener(
+      'click',
+      closeMobileMenu
+    );
+
+
+  </script>
+
+</body>
+</html>
