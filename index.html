@@ -142,7 +142,21 @@
       <section id="page-eservices" class="page"><div class="placeholder"><div class="placeholder-icon">E</div><h2>E-Services</h2><p>Digital institutional forms and student services will appear here.</p></div></section>
       <section id="page-drs" class="page"><div class="placeholder"><div class="placeholder-icon">D</div><h2>Document Routing System</h2><p>Document requests, routing, processing, tracking, and history will be connected here.</p></div></section>
       <section id="page-notifications" class="page"><div class="placeholder"><div class="placeholder-icon">N</div><h2>Notifications</h2><p>Your LVConnect notifications and institutional updates will appear here.</p></div></section>
-      <section id="page-profile" class="page"><div class="profile"><div class="section-head"><h3>My Profile</h3><span>LVConnect Account</span></div><div class="row"><span>Name</span><span id="profileName">—</span></div><div class="row"><span>TALAAN Code</span><span id="profileTalaan">—</span></div><div class="row"><span>LV Email</span><span id="profileEmail">—</span></div><div class="row"><span>Account ID</span><span id="profileAccountId">—</span></div><div class="row"><span>Account Type</span><span id="profileType">—</span></div><div class="row"><span>Permissions</span><span id="profilePermissions">—</span></div><div class="request-access"><h4>Request Additional Access</h4><p>If you hold a class officer or SSG officer position, you may submit a request for verification and approval.</p><button id="requestAccessButton" class="profile-btn" type="button">Request Additional Access</button></div></div></section>
+      
+<!-- SSG ADDITIONAL ACCESS APPROVALS -->
+<section id="page-ssg-approvals" class="page">
+  <div class="page-header">
+    <div>
+      <h1>Additional Access Requests</h1>
+      <p>Review and approve SSG Officer access requests assigned to your authority.</p>
+    </div>
+  </div>
+  <div id="approvalRequestsList" class="cards-grid">
+    <div class="card"><p>Loading requests...</p></div>
+  </div>
+</section>
+
+<section id="page-profile" class="page"><div class="profile"><div class="section-head"><h3>My Profile</h3><span>LVConnect Account</span></div><div class="row"><span>Name</span><span id="profileName">—</span></div><div class="row"><span>TALAAN Code</span><span id="profileTalaan">—</span></div><div class="row"><span>LV Email</span><span id="profileEmail">—</span></div><div class="row"><span>Account ID</span><span id="profileAccountId">—</span></div><div class="row"><span>Account Type</span><span id="profileType">—</span></div><div class="row"><span>Permissions</span><span id="profilePermissions">—</span></div><div class="request-access"><h4>Request Additional Access</h4><p>If you hold a class officer or SSG officer position, you may submit a request for verification and approval.</p><button id="requestAccessButton" class="profile-btn" type="button">Request Additional Access</button></div></div></section>
     </div>
   </main>
 </section>
@@ -192,5 +206,131 @@ document.querySelectorAll('[data-page]').forEach(el=>el.addEventListener('click'
 $('logout').addEventListener('click',logout);$('menu').addEventListener('click',()=>$('sidebar').classList.add('open'));$('overlay').addEventListener('click',closeMenu);
 (async function(){const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;try{session=JSON.parse(raw);if(!session?.sessionId)throw new Error('Invalid session');loading(true,'Restoring your session...');await loadAccess();openApp()}catch(e){clearSession()}finally{loading(false)}})();
 </script>
+
+<script>
+/* =====================================================
+ * SSG ADDITIONAL ACCESS APPROVAL UI
+ * ===================================================== */
+
+async function loadSSGApprovalRequests() {
+  const box = document.getElementById('approvalRequestsList');
+  if (!box) return;
+
+  box.innerHTML = '<div class="card"><p>Loading requests...</p></div>';
+
+  try {
+    const r = await post('GET_PENDING_PERMISSION_REQUESTS', {
+      sessionId: window.currentSessionId || localStorage.getItem('lvconnectSessionId') || ''
+    });
+
+    if (!r || r.success !== true) {
+      throw new Error(r?.message || 'Unable to load permission requests.');
+    }
+
+    const requests = Array.isArray(r.requests) ? r.requests : [];
+
+    if (!requests.length) {
+      box.innerHTML = '<div class="card"><p>No pending additional access requests.</p></div>';
+      return;
+    }
+
+    box.innerHTML = requests.map(function(req) {
+      const requestId = req['Request ID'] || '';
+      const name = req['Name'] || '';
+      const type = req['Request Type'] || '';
+      const position = req['Requested Position'] || '';
+      const office = req['Requested Office'] || '';
+      const talaan = req['TALAAN Code'] || '';
+
+      return `
+        <div class="card approval-request-card">
+          <h3>${escapeHtml(requestId)}</h3>
+          <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+          <p><strong>TALAAN Code:</strong> ${escapeHtml(talaan)}</p>
+          <p><strong>Request:</strong> ${escapeHtml(type)}</p>
+          <p><strong>Position:</strong> ${escapeHtml(position)}</p>
+          <p><strong>Office:</strong> ${escapeHtml(office)}</p>
+          <button type="button"
+            class="btn btn-primary"
+            onclick="approveSSGRequest('${escapeJs(requestId)}')">
+            Approve
+          </button>
+        </div>
+      `;
+    }).join('');
+
+  } catch (err) {
+    box.innerHTML =
+      '<div class="card"><p>' +
+      escapeHtml(err.message || 'Unable to load requests.') +
+      '</p></div>';
+  }
+}
+
+async function approveSSGRequest(requestId) {
+  const officerCode = prompt(
+    'Officer Code (leave blank to auto-generate):'
+  );
+
+  if (officerCode === null) return;
+
+  try {
+    const r = await post(
+      'APPROVE_ADDITIONAL_ACCESS_REQUEST',
+      {
+        sessionId:
+          window.currentSessionId ||
+          localStorage.getItem('lvconnectSessionId') ||
+          '',
+        requestId: requestId,
+        officerCode: officerCode.trim()
+      }
+    );
+
+    if (!r || r.success !== true) {
+      throw new Error(
+        r?.message || 'Unable to approve request.'
+      );
+    }
+
+    alert(
+      'Request approved successfully.\n\nOfficer Code: ' +
+      (r.officerCode || '')
+    );
+
+    loadSSGApprovalRequests();
+
+  } catch (err) {
+    alert(
+      err.message ||
+      'Unable to approve request.'
+    );
+  }
+}
+
+function escapeHtml(value) {
+  return String(value == null ? '' : value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function escapeJs(value) {
+  return String(value == null ? '' : value)
+    .replace(/\\/g, '\\\\')
+    .replace(/'/g, "\\'");
+}
+
+/* Load requests whenever the approval page is opened. */
+document.addEventListener('click', function(e) {
+  const link = e.target.closest('[data-page="ssg-approvals"]');
+  if (link) {
+    setTimeout(loadSSGApprovalRequests, 100);
+  }
+});
+</script>
+
 </body>
 </html>
