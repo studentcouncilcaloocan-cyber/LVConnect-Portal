@@ -143,7 +143,7 @@
       <section id="page-eservices" class="page"><div class="placeholder"><div class="placeholder-icon">E</div><h2>E-Services</h2><p>Digital institutional forms and student services will appear here.</p></div></section>
       <section id="page-drs" class="page"><div class="placeholder"><div class="placeholder-icon">D</div><h2>Document Routing System</h2><p>Document requests, routing, processing, tracking, and history will be connected here.</p></div></section>
       <section id="page-notifications" class="page"><div class="placeholder"><div class="placeholder-icon">N</div><h2>Notifications</h2><p>Your LVConnect notifications and institutional updates will appear here.</p></div></section>
-      <section id="page-ssg-approvals" class="page"><div class="profile"><div class="section-head"><h3>Additional Access Requests</h3><span>SSG Authorization</span></div><div id="approvalRequestsList"><div class="placeholder"><div class="placeholder-icon">✓</div><h2>Loading Requests</h2><p>Please wait...</p></div></div></div></section>
+      <section id="page-ssg-approvals" class="page"><div class="profile"><div class="section-head"><h3>Additional Access Requests</h3><span>SSG Verification</span></div><div id="approvalRequestsList"><div class="placeholder"><div class="placeholder-icon">✓</div><h2>Loading Requests</h2><p>Please wait...</p></div></div></div></section>
       <section id="page-profile" class="page"><div class="profile"><div class="section-head"><h3>My Profile</h3><span>LVConnect Account</span></div><div class="row"><span>Name</span><span id="profileName">—</span></div><div class="row"><span>TALAAN Code</span><span id="profileTalaan">—</span></div><div class="row"><span>LV Email</span><span id="profileEmail">—</span></div><div class="row"><span>Account ID</span><span id="profileAccountId">—</span></div><div class="row"><span>Account Type</span><span id="profileType">—</span></div><div class="row"><span>Permissions</span><span id="profilePermissions">—</span></div><div class="request-access"><h4>Request Additional Access</h4><p>If you hold a class officer or SSG officer position, you may submit a request for verification and approval.</p><button id="requestAccessButton" class="profile-btn" type="button">Request Additional Access</button></div></div></section>
     </div>
   </main>
@@ -159,56 +159,18 @@ function error(msg){$('loginError').textContent=msg||'Unable to sign in.';$('log
 function clearError(){$('loginError').textContent='';$('loginError').classList.remove('show')}
 async function post(action,data={}){return new Promise((resolve,reject)=>{const callbackName='__lvconnectCallback_'+Date.now()+'_'+Math.random().toString(36).slice(2);const script=document.createElement('script');const query=new URLSearchParams();query.set('action',action);query.set('callback',callbackName);Object.keys(data).forEach(k=>query.set(k,String(data[k]??'')));let timer=setTimeout(()=>{cleanup();reject(new Error('Request timed out. Please try again.'))},20000);function cleanup(){clearTimeout(timer);delete window[callbackName];if(script.parentNode)script.parentNode.removeChild(script)}window[callbackName]=function(result){cleanup();resolve(result)};script.onerror=function(){cleanup();reject(new Error('Unable to connect to LVConnect Backend.'))};script.src=API_URL+(API_URL.includes('?')?'&':'?')+query.toString();document.head.appendChild(script)})}
 async function login(code,password){const r=await post('LOGIN',{talaanCode:code,password});if(!r||r.success!==true)throw new Error(r?.message||'Invalid TALAAN Code or password.');session={sessionId:r.sessionId,account:r.account};localStorage.setItem(STORAGE_KEY,JSON.stringify(session));await loadAccess()}
-async function loadAccess(){const r=await post('CURRENT_USER',{sessionId:session.sessionId});if(!r||!r.account)throw new Error(r?.message||'Unable to load account access.');access=r;session.account=r.account;localStorage.setItem(STORAGE_KEY,JSON.stringify(session));applyUser()}
-function applyUser(){const a=access?.account;if(!a)return;const name=[a.firstName,a.middleInitial,a.surname].filter(Boolean).join(' ').trim()||'LVConnect User';$('sideUser').textContent=name;$('sideRole').textContent=a.accountType||'Account';$('welcome').textContent='Welcome, '+(a.firstName||'User')+'.';$('avatar').textContent=((a.firstName||'L')[0]+(a.surname||'V')[0]).toUpperCase();$('profileName').textContent=name;$('profileTalaan').textContent=a.talaanId||'—';$('profileEmail').textContent=a.email||'—';$('profileAccountId').textContent=a.accountId||'—';$('profileType').textContent=a.accountType||'—';$('profilePermissions').textContent=(access.permissions||[]).length?access.permissions.join(', '):'None';applyPermissions();loadSSGApprovalAccess()}
+async function loadAccess(){const r=await post('CURRENT_USER',{sessionId:session.sessionId});if(!r||!r.account)throw new Error(r?.message||'Unable to load account access.');access=r;session.account=r.account;localStorage.setItem(STORAGE_KEY,JSON.stringify(session));applyUser();loadSSGApprovalAccess()}
+function applyUser(){const a=access?.account;if(!a)return;const name=[a.firstName,a.middleInitial,a.surname].filter(Boolean).join(' ').trim()||'LVConnect User';$('sideUser').textContent=name;$('sideRole').textContent=a.accountType||'Account';$('welcome').textContent='Welcome, '+(a.firstName||'User')+'.';$('avatar').textContent=((a.firstName||'L')[0]+(a.surname||'V')[0]).toUpperCase();$('profileName').textContent=name;$('profileTalaan').textContent=a.talaanId||'—';$('profileEmail').textContent=a.email||'—';$('profileAccountId').textContent=a.accountId||'—';$('profileType').textContent=a.accountType||'—';$('profilePermissions').textContent=(access.permissions||[]).length?access.permissions.join(', '):'None';applyPermissions()}
+async function loadSSGApprovalAccess(){const nav=$('ssgApprovalNav');if(!nav||!session?.sessionId)return;nav.classList.add('hidden');try{const r=await post('GET_PENDING_PERMISSION_REQUESTS',{sessionId:session.sessionId});if(r&&r.success===true)nav.classList.remove('hidden')}catch(e){}}
+function escApproval(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\"/g,'&quot;').replace(/'/g,'&#039;')}
+async function loadApprovalRequests(){const box=$('approvalRequestsList');if(!box)return;box.innerHTML='<div class="placeholder"><div class="placeholder-icon">✓</div><h2>Loading Requests</h2><p>Please wait...</p></div>';try{const r=await post('GET_PENDING_PERMISSION_REQUESTS',{sessionId:session.sessionId});if(!r||r.success!==true)throw new Error(r?.message||'Unable to load requests.');const requests=Array.isArray(r.requests)?r.requests:[];if(!requests.length){box.innerHTML='<div class="placeholder"><div class="placeholder-icon">✓</div><h2>No Pending Requests</h2><p>There are no additional access requests waiting for your approval.</p></div>';return}box.innerHTML=requests.map(function(q){const rid=String(q['Request ID']||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");return '<div class="request-access"><h4>'+escApproval(q['Name'])+'</h4><p><strong>TALAAN Code:</strong> '+escApproval(q['TALAAN Code'])+'</p><p><strong>Request:</strong> '+escApproval(q['Request Type'])+'</p><p><strong>Position:</strong> '+escApproval(q['Requested Position'])+'</p><p><strong>Office:</strong> '+escApproval(q['Requested Office'])+'</p><p><strong>Request ID:</strong> '+escApproval(q['Request ID'])+'</p><button class="profile-btn" type="button" onclick="approveSSGRequest(\''+rid+'\')">Approve Request</button></div>'}).join('')}catch(e){box.innerHTML='<div class="placeholder"><div class="placeholder-icon">!</div><h2>Unable to Load Requests</h2><p>'+escApproval(e.message||'Unable to load requests.')+'</p></div>'}}
+async function approveSSGRequest(requestId){if(!confirm('Approve this additional access request?'))return;try{const r=await post('APPROVE_ADDITIONAL_ACCESS_REQUEST',{sessionId:session.sessionId,requestId:requestId,officerCode:''});if(!r||r.success!==true)throw new Error(r?.message||'Unable to approve request.');alert((r.message||'Request approved successfully.')+(r.officerCode?'\nOfficer Code: '+r.officerCode:''));loadApprovalRequests()}catch(e){alert(e.message||'Unable to approve request.')}}
 function hasPermission(p){return (access?.permissions||[]).map(x=>String(x).toUpperCase()).includes(String(p).toUpperCase())}
 function applyPermissions(){document.querySelectorAll('[data-permission]').forEach(el=>el.classList.toggle('hidden',!hasPermission(el.dataset.permission)))}
-async function loadSSGApprovalAccess(){
-  const nav=$('ssgApprovalNav');
-  if(!nav||!session?.sessionId)return;
-  nav.classList.add('hidden');
-  try{
-    const r=await post('GET_PENDING_PERMISSION_REQUESTS',{sessionId:session.sessionId});
-    if(r&&r.success===true){
-      nav.classList.remove('hidden');
-    }
-  }catch(e){}
-}
-function escApproval(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
-async function loadApprovalRequests(){
-  const box=$('approvalRequestsList'); if(!box)return;
-  box.innerHTML='<div class="placeholder"><div class="placeholder-icon">✓</div><h2>Loading Requests</h2><p>Please wait...</p></div>';
-  try{
-    const r=await post('GET_PENDING_PERMISSION_REQUESTS',{sessionId:session.sessionId});
-    if(!r||r.success!==true)throw new Error(r?.message||'Unable to load requests.');
-    const requests=Array.isArray(r.requests)?r.requests:[];
-    if(!requests.length){box.innerHTML='<div class="placeholder"><div class="placeholder-icon">✓</div><h2>No Pending Requests</h2><p>There are no additional access requests waiting for your approval.</p></div>';return;}
-    box.innerHTML=requests.map(function(q){
-      const id=escApproval(q['Request ID']);
-      return '<div class="request-access" style="margin-top:14px"><h4>'+escApproval(q['Name'])+'</h4>'+
-        '<p><strong>TALAAN Code:</strong> '+escApproval(q['TALAAN Code'])+'</p>'+\
-        '<p><strong>Request:</strong> '+escApproval(q['Request Type'])+'</p>'+\
-        '<p><strong>Position:</strong> '+escApproval(q['Requested Position'])+'</p>'+\
-        '<p><strong>Office:</strong> '+escApproval(q['Requested Office'])+'</p>'+\
-        '<p><strong>Request ID:</strong> '+id+'</p>'+\
-        '<button class="profile-btn" type="button" onclick="approveSSGRequest(\''+String(q['Request ID']||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\')">Approve Request</button></div>';
-    }).join('');
-  }catch(e){box.innerHTML='<div class="placeholder"><div class="placeholder-icon">!</div><h2>Unable to Load Requests</h2><p>'+escApproval(e.message||'Unable to load requests.')+'</p></div>';}
-}
-async function approveSSGRequest(requestId){
-  if(!confirm('Approve this additional access request?'))return;
-  try{
-    const r=await post('APPROVE_ADDITIONAL_ACCESS_REQUEST',{sessionId:session.sessionId,requestId:requestId,officerCode:''});
-    if(!r||r.success!==true)throw new Error(r?.message||'Unable to approve request.');
-    alert((r.message||'Request approved successfully.')+(r.officerCode?'\nOfficer Code: '+r.officerCode:''));
-    loadApprovalRequests();
-  }catch(e){alert(e.message||'Unable to approve request.');}
-}
-
 function openApp(){$('loginScreen').style.display='none';$('app').classList.add('active');openPage('dashboard')}
 function clearSession(){session=null;access=null;localStorage.removeItem(STORAGE_KEY)}
 async function logout(){try{loading(true,'Signing out...');if(session?.sessionId)await post('LOGOUT',{sessionId:session.sessionId})}catch(e){}finally{clearSession();loading(false);$('app').classList.remove('active');$('loginScreen').style.display='flex';$('loginForm').reset()}}
-const titles={dashboard:['Dashboard','Welcome to LVConnect Portal'],talaan:['TALAAN','Student attendance and records'],eservices:['E-Services','Digital institutional services'],drs:['Document Routing','Requests and document tracking'],notifications:['Notifications','Updates and transaction alerts'],profile:['My Profile','Account information and settings'], 'ssg-approvals':['Approval Requests','SSG additional access verification']};
+const titles={dashboard:['Dashboard','Welcome to LVConnect Portal'],talaan:['TALAAN','Student attendance and records'],eservices:['E-Services','Digital institutional services'],drs:['Document Routing','Requests and document tracking'],notifications:['Notifications','Updates and transaction alerts'],profile:['My Profile','Account information and settings'],'ssg-approvals':['Approval Requests','SSG additional access verification']};
 function openPage(page){const target=$('page-'+page);if(!target)return;const restricted=document.querySelector('.nav-item[data-page="'+page+'"][data-permission]');if(restricted&&!hasPermission(restricted.dataset.permission))return;document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));target.classList.add('active');document.querySelectorAll('.nav-item').forEach(x=>x.classList.toggle('active',x.dataset.page===page));if(titles[page])$('title').innerHTML='<h2>'+titles[page][0]+'</h2><p>'+titles[page][1]+'</p>';if(page==='ssg-approvals')loadApprovalRequests();closeMenu()}
 function closeMenu(){$('sidebar').classList.remove('open');$('overlay').classList.remove('active')}
 function openModal(id){$(id).classList.add('show')}
