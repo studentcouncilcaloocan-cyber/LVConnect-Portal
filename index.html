@@ -163,45 +163,33 @@ async function loadAccess(){const r=await post('CURRENT_USER',{sessionId:session
 function applyUser(){
   const a=access?.account;
   if(!a)return;
-
-  const name=[a.firstName,a.middleInitial,a.surname]
-    .filter(Boolean)
-    .join(' ')
-    .trim()||'LVConnect User';
-
+  const name=[a.firstName,a.middleInitial,a.surname].filter(Boolean).join(' ').trim()||'LVConnect User';
   $('sideUser').textContent=name;
   $('sideRole').textContent=a.accountType||'Account';
   $('welcome').textContent='Welcome, '+(a.firstName||'User')+'.';
   $('avatar').textContent=((a.firstName||'L')[0]+(a.surname||'V')[0]).toUpperCase();
-
   $('profileName').textContent=name;
   $('profileTalaan').textContent=a.talaanId||'—';
   $('profileEmail').textContent=a.email||'—';
   $('profileAccountId').textContent=a.accountId||'—';
   $('profileType').textContent=a.accountType||'—';
 
-  const assignments=Array.isArray(access.assignments)
-    ? access.assignments.filter(function(x){
-        return String(x.status||'ACTIVE').toUpperCase()!=='INACTIVE';
-      })
-    : [];
-
-  const ssgAssignment=assignments.find(function(x){
-    const type=String(x.assignmentType||'').toUpperCase();
-    const pos=String(x.position||'').toUpperCase();
-    const office=String(x.office||'').toUpperCase();
+  const assignments=Array.isArray(access?.assignments)?access.assignments:[];
+  const active=assignments.filter(function(x){
+    return String(x.Status||x.status||'ACTIVE').toUpperCase()==='ACTIVE';
+  });
+  const roleAssignment=active.find(function(x){
+    const type=String(x.assignmentType||x['Assignment Type']||'').toUpperCase();
+    const pos=String(x.position||x.Position||'').trim();
+    const office=String(x.office||x.Office||'').trim();
     return type==='ADDITIONAL' && (pos || office);
-  }) || assignments.find(function(x){
-    return String(x.position||'').trim() || String(x.office||'').trim();
+  }) || active.find(function(x){
+    return String(x.position||x.Position||'').trim() || String(x.office||x.Office||'').trim();
   });
 
-  $('profilePosition').textContent=ssgAssignment?.position||'—';
-  $('profileOffice').textContent=ssgAssignment?.office||'—';
-
-  $('profilePermissions').textContent=(access.permissions||[]).length
-    ? access.permissions.join(', ')
-    : 'None';
-
+  $('profilePosition').textContent=roleAssignment ? (roleAssignment.position||roleAssignment.Position||'—') : '—';
+  $('profileOffice').textContent=roleAssignment ? (roleAssignment.office||roleAssignment.Office||'—') : '—';
+  $('profilePermissions').textContent=(access.permissions||[]).length?access.permissions.join(', '):'None';
   applyPermissions();
   loadSSGApprovalAccess();
 }
@@ -210,35 +198,25 @@ function applyPermissions(){document.querySelectorAll('[data-permission]').forEa
 function loadSSGApprovalAccess(){
   const nav=$('ssgApprovalNav');
   if(!nav)return;
-
   nav.classList.add('hidden');
 
-  const assignments=Array.isArray(access?.assignments)
-    ? access.assignments
-    : [];
-
+  const assignments=Array.isArray(access?.assignments)?access.assignments:[];
   const active=assignments.filter(function(a){
-    return String(a.status||'ACTIVE').toUpperCase()==='ACTIVE';
+    return String(a.Status||a.status||'ACTIVE').toUpperCase()==='ACTIVE';
   });
 
   const canApprove=active.some(function(a){
-    const position=String(a.position||'').trim().toUpperCase();
-    const office=String(a.office||'').trim().toUpperCase();
-    const assignmentType=String(a.assignmentType||'').trim().toUpperCase();
+    const position=String(a.position||a.Position||'').trim().toUpperCase();
+    const office=String(a.office||a.Office||'').trim().toUpperCase();
+    const type=String(a.assignmentType||a['Assignment Type']||'').trim().toUpperCase();
 
-    /* Chairperson and Adviser approve Executive (EX) requests. */
-    if(
-      position==='CHAIRPERSON' ||
-      position==='SSG ADVISER' ||
-      position==='ADVISER'
-    ){
+    // Chairperson and Adviser approve Executive (EX) requests.
+    if(position==='CHAIRPERSON' || position==='SSG ADVISER' || position==='ADVISER'){
       return true;
     }
 
-    /* Executive members approve requests for their own office. */
-    if(assignmentType!=='ADDITIONAL' || !office){
-      return false;
-    }
+    // Executive members approve requests for their responding office.
+    if(type!=='ADDITIONAL' || !office)return false;
 
     return [
       'VICE CHAIRPERSON FOR STUDENT AFFAIRS',
@@ -273,11 +251,11 @@ async function loadApprovalRequests(){
     box.innerHTML=requests.map(function(q){
       const id=escApproval(q['Request ID']);
       return '<div class="request-access" style="margin-top:14px"><h4>'+escApproval(q['Name'])+'</h4>'+
-        '<p><strong>TALAAN Code:</strong> '+escApproval(q['TALAAN Code'])+'</p>'+\
-        '<p><strong>Request:</strong> '+escApproval(q['Request Type'])+'</p>'+\
-        '<p><strong>Position:</strong> '+escApproval(q['Requested Position'])+'</p>'+\
-        '<p><strong>Office:</strong> '+escApproval(q['Requested Office'])+'</p>'+\
-        '<p><strong>Request ID:</strong> '+id+'</p>'+\
+        '<p><strong>TALAAN Code:</strong> '+escApproval(q['TALAAN Code'])+'</p>'+
+        '<p><strong>Request:</strong> '+escApproval(q['Request Type'])+'</p>'+
+        '<p><strong>Position:</strong> '+escApproval(q['Requested Position'])+'</p>'+
+        '<p><strong>Office:</strong> '+escApproval(q['Requested Office'])+'</p>'+
+        '<p><strong>Request ID:</strong> '+id+'</p>'+
         '<button class="profile-btn" type="button" onclick="approveSSGRequest(\''+String(q['Request ID']||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\')">Approve Request</button></div>';
     }).join('');
   }catch(e){box.innerHTML='<div class="placeholder"><div class="placeholder-icon">!</div><h2>Unable to Load Requests</h2><p>'+escApproval(e.message||'Unable to load requests.')+'</p></div>';}
