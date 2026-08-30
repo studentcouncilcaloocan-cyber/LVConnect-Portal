@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>LVConnect Portal</title>
-<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <style>
 :root{--navy:#183b56;--navy2:#102c42;--gold:#b58b3b;--bg:#f5f7fa;--white:#fff;--text:#17212b;--muted:#6b7785;--border:#e2e8ee;--danger:#b84a4a;--radius:15px;--shadow:0 10px 35px rgba(20,40,60,.08)}
 *{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}button,input{font:inherit}button{cursor:pointer}
@@ -26,8 +25,17 @@
 .request-access h4{font-size:14px;margin-bottom:6px}.request-access p{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:14px}
 .profile-btn{height:43px;border:0;border-radius:9px;background:var(--navy);color:#fff;padding:0 16px;font-size:12px;font-weight:650}.profile-btn:hover{background:var(--navy2)}
 .select{height:44px;width:100%;border:1px solid var(--border);border-radius:9px;background:#f8fafc;padding:0 12px;outline:0}.select:focus{background:#fff;border-color:var(--navy);box-shadow:0 0 0 3px rgba(24,59,86,.08)}
+</style>
 
-.talaan-table{width:100%;border-collapse:collapse;font-size:12px;background:#fff}.talaan-table th,.talaan-table td{border-bottom:1px solid var(--border);padding:10px;text-align:left;white-space:nowrap}.talaan-table th{font-size:10px;text-transform:uppercase;color:var(--muted);letter-spacing:.5px;background:#f8fafc}.talaan-empty{padding:24px;text-align:center;color:var(--muted);font-size:12px}
+<style id="lv-talaan-modern-style">
+.lv-talaan-app{--lt-navy:var(--navy,#183b56);--lt-navy2:var(--navy2,#102c42);--lt-gold:var(--gold,#b58b3b);--lt-bg:#f6f8fa;--lt-border:#e2e8ee;--lt-muted:#6b7785;--lt-text:#17212b;--lt-shadow:0 10px 30px rgba(20,40,60,.07);display:flex;flex-direction:column;gap:18px}
+.lv-talaan-head{display:flex;align-items:flex-end;justify-content:space-between;gap:22px;background:linear-gradient(135deg,#fff,#f5f8fa);border:1px solid var(--lt-border);border-radius:18px;padding:24px 26px;box-shadow:var(--lt-shadow)}
+.lv-talaan-kicker{font-size:10px;font-weight:900;letter-spacing:1.8px;color:var(--lt-gold);margin-bottom:6px}.lv-talaan-head h1{font-size:25px;color:var(--lt-text);margin:0}.lv-talaan-head p{font-size:12px;color:var(--lt-muted);margin-top:6px;line-height:1.5}.lv-talaan-head-actions{display:flex;align-items:flex-end;gap:9px}.lv-talaan-event-select{display:flex;flex-direction:column;gap:5px;min-width:220px}.lv-talaan-event-select span{font-size:9px;font-weight:900;letter-spacing:1px;color:#8a95a0}.lv-talaan-event-select select,.lv-talaan-record-tools select,.lv-talaan-record-tools input{height:40px;border:1px solid var(--lt-border);border-radius:10px;background:#fff;color:var(--lt-text);padding:0 11px;outline:0;font-size:12px}.lv-talaan-event-select select:focus,.lv-talaan-record-tools select:focus,.lv-talaan-record-tools input:focus{border-color:var(--lt-navy);box-shadow:0 0 0 3px rgba(24,59,86,.07)}.lv-talaan-refresh{height:40px;border:0;border-radius:10px;background:var(--lt-navy);color:#fff;padding:0 14px;font-size:11px;font-weight:800}.lv-talaan-refresh:hover{background:var(--lt-navy2)}
+.lv-talaan-status{font-size:11px;color:var(--lt-muted);min-height:14px}.lv-talaan-summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.lv-talaan-stat{background:#fff;border:1px solid var(--lt-border);border-radius:15px;padding:18px;box-shadow:var(--lt-shadow);position:relative;overflow:hidden}.lv-talaan-stat:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--lt-navy)}.lv-talaan-stat.gold:before{background:var(--lt-gold)}.lv-talaan-stat.green:before{background:#4c8a64}.lv-talaan-stat.red:before{background:#b84a4a}.lv-talaan-stat label{font-size:10px;color:var(--lt-muted);font-weight:800;text-transform:uppercase;letter-spacing:.6px}.lv-talaan-stat strong{display:block;font-size:25px;margin-top:7px;color:var(--lt-text)}.lv-talaan-stat small{display:block;color:var(--lt-muted);font-size:10px;margin-top:3px}
+.lv-talaan-main-grid{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:16px}.lv-talaan-primary,.lv-talaan-panel{background:#fff;border:1px solid var(--lt-border);border-radius:17px;box-shadow:var(--lt-shadow)}.lv-talaan-primary{padding:20px}.lv-talaan-section-title{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:15px}.lv-talaan-section-title h3{font-size:15px;color:var(--lt-text)}.lv-talaan-section-title span{display:block;color:var(--lt-muted);font-size:10px;margin-top:4px}.lv-talaan-rate-badge{padding:8px 11px;border-radius:10px;background:#edf3f7;color:var(--lt-navy);font-weight:900;font-size:12px;white-space:nowrap}.lv-talaan-year-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.lv-talaan-year-card{border:1px solid var(--lt-border);border-radius:14px;padding:16px;background:#fbfcfd;cursor:pointer;transition:.18s;position:relative;overflow:hidden}.lv-talaan-year-card:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(20,40,60,.08);border-color:#cfd9e1}.lv-talaan-year-card.active{border-color:var(--lt-navy);background:#f5f8fa}.lv-talaan-year-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.lv-talaan-year-label{font-weight:850;font-size:13px;color:var(--lt-text)}.lv-talaan-year-rate{font-size:12px;font-weight:900;color:var(--lt-navy)}.lv-talaan-progress{height:6px;background:#e9eef2;border-radius:99px;margin:13px 0;overflow:hidden}.lv-talaan-progress i{display:block;height:100%;border-radius:99px;background:var(--lt-navy)}.lv-talaan-year-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.lv-talaan-mini{padding:7px 6px;border-radius:9px;background:#fff;border:1px solid #edf0f3}.lv-talaan-mini b{display:block;font-size:14px}.lv-talaan-mini span{display:block;font-size:9px;color:var(--lt-muted);margin-top:2px}
+.lv-talaan-side{display:flex;flex-direction:column;gap:16px}.lv-talaan-panel{padding:18px}.lv-talaan-panel-title{display:flex;justify-content:space-between;gap:10px;margin-bottom:12px}.lv-talaan-panel-title span{font-size:12px;color:var(--lt-muted);font-weight:750}.lv-talaan-panel-title b{font-size:12px;color:var(--lt-navy);text-align:right}.lv-talaan-detail-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid #eef1f4;font-size:11px}.lv-talaan-detail-row:last-child{border-bottom:0}.lv-talaan-detail-row span{color:var(--lt-muted)}.lv-talaan-detail-row strong{color:var(--lt-text);text-align:right}.lv-talaan-leader{padding:10px 0;border-bottom:1px solid #eef1f4}.lv-talaan-leader:last-child{border-bottom:0}.lv-talaan-leader-top{display:flex;justify-content:space-between;gap:10px;font-size:11px}.lv-talaan-leader-top strong{color:var(--lt-text)}.lv-talaan-leader-top b{color:var(--lt-navy)}.lv-talaan-leader-bar{height:5px;background:#edf1f4;border-radius:99px;margin-top:6px;overflow:hidden}.lv-talaan-leader-bar i{display:block;height:100%;background:var(--lt-gold);border-radius:99px}
+.lv-talaan-record-panel{padding:20px}.lv-talaan-record-tools{display:flex;gap:7px}.lv-talaan-record-tools input{width:210px}.lv-talaan-table-wrap{overflow:auto;border:1px solid var(--lt-border);border-radius:12px}.lv-talaan-table{width:100%;border-collapse:separate;border-spacing:0;min-width:720px;font-size:11px}.lv-talaan-table th{background:#f5f7f9;color:#687583;font-size:9px;text-transform:uppercase;letter-spacing:.5px;text-align:left;padding:11px;border-bottom:1px solid var(--lt-border);position:sticky;top:0;z-index:1}.lv-talaan-table td{padding:11px;border-bottom:1px solid #eef1f4;color:var(--lt-text);background:#fff}.lv-talaan-table tr:last-child td{border-bottom:0}.lv-talaan-table tr:hover td{background:#fbfcfd}.lv-talaan-name{font-weight:800}.lv-talaan-section{color:var(--lt-muted)}.lv-talaan-pill{display:inline-flex;align-items:center;padding:4px 7px;border-radius:7px;font-size:9px;font-weight:900}.lv-talaan-pill.present{background:#eaf5ee;color:#34734b}.lv-talaan-pill.absent{background:#fff0f0;color:#a04444}.lv-talaan-pill.nyh{background:#f2f4f6;color:#697580}.lv-talaan-empty{padding:35px 18px;text-align:center;color:var(--lt-muted);font-size:12px;background:#fbfcfd}.lv-talaan-error{padding:14px;background:#fff2f2;color:#a04444;border-radius:10px;font-size:11px}
+@media(max-width:950px){.lv-talaan-summary-grid{grid-template-columns:repeat(2,1fr)}.lv-talaan-main-grid{grid-template-columns:1fr}.lv-talaan-side{display:grid;grid-template-columns:1fr 1fr}.lv-talaan-head{align-items:stretch;flex-direction:column}.lv-talaan-head-actions{align-items:stretch}.lv-talaan-event-select{flex:1}}@media(max-width:650px){.lv-talaan-summary-grid{grid-template-columns:1fr 1fr}.lv-talaan-year-grid{grid-template-columns:1fr}.lv-talaan-side{grid-template-columns:1fr}.lv-talaan-section-title{align-items:flex-start;flex-direction:column}.lv-talaan-record-tools{width:100%;flex-direction:column}.lv-talaan-record-tools input{width:100%}.lv-talaan-record-tools select{width:100%}.lv-talaan-head-actions{flex-direction:column}.lv-talaan-event-select{min-width:0}.lv-talaan-head h1{font-size:21px}}
 </style>
 </head>
 <body>
@@ -122,7 +130,6 @@
       <div class="nav-label" style="margin-top:20px">Account</div>
       <button class="nav-item" data-page="notifications"><span class="nav-icon">◌</span>Notifications</button>
       <button class="nav-item" data-page="profile"><span class="nav-icon">○</span>Profile</button>
-      <button class="nav-item hidden" id="ssgApprovalNav" data-page="ssg-approvals"><span class="nav-icon">✓</span>Approval Requests</button>
     </nav>
     <div class="footer"><div class="mini-user"><div id="avatar" class="avatar">LV</div><div class="mini-info"><strong id="sideUser">LVConnect User</strong><span id="sideRole">Account</span></div></div></div>
   </aside>
@@ -143,81 +150,62 @@
         </div>
       </section>
       <section id="page-talaan" class="page">
-  <div class="profile">
-    <div class="section-head"><h3>TALAAN</h3><span id="talaanAccessLabel">Integrated</span></div>
-    <div class="row"><span>Event / Date</span><span><select id="talaanEvent" class="select" style="max-width:430px"><option value="">Loading events...</option></select></span></div>
-    <div class="stats" style="margin-top:18px">
-      <div class="stat"><label>TOTAL STUDENTS</label><strong id="talaanTotal">—</strong></div>
-      <div class="stat"><label>PRESENT</label><strong id="talaanPresent">—</strong></div>
-      <div class="stat"><label>ABSENT</label><strong id="talaanAbsent">—</strong></div>
-      <div class="stat"><label>ATTENDANCE RATE</label><strong id="talaanRate">—</strong></div>
+  <div id="lvTalaanApp" class="lv-talaan-app">
+    <div class="lv-talaan-head">
+      <div class="lv-talaan-head-copy">
+        <div class="lv-talaan-kicker">TALAAN</div>
+        <h1>Attendance &amp; Student Records</h1>
+        <p>Monitor attendance across year levels, events, and sections from one place.</p>
+      </div>
+      <div class="lv-talaan-head-actions">
+        <label class="lv-talaan-event-select"><span>EVENT</span><select id="lvTalaanEventSelect"><option value="">Loading events…</option></select></label>
+        <button type="button" class="lv-talaan-refresh" onclick="lvTalaanLoadDashboard_()">↻ Refresh</button>
+      </div>
     </div>
-    <div class="section-head" style="margin-top:20px"><h3>Attendance by Year Level</h3><span id="talaanRestriction"></span></div>
-    <div id="talaanYears" class="modules"></div>
-    <div class="section-head" style="margin-top:26px"><h3>QR Attendance Scanner</h3><span>Authorized attendance users only</span></div>
-    <div style="display:flex;gap:10px;align-items:center;margin-bottom:15px;flex-wrap:wrap">
-      <button id="startTalaanScanner" class="profile-btn" type="button">Start QR Scanner</button>
-      <button id="stopTalaanScanner" class="profile-btn" type="button" style="background:#fff;color:var(--navy);border:1px solid var(--border)">Stop Scanner</button>
-      <span id="talaanScanMessage" style="font-size:12px;color:var(--muted)"></span>
+    <div id="lvTalaanStatus" class="lv-talaan-status">Loading TALAAN…</div>
+    <div id="lvTalaanSummary" class="lv-talaan-summary-grid"></div>
+    <div class="lv-talaan-main-grid">
+      <div class="lv-talaan-primary">
+        <div class="lv-talaan-section-title"><div><h3>Year Level Attendance</h3><span>Choose a year level to inspect its attendance records.</span></div><div id="lvTalaanOverallBadge" class="lv-talaan-rate-badge">—</div></div>
+        <div id="lvTalaanYearGrid" class="lv-talaan-year-grid"></div>
+      </div>
+      <aside class="lv-talaan-side">
+        <div class="lv-talaan-panel">
+          <div class="lv-talaan-panel-title"><span>Event Details</span><b id="lvTalaanEventName">—</b></div>
+          <div class="lv-talaan-detail-row"><span>Date</span><strong id="lvTalaanEventDate">—</strong></div>
+          <div class="lv-talaan-detail-row"><span>Cut-off</span><strong id="lvTalaanEventCutoff">—</strong></div>
+          <div class="lv-talaan-detail-row"><span>Status</span><strong id="lvTalaanEventStatus">—</strong></div>
+        </div>
+        <div class="lv-talaan-panel">
+          <div class="lv-talaan-panel-title"><span>Attendance Leaders</span><b>Year Level</b></div>
+          <div id="lvTalaanLeaders"></div>
+        </div>
+      </aside>
     </div>
-    <div id="talaanScanner" style="max-width:430px;margin-bottom:24px"></div>
-    <div class="section-head" style="margin-top:26px"><h3>Attendance Records</h3><span>Select a year level</span></div>
-    <div style="display:flex;gap:10px;align-items:center;margin-bottom:15px">
-      <select id="talaanSheet" class="select" style="max-width:260px"><option value="">Select year level</option><option value="Attendance1">1st Year</option><option value="Attendance2">2nd Year</option><option value="Attendance3">3rd Year</option><option value="Attendance4">4th Year</option></select>
-      <button id="loadTalaanAttendance" class="profile-btn" type="button">Load Attendance</button>
+    <div class="lv-talaan-panel lv-talaan-record-panel">
+      <div class="lv-talaan-section-title"><div><h3 id="lvTalaanRecordsTitle">Attendance Records</h3><span>Search, filter, and review attendance by student.</span></div><div class="lv-talaan-record-tools"><input id="lvTalaanStudentFilter" type="search" placeholder="Search student or section…"><select id="lvTalaanYearFilter"><option value="">All year levels</option><option value="1">1st Year</option><option value="2">2nd Year</option><option value="3">3rd Year</option><option value="4">4th Year</option></select></div></div>
+      <div id="lvTalaanAttendanceTable" class="lv-talaan-table-wrap"><div class="lv-talaan-empty">Select a year level to view records.</div></div>
     </div>
-    <div id="talaanAttendanceBox" style="overflow:auto"></div>
   </div>
 </section>
-      <section id="page-eservices" class="page">
-  <div class="profile">
-    <div class="section-head"><h3>E-Services</h3><span>Institutional Forms & Documents</span></div>
-    <div id="eserviceCatalog" class="modules">
-      <div class="module"><div class="module-icon">S</div><h4>SAS Forms</h4><p>Event Proposal · Media Production · Outdoor Activity · Indoor Activity</p></div>
-      <div class="module"><div class="module-icon">G</div><h4>GAS Forms</h4><p>Equipment Request · School Facility Request · Equipment & Facility Request · SSG Outdoor Equipment Notification</p></div>
-      <div class="module"><div class="module-icon">S</div><h4>SSG Forms</h4><p>SAFE Form · SSG SK Form</p></div>
-      <div class="module"><div class="module-icon">E</div><h4>External Affairs</h4><p>Partnership Forms · MOA</p></div>
-      <div class="module"><div class="module-icon">A</div><h4>Administrative Affairs</h4><p>Post-Event Assessment · Post-Event Narrative Report · Secretariat Documents</p></div>
-      <div class="module"><div class="module-icon">O</div><h4>Operations</h4><p>Program Flow · Event Details · Technical Team Request · Logistical Request</p></div>
-      <div class="module"><div class="module-icon">F</div><h4>Financial Affairs</h4><p>Financial Report · Liquidation Report · Budget Proposal · Business Request</p></div>
-      <div class="module"><div class="module-icon">P</div><h4>Public Information Office</h4><p>Social Media Graphic · Broadcast Material · Set Design · Other Social Media Material · Social Media Caption</p></div>
-      <div class="module"><div class="module-icon">O</div><h4>Student Organization Requirements</h4><p>Accreditation/reaccreditation requirements, directories, reports, policies, and supporting uploads.</p></div>
-      <div class="module"><div class="module-icon">R</div><h4>Student Relations</h4><p>Student Organization Coordination Document · Student Relations Request</p></div>
-      <div class="module"><div class="module-icon">D</div><h4>Downloadable / Confidential Forms</h4><p>Parent's Consent · Security Letters · Incident Report · UNTV Equipment/Facility Request Letter Format.</p></div>
-    </div>
-    <div class="placeholder" style="margin-top:22px;padding:28px"><h2>Digital form workflows</h2><p>The catalog is based on the current SSG Online Hub content. Individual digital forms and routing workflows will be connected to the DRS module without copying the Google Sites interface.</p></div>
-  </div>
-</section>
-      <section id="page-drs" class="page">
-  <div class="profile">
-    <div class="section-head"><h3>Document Routing System</h3><span id="drsScopeLabel">Loading access...</span></div>
-    <div class="stats" style="margin-top:18px">
-      <div class="stat"><label>TOTAL REQUESTS</label><strong id="drsTotal">—</strong><small>Visible DRS requests</small></div>
-      <div class="stat"><label>FOR APPROVAL</label><strong id="drsForApproval">—</strong><small>Currently awaiting decision</small></div>
-      <div class="stat"><label>IN PROCESS</label><strong id="drsInProcess">—</strong><small>Active transactions</small></div>
-      <div class="stat"><label>COMPLETED</label><strong id="drsCompleted">—</strong><small>Completed transactions</small></div>
-    </div>
-    <div class="section-head" style="margin-top:26px"><h3>DRS Tracker</h3><span>Requests and routing status</span></div>
-    <div style="display:flex;gap:10px;align-items:center;margin-bottom:15px;flex-wrap:wrap">
-      <select id="drsStatusFilter" class="select" style="max-width:240px">
-        <option value="">All statuses</option><option value="FOR REVIEW">For Review</option><option value="RECEIVED">Received</option><option value="SCHEDULE FOR MEETING">Schedule for Meeting</option><option value="SCHEDULED">Scheduled</option><option value="RETURNED">Returned</option><option value="APPROVED">Approved</option><option value="REJECTED">Rejected</option><option value="COMPLETED">Completed</option><option value="CANCELLED">Cancelled</option>
-      </select>
-      <button id="loadDrsButton" class="profile-btn" type="button">Load DRS</button>
-    </div>
-    <div id="drsTrackerBox" style="display:grid;gap:12px"><div class="placeholder"><div class="placeholder-icon">D</div><h2>Loading DRS</h2><p>Please wait...</p></div></div>
-  </div>
-</section>
+      <section id="page-eservices" class="page"><div class="placeholder"><div class="placeholder-icon">E</div><h2>E-Services</h2><p>Digital institutional forms and student services will appear here.</p></div></section>
+      <section id="page-drs" class="page"><div class="placeholder"><div class="placeholder-icon">D</div><h2>Document Routing System</h2><p>Document requests, routing, processing, tracking, and history will be connected here.</p></div></section>
       <section id="page-notifications" class="page"><div class="placeholder"><div class="placeholder-icon">N</div><h2>Notifications</h2><p>Your LVConnect notifications and institutional updates will appear here.</p></div></section>
-      <section id="page-ssg-approvals" class="page">
-  <div class="profile">
-    <div class="section-head"><h3>Approval Requests</h3><span id="approvalScopeLabel">SSG Authorization</span></div>
-    <div class="section-head" style="margin-top:18px"><h3>DRS Approval Requests</h3><span>Requests currently awaiting decision</span></div>
-    <div id="drsApprovalRequestsList"><div class="placeholder"><div class="placeholder-icon">D</div><h2>Loading DRS Requests</h2><p>Please wait...</p></div></div>
-    <div class="section-head" style="margin-top:30px"><h3>Additional Access Requests</h3><span>SSG officer verification</span></div>
-    <div id="approvalRequestsList"><div class="placeholder"><div class="placeholder-icon">✓</div><h2>Loading Requests</h2><p>Please wait...</p></div></div>
+      
+<!-- SSG ADDITIONAL ACCESS APPROVALS -->
+<section id="page-ssg-approvals" class="page">
+  <div class="page-header">
+    <div>
+      <h1>Additional Access Requests</h1>
+      <p>Review and approve SSG Officer access requests assigned to your authority.</p>
+    </div>
+  </div>
+  <div id="approvalRequestsList" class="cards-grid">
+    <div class="card"><p>Loading requests...</p></div>
   </div>
 </section>
-      <section id="page-profile" class="page"><div class="profile"><div class="section-head"><h3>My Profile</h3><span>LVConnect Account</span></div><div class="row"><span>Name</span><span id="profileName">—</span></div><div class="row"><span>TALAAN Code</span><span id="profileTalaan">—</span></div><div class="row"><span>LV Email</span><span id="profileEmail">—</span></div><div class="row"><span>Account ID</span><span id="profileAccountId">—</span></div><div class="row"><span>Account Type</span><span id="profileType">—</span></div><div class="row"><span>SSG / Class Position</span><span id="profilePosition">—</span></div><div class="row"><span>Office</span><span id="profileOffice">—</span></div><div class="row"><span>Permissions</span><span id="profilePermissions">—</span></div><div class="request-access"><h4>Request Additional Access</h4><p>If you hold a class officer or SSG officer position, you may submit a request for verification and approval.</p><button id="requestAccessButton" class="profile-btn" type="button">Request Additional Access</button></div></div></section>
+
+<section id="page-profile" class="page"><div class="profile"><div class="section-head"><h3>My Profile</h3><span>LVConnect Account</span></div><div class="row"><span>Name</span><span id="profileName">—</span></div><div class="row"><span>TALAAN Code</span><span id="profileTalaan">—</span></div><div class="row"><span>LV Email</span><span id="profileEmail">—</span></div><div class="row"><span>Account ID</span><span id="profileAccountId">—</span></div><div class="row"><span>Account Type</span><span id="profileType">—</span></div><div class="row"><span>Permissions</span><span id="profilePermissions">—</span></div><div class="request-access"><h4>Request Additional Access</h4><p>If you hold a class officer or SSG officer position, you may submit a request for verification and approval.</p><button id="requestAccessButton" class="profile-btn" type="button">Request Additional Access</button></div></div></section>
     </div>
   </main>
 </section>
@@ -233,94 +221,14 @@ function clearError(){$('loginError').textContent='';$('loginError').classList.r
 async function post(action,data={}){return new Promise((resolve,reject)=>{const callbackName='__lvconnectCallback_'+Date.now()+'_'+Math.random().toString(36).slice(2);const script=document.createElement('script');const query=new URLSearchParams();query.set('action',action);query.set('callback',callbackName);Object.keys(data).forEach(k=>query.set(k,String(data[k]??'')));let timer=setTimeout(()=>{cleanup();reject(new Error('Request timed out. Please try again.'))},20000);function cleanup(){clearTimeout(timer);delete window[callbackName];if(script.parentNode)script.parentNode.removeChild(script)}window[callbackName]=function(result){cleanup();resolve(result)};script.onerror=function(){cleanup();reject(new Error('Unable to connect to LVConnect Backend.'))};script.src=API_URL+(API_URL.includes('?')?'&':'?')+query.toString();document.head.appendChild(script)})}
 async function login(code,password){const r=await post('LOGIN',{talaanCode:code,password});if(!r||r.success!==true)throw new Error(r?.message||'Invalid TALAAN Code or password.');session={sessionId:r.sessionId,account:r.account};localStorage.setItem(STORAGE_KEY,JSON.stringify(session));await loadAccess()}
 async function loadAccess(){const r=await post('CURRENT_USER',{sessionId:session.sessionId});if(!r||!r.account)throw new Error(r?.message||'Unable to load account access.');access=r;session.account=r.account;localStorage.setItem(STORAGE_KEY,JSON.stringify(session));applyUser()}
-function applyUser(){
-  const a=access?.account;
-  if(!a)return;
-  const name=[a.firstName,a.middleInitial,a.surname].filter(Boolean).join(' ').trim()||'LVConnect User';
-  $('sideUser').textContent=name;
-  $('sideRole').textContent=a.accountType||'Account';
-  $('welcome').textContent='Welcome, '+(a.firstName||'User')+'.';
-  $('avatar').textContent=((a.firstName||'L')[0]+(a.surname||'V')[0]).toUpperCase();
-  $('profileName').textContent=name;
-  $('profileTalaan').textContent=a.talaanId||'—';
-  $('profileEmail').textContent=a.email||'—';
-  $('profileAccountId').textContent=a.accountId||'—';
-  $('profileType').textContent=a.accountType||'—';
-
-  const assignments=Array.isArray(access?.assignments)?access.assignments:[];
-  const active=assignments.filter(function(x){
-    return String(x.Status||x.status||'ACTIVE').toUpperCase()==='ACTIVE';
-  });
-  const roleAssignment=active.find(function(x){
-    const type=String(x.assignmentType||x['Assignment Type']||'').toUpperCase();
-    const pos=String(x.position||x.Position||'').trim();
-    const office=String(x.office||x.Office||'').trim();
-    return type==='ADDITIONAL' && (pos || office);
-  }) || active.find(function(x){
-    return String(x.position||x.Position||'').trim() || String(x.office||x.Office||'').trim();
-  });
-
-  $('profilePosition').textContent=roleAssignment ? (roleAssignment.position||roleAssignment.Position||'—') : '—';
-  $('profileOffice').textContent=roleAssignment ? (roleAssignment.office||roleAssignment.Office||'—') : '—';
-  $('profilePermissions').textContent=(access.permissions||[]).length?access.permissions.join(', '):'None';
-  applyPermissions();
-  loadSSGApprovalAccess();
-}
+function applyUser(){const a=access?.account;if(!a)return;const name=[a.firstName,a.middleInitial,a.surname].filter(Boolean).join(' ').trim()||'LVConnect User';$('sideUser').textContent=name;$('sideRole').textContent=a.accountType||'Account';$('welcome').textContent='Welcome, '+(a.firstName||'User')+'.';$('avatar').textContent=((a.firstName||'L')[0]+(a.surname||'V')[0]).toUpperCase();$('profileName').textContent=name;$('profileTalaan').textContent=a.talaanId||'—';$('profileEmail').textContent=a.email||'—';$('profileAccountId').textContent=a.accountId||'—';$('profileType').textContent=a.accountType||'—';$('profilePermissions').textContent=(access.permissions||[]).length?access.permissions.join(', '):'None';applyPermissions()}
 function hasPermission(p){return (access?.permissions||[]).map(x=>String(x).toUpperCase()).includes(String(p).toUpperCase())}
 function applyPermissions(){document.querySelectorAll('[data-permission]').forEach(el=>el.classList.toggle('hidden',!hasPermission(el.dataset.permission)))}
-function loadSSGApprovalAccess(){
-  const nav=$('ssgApprovalNav');
-  if(!nav)return;
-  nav.classList.add('hidden');
-  const canDecide=hasPermission('DRS_DECIDE');
-  const assignments=Array.isArray(access?.assignments)?access.assignments:[];
-  const canApproveAccess=assignments.some(function(a){
-    const position=String(a.position||a.Position||'').trim().toUpperCase();
-    const office=String(a.office||a.Office||'').trim().toUpperCase();
-    const type=String(a.assignmentType||a['Assignment Type']||'').trim().toUpperCase();
-    if(position==='CHAIRPERSON'||position==='SSG CHAIRPERSON'||position==='ADVISER'||position==='SSG ADVISER')return true;
-    if(type!=='ADDITIONAL'||!office)return false;
-    return ['VICE CHAIRPERSON FOR STUDENT AFFAIRS','VCSA','VICE CHAIRPERSON FOR EXTERNAL AFFAIRS','VCEA','VICE CHAIRPERSON FOR ADMINISTRATIVE AFFAIRS','VCAA','VICE CHAIRPERSON FOR OPERATIONS','VCO','TREASURER','PUBLIC INFORMATION OFFICER','PIO'].some(function(p){return position===p||position.indexOf(p)!==-1;});
-  });
-  if(canDecide||canApproveAccess)nav.classList.remove('hidden');
-}
-
-function escApproval(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
-async function loadApprovalRequests(){
-  const box=$('approvalRequestsList'); if(!box)return;
-  box.innerHTML='<div class="placeholder"><div class="placeholder-icon">✓</div><h2>Loading Requests</h2><p>Please wait...</p></div>';
-  try{
-    const r=await post('GET_PENDING_PERMISSION_REQUESTS',{sessionId:session.sessionId});
-    if(!r||r.success!==true)throw new Error(r?.message||'Unable to load requests.');
-    const requests=Array.isArray(r.requests)?r.requests:[];
-    if(!requests.length){box.innerHTML='<div class="placeholder"><div class="placeholder-icon">✓</div><h2>No Pending Requests</h2><p>There are no additional access requests waiting for your approval.</p></div>';return;}
-    box.innerHTML=requests.map(function(q){
-      const id=escApproval(q['Request ID']);
-      return '<div class="request-access" style="margin-top:14px"><h4>'+escApproval(q['Name'])+'</h4>'+
-        '<p><strong>TALAAN Code:</strong> '+escApproval(q['TALAAN Code'])+'</p>'+
-        '<p><strong>Request:</strong> '+escApproval(q['Request Type'])+'</p>'+
-        '<p><strong>Position:</strong> '+escApproval(q['Requested Position'])+'</p>'+
-        '<p><strong>Office:</strong> '+escApproval(q['Requested Office'])+'</p>'+
-        '<p><strong>Request ID:</strong> '+id+'</p>'+
-        '<button class="profile-btn" type="button" onclick="approveSSGRequest(\''+String(q['Request ID']||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'")+'\')">Approve Request</button></div>';
-    }).join('');
-  }catch(e){box.innerHTML='<div class="placeholder"><div class="placeholder-icon">!</div><h2>Unable to Load Requests</h2><p>'+escApproval(e.message||'Unable to load requests.')+'</p></div>';}
-}
-async function approveSSGRequest(requestId){
-  if(!confirm('Approve this additional access request?'))return;
-  try{
-    const r=await post('APPROVE_ADDITIONAL_ACCESS_REQUEST',{sessionId:session.sessionId,requestId:requestId,officerCode:''});
-    if(!r||r.success!==true)throw new Error(r?.message||'Unable to approve request.');
-    alert((r.message||'Request approved successfully.')+(r.officerCode?'\nOfficer Code: '+r.officerCode:''));
-    loadApprovalRequests();
-  }catch(e){alert(e.message||'Unable to approve request.');}
-}
-
 function openApp(){$('loginScreen').style.display='none';$('app').classList.add('active');openPage('dashboard')}
 function clearSession(){session=null;access=null;localStorage.removeItem(STORAGE_KEY)}
 async function logout(){try{loading(true,'Signing out...');if(session?.sessionId)await post('LOGOUT',{sessionId:session.sessionId})}catch(e){}finally{clearSession();loading(false);$('app').classList.remove('active');$('loginScreen').style.display='flex';$('loginForm').reset()}}
-const titles={dashboard:['Dashboard','Welcome to LVConnect Portal'],talaan:['TALAAN','Student attendance and records'],eservices:['E-Services','Digital institutional services'],drs:['Document Routing','Requests and document tracking'],notifications:['Notifications','Updates and transaction alerts'],profile:['My Profile','Account information and settings'], 'ssg-approvals':['Approval Requests','SSG additional access verification']};
-function openPage(page){const target=$('page-'+page);if(!target)return;const restricted=document.querySelector('.nav-item[data-page="'+page+'"][data-permission]');if(restricted&&!hasPermission(restricted.dataset.permission))return;document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));target.classList.add('active');document.querySelectorAll('.nav-item').forEach(x=>x.classList.toggle('active',x.dataset.page===page));if(titles[page])$('title').innerHTML='<h2>'+titles[page][0]+'</h2><p>'+titles[page][1]+'</p>';if(page==='ssg-approvals'){loadApprovalRequests();loadDrsApprovalRequests()}if(page==='talaan')loadTalaanDashboard('');if(page==='drs')loadDrsTracker();closeMenu()}
+const titles={dashboard:['Dashboard','Welcome to LVConnect Portal'],talaan:['TALAAN','Student attendance and records'],eservices:['E-Services','Digital institutional services'],drs:['Document Routing','Requests and document tracking'],notifications:['Notifications','Updates and transaction alerts'],profile:['My Profile','Account information and settings']};
+function openPage(page){const target=$('page-'+page);if(!target)return;const restricted=document.querySelector('.nav-item[data-page="'+page+'"][data-permission]');if(restricted&&!hasPermission(restricted.dataset.permission))return;document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));target.classList.add('active');document.querySelectorAll('.nav-item').forEach(x=>x.classList.toggle('active',x.dataset.page===page));if(titles[page])$('title').innerHTML='<h2>'+titles[page][0]+'</h2><p>'+titles[page][1]+'</p>';closeMenu()}
 function closeMenu(){$('sidebar').classList.remove('open');$('overlay').classList.remove('active')}
 function openModal(id){$(id).classList.add('show')}
 function closeModal(id){$(id).classList.remove('show')}
@@ -345,169 +253,177 @@ $('createAccountForm').addEventListener('submit',async e=>{e.preventDefault();cl
 $('requestTalaanForm').addEventListener('submit',async e=>{e.preventDefault();clearModalMessage('requestTalaanMessage');const btn=$('requestTalaanButton');btn.disabled=true;btn.textContent='Submitting...';try{const r=await post('SUBMIT_ACCOUNT_REQUEST',{requestType:'REQUEST_TALAAN_CODE',email:$('rtEmail').value.trim(),firstName:$('rtFirstName').value.trim(),middleInitial:$('rtMiddleInitial').value.trim(),surname:$('rtSurname').value.trim(),details:$('rtDetails').value.trim()});if(!r||r.success!==true)throw new Error(r?.message||'Unable to submit TALAAN Code request.');showModalMessage('requestTalaanMessage',r.message+' Request ID: '+r.requestId,true);$('requestTalaanForm').reset()}catch(err){showModalMessage('requestTalaanMessage',err.message||'Unable to submit request.')}finally{btn.disabled=false;btn.textContent='Submit TALAAN Code Request'}});
 document.querySelectorAll('[data-page]').forEach(el=>el.addEventListener('click',()=>openPage(el.dataset.page)));
 $('logout').addEventListener('click',logout);$('menu').addEventListener('click',()=>$('sidebar').classList.add('open'));$('overlay').addEventListener('click',closeMenu);
-
-
-async function loadTalaanDashboard(selectedDate){
-  const eventSelect=$('talaanEvent');
-  try{
-    const r=await post('TALAAN_DASHBOARD',{sessionId:session.sessionId,date:selectedDate||''});
-    if(!r||r.success!==true) throw new Error(r?.message||r?.error||'Unable to load TALAAN.');
-    const events=Array.isArray(r.events)?r.events:[];
-    if(eventSelect.options.length<=1){
-      eventSelect.innerHTML='<option value="">Select event/date</option>'+events.map(function(e){return '<option value="'+escApproval(e.date)+'">'+escApproval(e.event)+' — '+escApproval(e.date)+'</option>';}).join('');
-      if(r.selectedDate) eventSelect.value=r.selectedDate;
-    }
-    const s=r.selectedSummary||{};
-    $('talaanTotal').textContent=s.totalStudents??'—';
-    $('talaanPresent').textContent=s.present??'—';
-    $('talaanAbsent').textContent=s.absent??'—';
-    $('talaanRate').textContent=(s.attendanceRate!==undefined&&s.attendanceRate!==null)?(String(s.attendanceRate).includes('%')?s.attendanceRate:Number(s.attendanceRate).toFixed(2)+'%'):'—';
-    $('talaanRestriction').textContent=r.restrictedYear?'Restricted to assigned year level':'All year levels';
-    const years=Array.isArray(s.yearLevels)?s.yearLevels:(Array.isArray(r.yearLevels)?r.yearLevels:[]);
-    $('talaanYears').innerHTML=years.length?years.map(function(y){
-      const label=y.yearLevel||y.year||y.label||'';
-      const present=y.present??0, absent=y.absent??0, total=y.totalStudents??y.total??0;
-      return '<div class="module"><div class="module-icon">'+escApproval(String(label).charAt(0))+'</div><h4>'+escApproval(label)+'</h4><p>Present: '+escApproval(present)+' · Absent: '+escApproval(absent)+' · Total: '+escApproval(total)+'</p></div>';
-    }).join(''):'<div class="talaan-empty">No attendance summary available for this event.</div>';
-  }catch(e){
-    $('talaanYears').innerHTML='<div class="talaan-empty">'+escApproval(e.message||'Unable to load TALAAN.')+'</div>';
-  }
-}
-
-async function loadTalaanAttendance(){
-  const sheet=$('talaanSheet').value;
-  if(!sheet)return;
-  const box=$('talaanAttendanceBox');
-  box.innerHTML='<div class="talaan-empty">Loading attendance...</div>';
-  try{
-    const r=await post('TALAAN_ATTENDANCE',{sessionId:session.sessionId,sheet:sheet});
-    if(!r||r.success!==true)throw new Error(r?.message||r?.error||'Unable to load attendance.');
-    const data=Array.isArray(r.data)?r.data:[];
-    if(!data.length){box.innerHTML='<div class="talaan-empty">No attendance data.</div>';return;}
-    const head=data[0]||[];
-    box.innerHTML='<table class="talaan-table"><thead><tr>'+head.map(function(h){return '<th>'+escApproval(h)+'</th>';}).join('')+'</tr></thead><tbody>'+data.slice(1).map(function(row){return '<tr>'+head.map(function(_,i){return '<td>'+escApproval(row[i]||'')+'</td>';}).join('')+'</tr>';}).join('')+'</tbody></table>';
-  }catch(e){box.innerHTML='<div class="talaan-empty">'+escApproval(e.message||'Unable to load attendance.')+'</div>';}
-}
-
-
-async function loadDrsTracker(){
-  const box=$('drsTrackerBox');
-  if(!box)return;
-  box.innerHTML='<div class="placeholder"><div class="placeholder-icon">D</div><h2>Loading DRS</h2><p>Please wait...</p></div>';
-  try{
-    const status=$('drsStatusFilter').value||'';
-    const r=await post('GET_DRS_REQUESTS',{sessionId:session.sessionId,status:status});
-    if(!r||r.success!==true)throw new Error(r?.message||'Unable to load DRS requests.');
-    const requests=Array.isArray(r.requests)?r.requests:[];
-    const all=await post('GET_DRS_REQUESTS',{sessionId:session.sessionId,status:''});
-    const allRows=all&&all.success===true&&Array.isArray(all.requests)?all.requests:requests;
-    const forApproval=allRows.filter(x=>String(x.currentStatus||'').toUpperCase()==='FOR REVIEW').length;
-    const completed=allRows.filter(x=>String(x.currentStatus||'').toUpperCase()==='COMPLETED').length;
-    const inProcess=allRows.filter(x=>['RECEIVED','FOR REVIEW','SCHEDULE FOR MEETING','SCHEDULED','RETURNED'].includes(String(x.currentStatus||'').toUpperCase())).length;
-    $('drsTotal').textContent=allRows.length;
-    $('drsForApproval').textContent=forApproval;
-    $('drsInProcess').textContent=inProcess;
-    $('drsCompleted').textContent=completed;
-    $('drsScopeLabel').textContent=hasPermission('DRS_VIEW_ALL')?'Entire SSG — all offices & committees':(hasPermission('DRS_VIEW_DEPARTMENT')?'Responding office':'Your DRS requests');
-    if(!requests.length){box.innerHTML='<div class="placeholder"><div class="placeholder-icon">✓</div><h2>No DRS Requests</h2><p>No requests match the selected status.</p></div>';return;}
-    box.innerHTML=requests.map(function(q){
-      const jsId=JSON.stringify(String(q.requestId||''));
-      const status=String(q.currentStatus||'').toUpperCase();
-      const canDecide=hasPermission('DRS_DECIDE')&&status==='FOR REVIEW';
-      return `<div class="request-access" style="margin-top:0">
-        <h4>${escApproval(q.referenceNumber||q.requestId)}</h4>
-        <p><strong>Document:</strong> ${escApproval(q.documentType)}</p>
-        <p><strong>Subject:</strong> ${escApproval(q.subject)}</p>
-        <p><strong>Office:</strong> ${escApproval(q.currentOffice||q.requestingOffice||'—')}</p>
-        <p><strong>Committee:</strong> ${escApproval(q.committee||'—')}</p>
-        <p><strong>Status:</strong> ${escApproval(q.currentStatus)}</p>
-        <p><strong>Submitted:</strong> ${escApproval(q.submittedAt)}</p>
-        <p><strong>Request ID:</strong> ${escApproval(q.requestId)}</p>
-        ${canDecide?`<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><button class="profile-btn" type="button" onclick='decideDrsRequest(${jsId},"APPROVED")'>Approve</button><button class="profile-btn" type="button" style="background:#fff;color:var(--navy);border:1px solid var(--border)" onclick='decideDrsRequest(${jsId},"REJECTED")'>Reject</button></div>`:''}
-      </div>`;
-    }).join('');
-  }catch(e){box.innerHTML='<div class="placeholder"><div class="placeholder-icon">!</div><h2>Unable to Load DRS</h2><p>'+escApproval(e.message||'Unable to load DRS.')+'</p></div>';}
-}
-
-async function loadDrsApprovalRequests(){
-  const box=$('drsApprovalRequestsList');
-  if(!box)return;
-  box.innerHTML='<div class="placeholder"><div class="placeholder-icon">D</div><h2>Loading DRS Requests</h2><p>Please wait...</p></div>';
-  try{
-    const r=await post('GET_DRS_APPROVAL_REQUESTS',{sessionId:session.sessionId});
-    if(!r||r.success!==true)throw new Error(r?.message||'Unable to load DRS approval requests.');
-    const requests=Array.isArray(r.requests)?r.requests:[];
-    $('approvalScopeLabel').textContent=hasPermission('DRS_VIEW_ALL')?'Chairperson / Adviser — Entire SSG':(hasPermission('DRS_VIEW_DEPARTMENT')?'Executive Head — Responding Office':'SSG Authorization');
-    if(!requests.length){box.innerHTML='<div class="placeholder"><div class="placeholder-icon">✓</div><h2>No DRS Approval Requests</h2><p>There are no DRS requests awaiting your decision.</p></div>';return;}
-    box.innerHTML=requests.map(function(q){
-      const jsId=JSON.stringify(String(q.requestId||''));
-      return `<div class="request-access" style="margin-top:14px">
-        <h4>${escApproval(q.referenceNumber||q.requestId)}</h4>
-        <p><strong>Document:</strong> ${escApproval(q.documentType)}</p>
-        <p><strong>Subject:</strong> ${escApproval(q.subject)}</p>
-        <p><strong>Office:</strong> ${escApproval(q.currentOffice||q.requestingOffice||'—')}</p>
-        <p><strong>Committee:</strong> ${escApproval(q.committee||'—')}</p>
-        <p><strong>Status:</strong> ${escApproval(q.currentStatus)}</p>
-        <p><strong>Request ID:</strong> ${escApproval(q.requestId)}</p>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><button class="profile-btn" type="button" onclick='decideDrsRequest(${jsId},"APPROVED")'>Approve</button><button class="profile-btn" type="button" style="background:#fff;color:var(--navy);border:1px solid var(--border)" onclick='decideDrsRequest(${jsId},"REJECTED")'>Reject</button></div>
-      </div>`;
-    }).join('');
-  }catch(e){box.innerHTML='<div class="placeholder"><div class="placeholder-icon">!</div><h2>Unable to Load DRS Approvals</h2><p>'+escApproval(e.message||'Unable to load DRS approvals.')+'</p></div>';}
-}
-
-async function decideDrsRequest(requestId,decision){
-  const remarks=prompt((decision==='APPROVED'?'Approval':'Rejection')+' remarks (optional):','');
-  if(remarks===null)return;
-  try{
-    const action=decision==='APPROVED'?'APPROVE_DRS_REQUEST':'REJECT_DRS_REQUEST';
-    const r=await post(action,{sessionId:session.sessionId,requestId:requestId,remarks:remarks});
-    if(!r||r.success!==true)throw new Error(r?.message||'Unable to process DRS decision.');
-    alert(r.message||('DRS request '+decision.toLowerCase()+'.'));
-    loadDrsTracker();
-    loadDrsApprovalRequests();
-  }catch(e){alert(e.message||'Unable to process DRS decision.');}
-}
-$('drsStatusFilter').addEventListener('change',loadDrsTracker);
-$('loadDrsButton').addEventListener('click',loadDrsTracker);
-
-let talaanQrScanner=null;
-async function startTalaanScanner(){
-  const msg=$('talaanScanMessage');
-  try{
-    if(typeof Html5Qrcode==='undefined') throw new Error('QR scanner library is unavailable.');
-    if(talaanQrScanner) return;
-    talaanQrScanner=new Html5Qrcode('talaanScanner');
-    await talaanQrScanner.start(
-      {facingMode:'environment'},
-      {fps:10,qrbox:{width:250,height:250}},
-      async function(decodedText){
-        msg.textContent='QR detected. Recording...';
-        try{
-          const r=await post('TALAAN_RECORD_ATTENDANCE',{sessionId:session.sessionId,qrText:decodedText});
-          msg.textContent=r&&r.success!==false?(r.message||'Attendance recorded.'):(r.message||r.error||'Unable to record attendance.');
-        }catch(e){msg.textContent=e.message||'Unable to record attendance.';}
-      },
-      function(){ }
-    );
-    msg.textContent='Scanner active.';
-  }catch(e){
-    msg.textContent=e.message||'Unable to start scanner.';
-    talaanQrScanner=null;
-  }
-}
-async function stopTalaanScanner(){
-  if(!talaanQrScanner)return;
-  try{await talaanQrScanner.stop();talaanQrScanner.clear();}catch(e){}
-  talaanQrScanner=null;
-  $('talaanScanMessage').textContent='Scanner stopped.';
-}
-$('startTalaanScanner').addEventListener('click',startTalaanScanner);
-$('stopTalaanScanner').addEventListener('click',stopTalaanScanner);
-
-$('talaanEvent').addEventListener('change',function(){loadTalaanDashboard(this.value)});
-$('loadTalaanAttendance').addEventListener('click',loadTalaanAttendance);
-
 (async function(){const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;try{session=JSON.parse(raw);if(!session?.sessionId)throw new Error('Invalid session');loading(true,'Restoring your session...');await loadAccess();openApp()}catch(e){clearSession()}finally{loading(false)}})();
+</script>
+
+<script>
+/* =====================================================
+ * SSG ADDITIONAL ACCESS APPROVAL UI
+ * ===================================================== */
+
+async function loadSSGApprovalRequests() {
+  const box = document.getElementById('approvalRequestsList');
+  if (!box) return;
+
+  box.innerHTML = '<div class="card"><p>Loading requests...</p></div>';
+
+  try {
+    const r = await post('GET_PENDING_PERMISSION_REQUESTS', {
+      sessionId: window.currentSessionId || localStorage.getItem('lvconnectSessionId') || ''
+    });
+
+    if (!r || r.success !== true) {
+      throw new Error(r?.message || 'Unable to load permission requests.');
+    }
+
+    const requests = Array.isArray(r.requests) ? r.requests : [];
+
+    if (!requests.length) {
+      box.innerHTML = '<div class="card"><p>No pending additional access requests.</p></div>';
+      return;
+    }
+
+    box.innerHTML = requests.map(function(req) {
+      const requestId = req['Request ID'] || '';
+      const name = req['Name'] || '';
+      const type = req['Request Type'] || '';
+      const position = req['Requested Position'] || '';
+      const office = req['Requested Office'] || '';
+      const talaan = req['TALAAN Code'] || '';
+
+      return `
+        <div class="card approval-request-card">
+          <h3>${escapeHtml(requestId)}</h3>
+          <p><strong>Name:</strong> ${escapeHtml(name)}</p>
+          <p><strong>TALAAN Code:</strong> ${escapeHtml(talaan)}</p>
+          <p><strong>Request:</strong> ${escapeHtml(type)}</p>
+          <p><strong>Position:</strong> ${escapeHtml(position)}</p>
+          <p><strong>Office:</strong> ${escapeHtml(office)}</p>
+          <button type="button"
+            class="btn btn-primary"
+            onclick="approveSSGRequest('${escapeJs(requestId)}')">
+            Approve
+          </button>
+        </div>
+      `;
+    }).join('');
+
+  } catch (err) {
+    box.innerHTML =
+      '<div class="card"><p>' +
+      escapeHtml(err.message || 'Unable to load requests.') +
+      '</p></div>';
+  }
+}
+
+async function approveSSGRequest(requestId) {
+  const officerCode = prompt(
+    'Officer Code (leave blank to auto-generate):'
+  );
+
+  if (officerCode === null) return;
+
+  try {
+    const r = await post(
+      'APPROVE_ADDITIONAL_ACCESS_REQUEST',
+      {
+        sessionId:
+          window.currentSessionId ||
+          localStorage.getItem('lvconnectSessionId') ||
+          '',
+        requestId: requestId,
+        officerCode: officerCode.trim()
+      }
+    );
+
+    if (!r || r.success !== true) {
+      throw new Error(
+        r?.message || 'Unable to approve request.'
+      );
+    }
+
+    alert(
+      'Request approved successfully.\n\nOfficer Code: ' +
+      (r.officerCode || '')
+    );
+
+    loadSSGApprovalRequests();
+
+  } catch (err) {
+    alert(
+      err.message ||
+      'Unable to approve request.'
+    );
+  }
+}
+
+function escapeHtml(value) {
+  return String(value == null ? '' : value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function escapeJs(value) {
+  return String(value == null ? '' : value)
+    .replace(/\\/g, '\\\\')
+    .replace(/'/g, "\\'");
+}
+
+/* Load requests whenever the approval page is opened. */
+document.addEventListener('click', function(e) {
+  const link = e.target.closest('[data-page="ssg-approvals"]');
+  if (link) {
+    setTimeout(loadSSGApprovalRequests, 100);
+  }
+});
+</script>
+
+
+<script id="lv-talaan-modern-script">
+let lvTalaanState_={dashboard:null,events:[],selectedYear:'',rows:[],selectedSheet:''};
+function lvTalaanEscape_(v){return String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
+function lvTalaanSetStatus_(text,error){const el=document.getElementById('lvTalaanStatus');if(!el)return;el.textContent=text||'';el.className='lv-talaan-status'+(error?' lv-talaan-error':'')}
+function lvTalaanPercent_(v){const n=Number(v||0);return isFinite(n)?n.toFixed(1)+'%':'0.0%'}
+function lvTalaanEvent_(date){return lvTalaanState_.events.find(e=>String(e.date)===String(date))||null}
+async function lvTalaanLoadEvents_(){
+  const r=await post('TALAAN_EVENTS',{sessionId:session.sessionId});
+  if(!r||r.success!==true)throw new Error(r?.message||r?.error||'Unable to load TALAAN events.');
+  lvTalaanState_.events=Array.isArray(r.events)?r.events:[];
+  const sel=document.getElementById('lvTalaanEventSelect');
+  sel.innerHTML=lvTalaanState_.events.length?lvTalaanState_.events.map(e=>'<option value="'+lvTalaanEscape_(e.date)+'">'+lvTalaanEscape_(e.event||'Attendance Event')+' — '+lvTalaanEscape_(e.date)+'</option>').join(''):'<option value="">No events found</option>';
+  if(lvTalaanState_.events.length){sel.value=lvTalaanState_.events[0].date;return lvTalaanState_.events[0].date}
+  return '';
+}
+function lvTalaanRenderSummary_(){
+  const s=lvTalaanState_.dashboard?.selectedSummary||{};const box=document.getElementById('lvTalaanSummary');if(!box)return;
+  box.innerHTML=[['TOTAL STUDENTS',s.totalStudents||0,'Across all year levels',''],['PRESENT',s.present||0,'Marked present','green'],['ABSENT',s.absent||0,'Marked absent','red'],['ATTENDANCE RATE',lvTalaanPercent_(s.attendanceRate),'Overall event rate','gold']].map(x=>'<div class="lv-talaan-stat '+x[3]+'"><label>'+x[0]+'</label><strong>'+lvTalaanEscape_(x[1])+'</strong><small>'+x[2]+'</small></div>').join('');
+  document.getElementById('lvTalaanOverallBadge').textContent=lvTalaanPercent_(s.attendanceRate);
+  const ev=lvTalaanEvent_(s.date)||{};document.getElementById('lvTalaanEventName').textContent=ev.event||s.event||'—';document.getElementById('lvTalaanEventDate').textContent=ev.date||s.date||'—';document.getElementById('lvTalaanEventCutoff').textContent=ev.cutoff||'—';document.getElementById('lvTalaanEventStatus').textContent=ev.status||'—';
+  const leaders=document.getElementById('lvTalaanLeaders');const ys=(s.yearLevels||[]).filter(y=>Number(y.totalStudents)>0).sort((a,b)=>Number(b.percentage)-Number(a.percentage));leaders.innerHTML=ys.length?ys.slice(0,4).map(y=>'<div class="lv-talaan-leader"><div class="lv-talaan-leader-top"><strong>'+lvTalaanEscape_(y.label)+'</strong><b>'+lvTalaanPercent_(y.percentage)+'</b></div><div class="lv-talaan-leader-bar"><i style="width:'+Math.max(0,Math.min(100,Number(y.percentage)||0))+'%"></i></div></div>').join(''):'<div class="lv-talaan-empty">No year-level data for this event.</div>';
+}
+function lvTalaanRenderYears_(){
+ const s=lvTalaanState_.dashboard?.selectedSummary||{};const box=document.getElementById('lvTalaanYearGrid');const ys=s.yearLevels||[];
+ box.innerHTML=ys.length?ys.map(y=>'<div class="lv-talaan-year-card '+(String(y.yearLevel)===String(lvTalaanState_.selectedYear)?'active':'')+'" onclick="lvTalaanSelectYear_(\''+String(y.yearLevel).replace(/'/g,"\\'")+'\')"><div class="lv-talaan-year-top"><span class="lv-talaan-year-label">'+lvTalaanEscape_(y.label)+'</span><span class="lv-talaan-year-rate">'+lvTalaanPercent_(y.percentage)+'</span></div><div class="lv-talaan-progress"><i style="width:'+Math.max(0,Math.min(100,Number(y.percentage)||0))+'%"></i></div><div class="lv-talaan-year-meta"><div class="lv-talaan-mini"><b>'+Number(y.totalStudents||0)+'</b><span>Students</span></div><div class="lv-talaan-mini"><b>'+Number(y.present||0)+'</b><span>Present</span></div><div class="lv-talaan-mini"><b>'+Number(y.absent||0)+'</b><span>Absent</span></div></div></div>').join(''):'<div class="lv-talaan-empty">No year-level attendance data.</div>';
+}
+function lvTalaanParseRows_(data){if(!Array.isArray(data)||data.length<2)return {headers:[],rows:[]};return {headers:data[0].map(x=>String(x||'')),rows:data.slice(1)} }
+function lvTalaanSelectedDateColumn_(headers,date){const target=String(date||'').trim().toUpperCase();for(let i=2;i<headers.length;i++){if(String(headers[i]||'').trim().toUpperCase()===target)return i}return -1}
+function lvTalaanRenderTable_(){
+ const wrap=document.getElementById('lvTalaanAttendanceTable');if(!lvTalaanState_.rows.length){wrap.innerHTML='<div class="lv-talaan-empty">Select a year level to view records.</div>';return}
+ const data=lvTalaanState_.rows, headers=data.headers, rows=data.rows, date=lvTalaanState_.dashboard?.selectedSummary?.date||'', di=lvTalaanSelectedDateColumn_(headers,date), q=(document.getElementById('lvTalaanStudentFilter')?.value||'').trim().toLowerCase();
+ const year=lvTalaanState_.selectedYear;
+ const filtered=rows.filter(r=>{const name=String(r[0]||'').toLowerCase(),sec=String(r[1]||'').toLowerCase();return (!q||name.includes(q)||sec.includes(q))});
+ let html='<table class="lv-talaan-table"><thead><tr><th>Student</th><th>Section</th><th>Event Date</th><th>Status</th></tr></thead><tbody>';
+ if(!filtered.length){html+='<tr><td colspan="4"><div class="lv-talaan-empty">No matching students.</div></td></tr>'} else filtered.forEach(r=>{const raw=di>=0?String(r[di]||''):'';const u=raw.trim().toUpperCase();let cls='nyh',txt='NOT YET HELD';if(u==='PRESENT'||u==='P'){cls='present';txt='PRESENT'}else if(u==='ABSENT'||u==='A'){cls='absent';txt='ABSENT'}else if(u){cls='nyh';txt=raw}html+='<tr><td class="lv-talaan-name">'+lvTalaanEscape_(r[0]||'')+'</td><td class="lv-talaan-section">'+lvTalaanEscape_(r[1]||'')+'</td><td>'+lvTalaanEscape_(date||'—')+'</td><td><span class="lv-talaan-pill '+cls+'">'+lvTalaanEscape_(txt)+'</span></td></tr>'});
+ html+='</tbody></table>';wrap.innerHTML=html;document.getElementById('lvTalaanRecordsTitle').textContent='Attendance Records'+(year?' — '+year+' Year':'');
+}
+async function lvTalaanSelectYear_(year){lvTalaanState_.selectedYear=String(year);lvTalaanRenderYears_();const sheet='Attendance'+year;lvTalaanState_.selectedSheet=sheet;lvTalaanSetStatus_('Loading '+year+' Year attendance…');try{const r=await post('TALAAN_ATTENDANCE',{sessionId:session.sessionId,sheet:sheet});if(!r||r.success!==true)throw new Error(r?.message||r?.error||'Unable to load attendance records.');lvTalaanState_.rows=lvTalaanParseRows_(r.data);lvTalaanRenderTable_();lvTalaanSetStatus_('Showing '+year+' Year attendance records.')}catch(e){document.getElementById('lvTalaanAttendanceTable').innerHTML='<div class="lv-talaan-error">'+lvTalaanEscape_(e.message||e)+'</div>';lvTalaanSetStatus_('Unable to load attendance.',true)}}
+async function lvTalaanLoadDashboard_(date){lvTalaanSetStatus_('Refreshing TALAAN…');try{if(!lvTalaanState_.events.length&&!date)date=await lvTalaanLoadEvents_();const r=await post('TALAAN_DASHBOARD',{sessionId:session.sessionId,date:date||document.getElementById('lvTalaanEventSelect').value||''});if(!r||r.success!==true)throw new Error(r?.message||r?.error||'Unable to load TALAAN dashboard.');lvTalaanState_.dashboard=r;lvTalaanRenderSummary_();lvTalaanRenderYears_();const keep=lvTalaanState_.selectedYear||((r.selectedSummary?.yearLevels||[])[0]?.yearLevel||'');if(keep)await lvTalaanSelectYear_(keep);else lvTalaanSetStatus_('TALAAN loaded.');}catch(e){lvTalaanSetStatus_(e.message||String(e),true);document.getElementById('lvTalaanSummary').innerHTML='';document.getElementById('lvTalaanYearGrid').innerHTML='<div class="lv-talaan-error">'+lvTalaanEscape_(e.message||e)+'</div>'}}
+function lvTalaanInit_(){const sel=document.getElementById('lvTalaanEventSelect');if(!sel)return;sel.addEventListener('change',()=>{lvTalaanState_.selectedYear='';lvTalaanLoadDashboard_(sel.value)});document.getElementById('lvTalaanStudentFilter').addEventListener('input',lvTalaanRenderTable_);document.getElementById('lvTalaanYearFilter').addEventListener('change',function(){const v=this.value;if(v)lvTalaanSelectYear_(v);});}
+const _lvOriginalOpenPage=window.openPage;window.openPage=function(page){_lvOriginalOpenPage(page);if(page==='talaan'&&session){setTimeout(()=>{if(!lvTalaanState_.dashboard)lvTalaanLoadDashboard_();},0)}};
+document.addEventListener('DOMContentLoaded',lvTalaanInit_);
 </script>
 </body>
 </html>
