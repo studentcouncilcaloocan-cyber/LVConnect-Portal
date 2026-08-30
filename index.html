@@ -25,6 +25,10 @@
 .request-access h4{font-size:14px;margin-bottom:6px}.request-access p{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:14px}
 .profile-btn{height:43px;border:0;border-radius:9px;background:var(--navy);color:#fff;padding:0 16px;font-size:12px;font-weight:650}.profile-btn:hover{background:var(--navy2)}
 .select{height:44px;width:100%;border:1px solid var(--border);border-radius:9px;background:#f8fafc;padding:0 12px;outline:0}.select:focus{background:#fff;border-color:var(--navy);box-shadow:0 0 0 3px rgba(24,59,86,.08)}
+
+.lv-talaan-tools{display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--lt-border)}
+.lv-talaan-tools.show{display:block}.lv-talaan-tools-title{font-size:10px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:var(--lt-muted);margin-bottom:9px}.lv-talaan-tool-grid{display:flex;gap:8px;flex-wrap:wrap}.lv-talaan-tool{height:38px;border:1px solid var(--lt-border);border-radius:10px;background:#fff;color:var(--lt-text);padding:0 12px;font-size:11px;font-weight:800;cursor:pointer}.lv-talaan-tool:hover{border-color:var(--lt-navy);color:var(--lt-navy);background:#f8fafc}.lv-talaan-tool.primary{background:var(--lt-navy);color:#fff;border-color:var(--lt-navy)}.lv-talaan-tool.gold{background:#fbf7ed;color:#8b6a25;border-color:#eadfbe}.lv-talaan-extra{margin-top:16px}.lv-talaan-extra-card{background:#fff;border:1px solid var(--lt-border);border-radius:17px;box-shadow:var(--lt-shadow);padding:20px}.lv-talaan-extra-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:16px}.lv-talaan-extra-head h3{font-size:16px}.lv-talaan-extra-head p{font-size:11px;color:var(--lt-muted);margin-top:4px}.lv-talaan-settings-row{display:grid;grid-template-columns:1.3fr 1fr 1fr .8fr auto;gap:8px;padding:9px 0;border-bottom:1px solid #eef1f4;align-items:center}.lv-talaan-settings-row input,.lv-talaan-settings-row select{height:38px;border:1px solid var(--lt-border);border-radius:9px;padding:0 9px;font-size:11px}.lv-talaan-settings-row .small-btn{height:34px;border:1px solid var(--lt-border);border-radius:8px;background:#fff;padding:0 9px;font-size:10px;font-weight:800}.lv-talaan-settings-row .danger-btn{color:#a04444}.lv-talaan-directory-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.lv-talaan-directory-toolbar input,.lv-talaan-directory-toolbar select{height:40px;border:1px solid var(--lt-border);border-radius:9px;padding:0 10px;font-size:11px}.lv-talaan-directory-list{display:flex;flex-direction:column;gap:7px}.lv-talaan-id-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 12px;border:1px solid #eef1f4;border-radius:11px;background:#fbfcfd}.lv-talaan-id-main strong{font-size:11px}.lv-talaan-id-main span{display:block;font-size:10px;color:var(--lt-muted);margin-top:3px}.lv-talaan-id-actions{display:flex;gap:6px;flex-wrap:wrap}.lv-talaan-id-actions button{height:32px;border:1px solid var(--lt-border);border-radius:8px;background:#fff;padding:0 9px;font-size:10px;font-weight:800}.lv-talaan-id-preview{display:flex;flex-direction:column;align-items:center;gap:9px;padding:14px}.lv-talaan-id-preview-code{font-weight:900;color:var(--lt-navy);font-size:15px}.lv-talaan-scanner-wrap{max-width:520px;margin:auto}.lv-talaan-reader{width:100%;min-height:300px;border:1px dashed #ccd6df;border-radius:13px;overflow:hidden;background:#f8fafc}.lv-talaan-scan-result{margin-top:10px;padding:12px;border-radius:10px;background:#f5f8fa;font-size:11px;line-height:1.5}.lv-talaan-success{background:#edf7f0!important;color:#34734b}.lv-talaan-error-box{background:#fff1f1!important;color:#a04444}.lv-talaan-badge{display:inline-flex;padding:4px 7px;border-radius:7px;background:#edf3f7;color:var(--lt-navy);font-size:9px;font-weight:900}
+@media(max-width:800px){.lv-talaan-settings-row{grid-template-columns:1fr 1fr}.lv-talaan-id-row{align-items:flex-start;flex-direction:column}.lv-talaan-id-actions{width:100%}}
 </style>
 
 <style id="lv-talaan-modern-style">
@@ -37,6 +41,8 @@
 .lv-talaan-record-panel{padding:20px}.lv-talaan-record-tools{display:flex;gap:7px}.lv-talaan-record-tools input{width:210px}.lv-talaan-table-wrap{overflow:auto;border:1px solid var(--lt-border);border-radius:12px}.lv-talaan-table{width:100%;border-collapse:separate;border-spacing:0;min-width:720px;font-size:11px}.lv-talaan-table th{background:#f5f7f9;color:#687583;font-size:9px;text-transform:uppercase;letter-spacing:.5px;text-align:left;padding:11px;border-bottom:1px solid var(--lt-border);position:sticky;top:0;z-index:1}.lv-talaan-table td{padding:11px;border-bottom:1px solid #eef1f4;color:var(--lt-text);background:#fff}.lv-talaan-table tr:last-child td{border-bottom:0}.lv-talaan-table tr:hover td{background:#fbfcfd}.lv-talaan-name{font-weight:800}.lv-talaan-section{color:var(--lt-muted)}.lv-talaan-pill{display:inline-flex;align-items:center;padding:4px 7px;border-radius:7px;font-size:9px;font-weight:900}.lv-talaan-pill.present{background:#eaf5ee;color:#34734b}.lv-talaan-pill.absent{background:#fff0f0;color:#a04444}.lv-talaan-pill.nyh{background:#f2f4f6;color:#697580}.lv-talaan-empty{padding:35px 18px;text-align:center;color:var(--lt-muted);font-size:12px;background:#fbfcfd}.lv-talaan-error{padding:14px;background:#fff2f2;color:#a04444;border-radius:10px;font-size:11px}
 @media(max-width:950px){.lv-talaan-summary-grid{grid-template-columns:repeat(2,1fr)}.lv-talaan-main-grid{grid-template-columns:1fr}.lv-talaan-side{display:grid;grid-template-columns:1fr 1fr}.lv-talaan-head{align-items:stretch;flex-direction:column}.lv-talaan-head-actions{align-items:stretch}.lv-talaan-event-select{flex:1}}@media(max-width:650px){.lv-talaan-summary-grid{grid-template-columns:1fr 1fr}.lv-talaan-year-grid{grid-template-columns:1fr}.lv-talaan-side{grid-template-columns:1fr}.lv-talaan-section-title{align-items:flex-start;flex-direction:column}.lv-talaan-record-tools{width:100%;flex-direction:column}.lv-talaan-record-tools input{width:100%}.lv-talaan-record-tools select{width:100%}.lv-talaan-head-actions{flex-direction:column}.lv-talaan-event-select{min-width:0}.lv-talaan-head h1{font-size:21px}}
 </style>
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
 <section id="loginScreen" class="login-screen">
@@ -160,6 +166,14 @@
       <div class="lv-talaan-head-actions">
         <label class="lv-talaan-event-select"><span>EVENT</span><select id="lvTalaanEventSelect"><option value="">Loading events…</option></select></label>
         <button type="button" class="lv-talaan-refresh" onclick="lvTalaanLoadDashboard_()">↻ Refresh</button>
+      </div>
+    </div>
+    <div id="lvTalaanPrivilegedTools" class="lv-talaan-tools">
+      <div class="lv-talaan-tools-title">Operational Tools</div>
+      <div class="lv-talaan-tool-grid">
+        <button type="button" class="lv-talaan-tool" onclick="lvTalaanShowSettings_()">⚙ Event Settings</button>
+        <button type="button" class="lv-talaan-tool primary" onclick="lvTalaanShowScanner_()">📷 QR Scanner</button>
+        <button type="button" class="lv-talaan-tool gold" onclick="lvTalaanShowDirectory_()">🪪 Student TALAAN IDs</button>
       </div>
     </div>
     <div id="lvTalaanStatus" class="lv-talaan-status">Loading TALAAN…</div>
@@ -424,6 +438,73 @@ async function lvTalaanLoadDashboard_(date){lvTalaanSetStatus_('Refreshing TALAA
 function lvTalaanInit_(){const sel=document.getElementById('lvTalaanEventSelect');if(!sel)return;sel.addEventListener('change',()=>{lvTalaanState_.selectedYear='';lvTalaanLoadDashboard_(sel.value)});document.getElementById('lvTalaanStudentFilter').addEventListener('input',lvTalaanRenderTable_);document.getElementById('lvTalaanYearFilter').addEventListener('change',function(){const v=this.value;if(v)lvTalaanSelectYear_(v);});}
 const _lvOriginalOpenPage=window.openPage;window.openPage=function(page){_lvOriginalOpenPage(page);if(page==='talaan'&&session){setTimeout(()=>{if(!lvTalaanState_.dashboard)lvTalaanLoadDashboard_();},0)}};
 document.addEventListener('DOMContentLoaded',lvTalaanInit_);
+</script>
+
+<script id="lv-talaan-operational-tools">
+function lvTalaanIsChairOrAdviser_(){
+  return (access?.assignments||[]).some(a=>{
+    const p=String(a.position||'').toUpperCase().trim();
+    return p==='CHAIRPERSON'||p==='SSG CHAIRPERSON'||p==='ADVISER'||p==='SSG ADVISER';
+  });
+}
+function lvTalaanIsOVCAA_(){
+  return (access?.assignments||[]).some(a=>{
+    const p=String(a.position||'').toUpperCase().trim(),o=String(a.office||'').toUpperCase().trim();
+    return p==='VCAA'||p.includes('VICE CHAIRPERSON FOR ADMINISTRATIVE AFFAIRS')||(o==='AA'&&p.includes('EXECUTIVE'));
+  });
+}
+function lvTalaanHasOperationalAccess_(){return lvTalaanIsChairOrAdviser_()||lvTalaanIsOVCAA_();}
+function lvTalaanApplyOperationalTools_(){const el=document.getElementById('lvTalaanPrivilegedTools');if(el)el.classList.toggle('show',lvTalaanHasOperationalAccess_());}
+const _lvTalaanOldApplyUser=window.applyUser;window.applyUser=function(){_lvTalaanOldApplyUser();lvTalaanApplyOperationalTools_();};
+
+function lvTalaanExtra_(html){
+  const existing=document.getElementById('lvTalaanExtra');
+  if(existing) existing.remove();
+  const host=document.getElementById('lvTalaanApp');
+  if(!host)return;
+  const div=document.createElement('div');div.id='lvTalaanExtra';div.className='lv-talaan-extra';div.innerHTML=html;host.appendChild(div);
+  div.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function lvTalaanShowSettings_(){
+  if(!lvTalaanHasOperationalAccess_())return;
+  lvTalaanExtra_('<div class="lv-talaan-extra-card"><div class="lv-talaan-extra-head"><div><h3>⚙ Event Settings</h3><p>Manage TALAAN events. Available only to the SSG Chairperson/Adviser and OVCAA.</p></div><button class="lv-talaan-tool" onclick="document.getElementById(\'lvTalaanExtra\')?.remove()">Close</button></div><div id="lvTalaanSettingsBody">Loading settings…</div></div>');
+  lvTalaanLoadSettings_();
+}
+async function lvTalaanLoadSettings_(){
+  const box=document.getElementById('lvTalaanSettingsBody');if(!box)return;
+  try{const r=await post('TALAAN_SETTINGS',{sessionId:session.sessionId});if(!r?.success)throw new Error(r?.message||r?.error||'Unable to load settings.');
+    const data=r.data||[];if(data.length<1){box.innerHTML='<div class="lv-talaan-empty">No settings found.</div>';return;}
+    const h=data[0].map(x=>String(x||''));const idx=(names)=>{for(const n of names){const i=h.findIndex(x=>x.trim().toUpperCase()===n.toUpperCase());if(i>=0)return i;}return -1;};
+    const ei=idx(['Event','Event Title']),di=idx(['Date','Event Date']),ci=idx(['Cut-off','Cutoff','Cut Off']),si=idx(['Status']);
+    let html='<div class="lv-talaan-settings-row" style="font-weight:900;font-size:9px;color:#687583"><span>EVENT</span><span>DATE</span><span>CUT-OFF</span><span>STATUS</span><span>ACTION</span></div>';
+    for(let i=1;i<data.length;i++){const row=i+1;html+=`<div class="lv-talaan-settings-row"><input id="tsE${row}" value="${lvTalaanEscape_(data[i][ei]||'')}"><input id="tsD${row}" value="${lvTalaanEscape_(data[i][di]||'')}"><input id="tsC${row}" value="${lvTalaanEscape_(data[i][ci]||'')}"><select id="tsS${row}"><option ${String(data[i][si]||'')==='Active'?'selected':''}>Active</option><option ${String(data[i][si]||'')==='Scheduled'?'selected':''}>Scheduled</option><option ${String(data[i][si]||'')==='Closed'?'selected':''}>Closed</option></select><span style="display:flex;gap:5px"><button class="small-btn" onclick="lvTalaanUpdateSetting_(${row})">Save</button><button class="small-btn danger-btn" onclick="lvTalaanDeleteSetting_(${row})">Delete</button></span></div>`;}
+    html+='<div style="margin-top:15px;padding-top:15px;border-top:1px solid #eef1f4"><div class="lv-talaan-section-title"><div><h3>Add Event</h3><span>Create a new TALAAN attendance event.</span></div></div><div class="lv-talaan-settings-row"><input id="tsNewE" placeholder="Event name"><input id="tsNewD" placeholder="Event date"><input id="tsNewC" placeholder="Cut-off"><select id="tsNewS"><option>Active</option><option>Scheduled</option><option>Closed</option></select><button class="lv-talaan-tool primary" onclick="lvTalaanAddSetting_()">＋ Add</button></div></div>';
+    box.innerHTML=html;
+  }catch(e){box.innerHTML='<div class="lv-talaan-error">'+lvTalaanEscape_(e.message||String(e))+'</div>';}
+}
+async function lvTalaanUpdateSetting_(row){try{const r=await post('TALAAN_UPDATE_SETTINGS',{sessionId:session.sessionId,row,event:document.getElementById('tsE'+row).value,date:document.getElementById('tsD'+row).value,cutoff:document.getElementById('tsC'+row).value,status:document.getElementById('tsS'+row).value});if(!r?.success)throw new Error(r?.message||r?.error||'Unable to update event.');alert('Event settings updated.');await lvTalaanLoadSettings_();await lvTalaanLoadEvents_();await lvTalaanLoadDashboard_();}catch(e){alert(e.message||e)}}
+async function lvTalaanAddSetting_(){try{const r=await post('TALAAN_ADD_SETTINGS',{sessionId:session.sessionId,event:document.getElementById('tsNewE').value,date:document.getElementById('tsNewD').value,cutoff:document.getElementById('tsNewC').value,status:document.getElementById('tsNewS').value});if(!r?.success)throw new Error(r?.message||r?.error||'Unable to add event.');alert('Event added.');await lvTalaanLoadSettings_();await lvTalaanLoadEvents_();}catch(e){alert(e.message||e)}}
+async function lvTalaanDeleteSetting_(row){if(!confirm('Remove this TALAAN event?'))return;try{const r=await post('TALAAN_DELETE_SETTINGS',{sessionId:session.sessionId,row});if(!r?.success)throw new Error(r?.message||r?.error||'Unable to remove event.');await lvTalaanLoadSettings_();await lvTalaanLoadEvents_();await lvTalaanLoadDashboard_();}catch(e){alert(e.message||e)}}
+
+function lvTalaanShowScanner_(){
+  if(!lvTalaanHasOperationalAccess_())return;
+  lvTalaanExtra_('<div class="lv-talaan-extra-card"><div class="lv-talaan-extra-head"><div><h3>📷 QR Attendance Scanner</h3><p>Scan a student TALAAN QR code to record attendance.</p></div><button class="lv-talaan-tool" onclick="lvTalaanStopScanner_();document.getElementById(\'lvTalaanExtra\')?.remove()">Close</button></div><div class="lv-talaan-scanner-wrap"><div id="lvTalaanReader" class="lv-talaan-reader"></div><div id="lvTalaanScanResult" class="lv-talaan-scan-result">Starting camera…</div></div></div>');
+  setTimeout(lvTalaanStartScanner_,250);
+}
+let lvTalaanScanner_=null;
+async function lvTalaanStartScanner_(){try{if(!window.Html5Qrcode)throw new Error('QR scanner library is unavailable.');lvTalaanScanner_=new Html5Qrcode('lvTalaanReader');await lvTalaanScanner_.start({facingMode:'environment'},{fps:10,qrbox:{width:250,height:250}},async text=>{try{const r=await post('TALAAN_RECORD',{sessionId:session.sessionId,qrText:text});const box=document.getElementById('lvTalaanScanResult');if(!box)return;if(r?.success){box.className='lv-talaan-scan-result lv-talaan-success';box.innerHTML='<strong>Attendance recorded.</strong><br>'+lvTalaanEscape_(r.name||r.student?.name||'Student');}else{box.className='lv-talaan-scan-result lv-talaan-error-box';box.textContent=r?.message||r?.error||'Unable to record attendance.';}}catch(e){const box=document.getElementById('lvTalaanScanResult');if(box){box.className='lv-talaan-scan-result lv-talaan-error-box';box.textContent=e.message||String(e)}}},{})}catch(e){const box=document.getElementById('lvTalaanScanResult');if(box){box.className='lv-talaan-scan-result lv-talaan-error-box';box.textContent=e.message||String(e)}}}
+function lvTalaanStopScanner_(){if(lvTalaanScanner_){lvTalaanScanner_.stop().catch(()=>{});lvTalaanScanner_.clear().catch(()=>{});lvTalaanScanner_=null}}
+
+function lvTalaanShowDirectory_(){
+  if(!lvTalaanHasOperationalAccess_())return;
+  lvTalaanExtra_('<div class="lv-talaan-extra-card"><div class="lv-talaan-extra-head"><div><h3>🪪 Student TALAAN IDs</h3><p>Browse student TALAAN IDs and generate/view their QR codes.</p></div><button class="lv-talaan-tool" onclick="document.getElementById(\'lvTalaanExtra\')?.remove()">Close</button></div><div class="lv-talaan-directory-toolbar"><input id="lvTalaanDirSearch" placeholder="Search student or TALAAN ID…"><select id="lvTalaanDirYear"><option value="">All year levels</option><option value="1">1st Year</option><option value="2">2nd Year</option><option value="3">3rd Year</option><option value="4">4th Year</option></select><select id="lvTalaanDirProgram"><option value="">All programs</option></select></div><div id="lvTalaanDirectoryList" class="lv-talaan-directory-list">Loading student IDs…</div></div>');
+  lvTalaanLoadDirectory_();
+}
+let lvTalaanDirectoryData_=[];
+async function lvTalaanLoadDirectory_(){try{const r=await post('TALAAN_STUDENT_DIRECTORY',{sessionId:session.sessionId});if(!r?.success)throw new Error(r?.message||r?.error||'Unable to load student IDs.');lvTalaanDirectoryData_=r.students||[];const programs=[...new Set(lvTalaanDirectoryData_.map(s=>s.program).filter(Boolean))].sort();const ps=document.getElementById('lvTalaanDirProgram');programs.forEach(x=>{const o=document.createElement('option');o.value=x;o.textContent=x;ps.appendChild(o)});['lvTalaanDirSearch','lvTalaanDirYear','lvTalaanDirProgram'].forEach(id=>document.getElementById(id)?.addEventListener('input',lvTalaanRenderDirectory_));lvTalaanRenderDirectory_();}catch(e){document.getElementById('lvTalaanDirectoryList').innerHTML='<div class="lv-talaan-error">'+lvTalaanEscape_(e.message||String(e))+'</div>'}}
+function lvTalaanRenderDirectory_(){const q=String(document.getElementById('lvTalaanDirSearch')?.value||'').toUpperCase(),y=String(document.getElementById('lvTalaanDirYear')?.value||''),p=String(document.getElementById('lvTalaanDirProgram')?.value||'');const list=lvTalaanDirectoryData_.filter(s=>(!q||String(s.name+' '+s.studentId+' '+s.section).toUpperCase().includes(q))&&(!y||String(s.yearLevel).includes(y))&&(!p||String(s.program)===p));const box=document.getElementById('lvTalaanDirectoryList');if(!list.length){box.innerHTML='<div class="lv-talaan-empty">No student IDs found.</div>';return}box.innerHTML=list.map((s,i)=>`<div class="lv-talaan-id-row"><div class="lv-talaan-id-main"><strong>${lvTalaanEscape_(s.name)}</strong><span>${lvTalaanEscape_(s.studentId)}${s.section?' • '+lvTalaanEscape_(s.section):''}${s.program?' • '+lvTalaanEscape_(s.program):''}</span></div><div class="lv-talaan-id-actions"><button onclick="lvTalaanCopy_('${lvTalaanEscape_(s.name+' — '+s.studentId).replace(/'/g,"\\'")}')">Copy</button><button onclick="lvTalaanPreviewQr_(${lvTalaanDirectoryData_.indexOf(s)})">View QR</button></div></div>`).join('')}
+async function lvTalaanCopy_(text){try{await navigator.clipboard.writeText(text);alert('Copied.')}catch(e){window.prompt('Copy this:',text)}}
+function lvTalaanPreviewQr_(index){const s=lvTalaanDirectoryData_[index];if(!s?.studentId)return;const wrap=document.createElement('div');wrap.className='modal show';wrap.innerHTML='<div class="modal-card"><div class="modal-head"><div><h2>'+lvTalaanEscape_(s.name)+'</h2><p>Official TALAAN ID and QR Code</p></div><button class="close-modal">×</button></div><div class="lv-talaan-id-preview"><div class="lv-talaan-id-preview-code">'+lvTalaanEscape_(s.studentId)+'</div><div id="lvTalaanQrHolder"></div><span class="lv-talaan-badge">TALAAN QR</span></div></div>';wrap.querySelector('.close-modal').onclick=()=>wrap.remove();wrap.onclick=e=>{if(e.target===wrap)wrap.remove()};document.body.appendChild(wrap);if(window.QRCode)new QRCode(document.getElementById('lvTalaanQrHolder'),{text:String(s.studentId),width:240,height:240,correctLevel:QRCode.CorrectLevel.M});}
 </script>
 </body>
 </html>
