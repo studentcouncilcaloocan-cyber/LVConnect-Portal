@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>LVConnect Portal</title>
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <style>
 :root{--navy:#183b56;--navy2:#102c42;--gold:#b58b3b;--bg:#f5f7fa;--white:#fff;--text:#17212b;--muted:#6b7785;--border:#e2e8ee;--danger:#b84a4a;--radius:15px;--shadow:0 10px 35px rgba(20,40,60,.08)}
 *{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}button,input{font:inherit}button{cursor:pointer}
@@ -25,6 +26,8 @@
 .request-access h4{font-size:14px;margin-bottom:6px}.request-access p{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:14px}
 .profile-btn{height:43px;border:0;border-radius:9px;background:var(--navy);color:#fff;padding:0 16px;font-size:12px;font-weight:650}.profile-btn:hover{background:var(--navy2)}
 .select{height:44px;width:100%;border:1px solid var(--border);border-radius:9px;background:#f8fafc;padding:0 12px;outline:0}.select:focus{background:#fff;border-color:var(--navy);box-shadow:0 0 0 3px rgba(24,59,86,.08)}
+
+.talaan-table{width:100%;border-collapse:collapse;font-size:12px;background:#fff}.talaan-table th,.talaan-table td{border-bottom:1px solid var(--border);padding:10px;text-align:left;white-space:nowrap}.talaan-table th{font-size:10px;text-transform:uppercase;color:var(--muted);letter-spacing:.5px;background:#f8fafc}.talaan-empty{padding:24px;text-align:center;color:var(--muted);font-size:12px}
 </style>
 </head>
 <body>
@@ -139,11 +142,81 @@
           <div class="module" data-page="profile"><div class="module-icon">P</div><h4>My Profile</h4><p>View your account information, role, and connected services.</p><div class="arrow">View Profile →</div></div>
         </div>
       </section>
-      <section id="page-talaan" class="page"><div class="placeholder"><div class="placeholder-icon">T</div><h2>TALAAN</h2><p>The existing TALAAN portal remains separate. Its integration into LVConnect will be connected here.</p></div></section>
-      <section id="page-eservices" class="page"><div class="placeholder"><div class="placeholder-icon">E</div><h2>E-Services</h2><p>Digital institutional forms and student services will appear here.</p></div></section>
-      <section id="page-drs" class="page"><div class="placeholder"><div class="placeholder-icon">D</div><h2>Document Routing System</h2><p>Document requests, routing, processing, tracking, and history will be connected here.</p></div></section>
+      <section id="page-talaan" class="page">
+  <div class="profile">
+    <div class="section-head"><h3>TALAAN</h3><span id="talaanAccessLabel">Integrated</span></div>
+    <div class="row"><span>Event / Date</span><span><select id="talaanEvent" class="select" style="max-width:430px"><option value="">Loading events...</option></select></span></div>
+    <div class="stats" style="margin-top:18px">
+      <div class="stat"><label>TOTAL STUDENTS</label><strong id="talaanTotal">—</strong></div>
+      <div class="stat"><label>PRESENT</label><strong id="talaanPresent">—</strong></div>
+      <div class="stat"><label>ABSENT</label><strong id="talaanAbsent">—</strong></div>
+      <div class="stat"><label>ATTENDANCE RATE</label><strong id="talaanRate">—</strong></div>
+    </div>
+    <div class="section-head" style="margin-top:20px"><h3>Attendance by Year Level</h3><span id="talaanRestriction"></span></div>
+    <div id="talaanYears" class="modules"></div>
+    <div class="section-head" style="margin-top:26px"><h3>QR Attendance Scanner</h3><span>Authorized attendance users only</span></div>
+    <div style="display:flex;gap:10px;align-items:center;margin-bottom:15px;flex-wrap:wrap">
+      <button id="startTalaanScanner" class="profile-btn" type="button">Start QR Scanner</button>
+      <button id="stopTalaanScanner" class="profile-btn" type="button" style="background:#fff;color:var(--navy);border:1px solid var(--border)">Stop Scanner</button>
+      <span id="talaanScanMessage" style="font-size:12px;color:var(--muted)"></span>
+    </div>
+    <div id="talaanScanner" style="max-width:430px;margin-bottom:24px"></div>
+    <div class="section-head" style="margin-top:26px"><h3>Attendance Records</h3><span>Select a year level</span></div>
+    <div style="display:flex;gap:10px;align-items:center;margin-bottom:15px">
+      <select id="talaanSheet" class="select" style="max-width:260px"><option value="">Select year level</option><option value="Attendance1">1st Year</option><option value="Attendance2">2nd Year</option><option value="Attendance3">3rd Year</option><option value="Attendance4">4th Year</option></select>
+      <button id="loadTalaanAttendance" class="profile-btn" type="button">Load Attendance</button>
+    </div>
+    <div id="talaanAttendanceBox" style="overflow:auto"></div>
+  </div>
+</section>
+      <section id="page-eservices" class="page">
+  <div class="profile">
+    <div class="section-head"><h3>E-Services</h3><span>Institutional Forms & Documents</span></div>
+    <div id="eserviceCatalog" class="modules">
+      <div class="module"><div class="module-icon">S</div><h4>SAS Forms</h4><p>Event Proposal · Media Production · Outdoor Activity · Indoor Activity</p></div>
+      <div class="module"><div class="module-icon">G</div><h4>GAS Forms</h4><p>Equipment Request · School Facility Request · Equipment & Facility Request · SSG Outdoor Equipment Notification</p></div>
+      <div class="module"><div class="module-icon">S</div><h4>SSG Forms</h4><p>SAFE Form · SSG SK Form</p></div>
+      <div class="module"><div class="module-icon">E</div><h4>External Affairs</h4><p>Partnership Forms · MOA</p></div>
+      <div class="module"><div class="module-icon">A</div><h4>Administrative Affairs</h4><p>Post-Event Assessment · Post-Event Narrative Report · Secretariat Documents</p></div>
+      <div class="module"><div class="module-icon">O</div><h4>Operations</h4><p>Program Flow · Event Details · Technical Team Request · Logistical Request</p></div>
+      <div class="module"><div class="module-icon">F</div><h4>Financial Affairs</h4><p>Financial Report · Liquidation Report · Budget Proposal · Business Request</p></div>
+      <div class="module"><div class="module-icon">P</div><h4>Public Information Office</h4><p>Social Media Graphic · Broadcast Material · Set Design · Other Social Media Material · Social Media Caption</p></div>
+      <div class="module"><div class="module-icon">O</div><h4>Student Organization Requirements</h4><p>Accreditation/reaccreditation requirements, directories, reports, policies, and supporting uploads.</p></div>
+      <div class="module"><div class="module-icon">R</div><h4>Student Relations</h4><p>Student Organization Coordination Document · Student Relations Request</p></div>
+      <div class="module"><div class="module-icon">D</div><h4>Downloadable / Confidential Forms</h4><p>Parent's Consent · Security Letters · Incident Report · UNTV Equipment/Facility Request Letter Format.</p></div>
+    </div>
+    <div class="placeholder" style="margin-top:22px;padding:28px"><h2>Digital form workflows</h2><p>The catalog is based on the current SSG Online Hub content. Individual digital forms and routing workflows will be connected to the DRS module without copying the Google Sites interface.</p></div>
+  </div>
+</section>
+      <section id="page-drs" class="page">
+  <div class="profile">
+    <div class="section-head"><h3>Document Routing System</h3><span id="drsScopeLabel">Loading access...</span></div>
+    <div class="stats" style="margin-top:18px">
+      <div class="stat"><label>TOTAL REQUESTS</label><strong id="drsTotal">—</strong><small>Visible DRS requests</small></div>
+      <div class="stat"><label>FOR APPROVAL</label><strong id="drsForApproval">—</strong><small>Currently awaiting decision</small></div>
+      <div class="stat"><label>IN PROCESS</label><strong id="drsInProcess">—</strong><small>Active transactions</small></div>
+      <div class="stat"><label>COMPLETED</label><strong id="drsCompleted">—</strong><small>Completed transactions</small></div>
+    </div>
+    <div class="section-head" style="margin-top:26px"><h3>DRS Tracker</h3><span>Requests and routing status</span></div>
+    <div style="display:flex;gap:10px;align-items:center;margin-bottom:15px;flex-wrap:wrap">
+      <select id="drsStatusFilter" class="select" style="max-width:240px">
+        <option value="">All statuses</option><option value="FOR REVIEW">For Review</option><option value="RECEIVED">Received</option><option value="SCHEDULE FOR MEETING">Schedule for Meeting</option><option value="SCHEDULED">Scheduled</option><option value="RETURNED">Returned</option><option value="APPROVED">Approved</option><option value="REJECTED">Rejected</option><option value="COMPLETED">Completed</option><option value="CANCELLED">Cancelled</option>
+      </select>
+      <button id="loadDrsButton" class="profile-btn" type="button">Load DRS</button>
+    </div>
+    <div id="drsTrackerBox" style="display:grid;gap:12px"><div class="placeholder"><div class="placeholder-icon">D</div><h2>Loading DRS</h2><p>Please wait...</p></div></div>
+  </div>
+</section>
       <section id="page-notifications" class="page"><div class="placeholder"><div class="placeholder-icon">N</div><h2>Notifications</h2><p>Your LVConnect notifications and institutional updates will appear here.</p></div></section>
-      <section id="page-ssg-approvals" class="page"><div class="profile"><div class="section-head"><h3>Additional Access Requests</h3><span>SSG Authorization</span></div><div id="approvalRequestsList"><div class="placeholder"><div class="placeholder-icon">✓</div><h2>Loading Requests</h2><p>Please wait...</p></div></div></div></section>
+      <section id="page-ssg-approvals" class="page">
+  <div class="profile">
+    <div class="section-head"><h3>Approval Requests</h3><span id="approvalScopeLabel">SSG Authorization</span></div>
+    <div class="section-head" style="margin-top:18px"><h3>DRS Approval Requests</h3><span>Requests currently awaiting decision</span></div>
+    <div id="drsApprovalRequestsList"><div class="placeholder"><div class="placeholder-icon">D</div><h2>Loading DRS Requests</h2><p>Please wait...</p></div></div>
+    <div class="section-head" style="margin-top:30px"><h3>Additional Access Requests</h3><span>SSG officer verification</span></div>
+    <div id="approvalRequestsList"><div class="placeholder"><div class="placeholder-icon">✓</div><h2>Loading Requests</h2><p>Please wait...</p></div></div>
+  </div>
+</section>
       <section id="page-profile" class="page"><div class="profile"><div class="section-head"><h3>My Profile</h3><span>LVConnect Account</span></div><div class="row"><span>Name</span><span id="profileName">—</span></div><div class="row"><span>TALAAN Code</span><span id="profileTalaan">—</span></div><div class="row"><span>LV Email</span><span id="profileEmail">—</span></div><div class="row"><span>Account ID</span><span id="profileAccountId">—</span></div><div class="row"><span>Account Type</span><span id="profileType">—</span></div><div class="row"><span>SSG / Class Position</span><span id="profilePosition">—</span></div><div class="row"><span>Office</span><span id="profileOffice">—</span></div><div class="row"><span>Permissions</span><span id="profilePermissions">—</span></div><div class="request-access"><h4>Request Additional Access</h4><p>If you hold a class officer or SSG officer position, you may submit a request for verification and approval.</p><button id="requestAccessButton" class="profile-btn" type="button">Request Additional Access</button></div></div></section>
     </div>
   </main>
@@ -199,46 +272,19 @@ function loadSSGApprovalAccess(){
   const nav=$('ssgApprovalNav');
   if(!nav)return;
   nav.classList.add('hidden');
-
+  const canDecide=hasPermission('DRS_DECIDE');
   const assignments=Array.isArray(access?.assignments)?access.assignments:[];
-  const active=assignments.filter(function(a){
-    return String(a.Status||a.status||'ACTIVE').toUpperCase()==='ACTIVE';
-  });
-
-  const canApprove=active.some(function(a){
+  const canApproveAccess=assignments.some(function(a){
     const position=String(a.position||a.Position||'').trim().toUpperCase();
     const office=String(a.office||a.Office||'').trim().toUpperCase();
     const type=String(a.assignmentType||a['Assignment Type']||'').trim().toUpperCase();
-
-    // Chairperson and Adviser approve Executive (EX) requests.
-    if(position==='CHAIRPERSON' || position==='SSG ADVISER' || position==='ADVISER'){
-      return true;
-    }
-
-    // Executive members approve requests for their responding office.
-    if(type!=='ADDITIONAL' || !office)return false;
-
-    return [
-      'VICE CHAIRPERSON FOR STUDENT AFFAIRS',
-      'VCSA',
-      'VICE CHAIRPERSON FOR EXTERNAL AFFAIRS',
-      'VCEA',
-      'VICE CHAIRPERSON FOR ADMINISTRATIVE AFFAIRS',
-      'VCAA',
-      'VICE CHAIRPERSON FOR OPERATIONS',
-      'VCO',
-      'TREASURER',
-      'PUBLIC INFORMATION OFFICER',
-      'PIO'
-    ].some(function(p){
-      return position===p || position.indexOf(p)!==-1;
-    });
+    if(position==='CHAIRPERSON'||position==='SSG CHAIRPERSON'||position==='ADVISER'||position==='SSG ADVISER')return true;
+    if(type!=='ADDITIONAL'||!office)return false;
+    return ['VICE CHAIRPERSON FOR STUDENT AFFAIRS','VCSA','VICE CHAIRPERSON FOR EXTERNAL AFFAIRS','VCEA','VICE CHAIRPERSON FOR ADMINISTRATIVE AFFAIRS','VCAA','VICE CHAIRPERSON FOR OPERATIONS','VCO','TREASURER','PUBLIC INFORMATION OFFICER','PIO'].some(function(p){return position===p||position.indexOf(p)!==-1;});
   });
-
-  if(canApprove){
-    nav.classList.remove('hidden');
-  }
+  if(canDecide||canApproveAccess)nav.classList.remove('hidden');
 }
+
 function escApproval(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
 async function loadApprovalRequests(){
   const box=$('approvalRequestsList'); if(!box)return;
@@ -274,7 +320,7 @@ function openApp(){$('loginScreen').style.display='none';$('app').classList.add(
 function clearSession(){session=null;access=null;localStorage.removeItem(STORAGE_KEY)}
 async function logout(){try{loading(true,'Signing out...');if(session?.sessionId)await post('LOGOUT',{sessionId:session.sessionId})}catch(e){}finally{clearSession();loading(false);$('app').classList.remove('active');$('loginScreen').style.display='flex';$('loginForm').reset()}}
 const titles={dashboard:['Dashboard','Welcome to LVConnect Portal'],talaan:['TALAAN','Student attendance and records'],eservices:['E-Services','Digital institutional services'],drs:['Document Routing','Requests and document tracking'],notifications:['Notifications','Updates and transaction alerts'],profile:['My Profile','Account information and settings'], 'ssg-approvals':['Approval Requests','SSG additional access verification']};
-function openPage(page){const target=$('page-'+page);if(!target)return;const restricted=document.querySelector('.nav-item[data-page="'+page+'"][data-permission]');if(restricted&&!hasPermission(restricted.dataset.permission))return;document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));target.classList.add('active');document.querySelectorAll('.nav-item').forEach(x=>x.classList.toggle('active',x.dataset.page===page));if(titles[page])$('title').innerHTML='<h2>'+titles[page][0]+'</h2><p>'+titles[page][1]+'</p>';if(page==='ssg-approvals')loadApprovalRequests();closeMenu()}
+function openPage(page){const target=$('page-'+page);if(!target)return;const restricted=document.querySelector('.nav-item[data-page="'+page+'"][data-permission]');if(restricted&&!hasPermission(restricted.dataset.permission))return;document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));target.classList.add('active');document.querySelectorAll('.nav-item').forEach(x=>x.classList.toggle('active',x.dataset.page===page));if(titles[page])$('title').innerHTML='<h2>'+titles[page][0]+'</h2><p>'+titles[page][1]+'</p>';if(page==='ssg-approvals'){loadApprovalRequests();loadDrsApprovalRequests()}if(page==='talaan')loadTalaanDashboard('');if(page==='drs')loadDrsTracker();closeMenu()}
 function closeMenu(){$('sidebar').classList.remove('open');$('overlay').classList.remove('active')}
 function openModal(id){$(id).classList.add('show')}
 function closeModal(id){$(id).classList.remove('show')}
@@ -299,6 +345,168 @@ $('createAccountForm').addEventListener('submit',async e=>{e.preventDefault();cl
 $('requestTalaanForm').addEventListener('submit',async e=>{e.preventDefault();clearModalMessage('requestTalaanMessage');const btn=$('requestTalaanButton');btn.disabled=true;btn.textContent='Submitting...';try{const r=await post('SUBMIT_ACCOUNT_REQUEST',{requestType:'REQUEST_TALAAN_CODE',email:$('rtEmail').value.trim(),firstName:$('rtFirstName').value.trim(),middleInitial:$('rtMiddleInitial').value.trim(),surname:$('rtSurname').value.trim(),details:$('rtDetails').value.trim()});if(!r||r.success!==true)throw new Error(r?.message||'Unable to submit TALAAN Code request.');showModalMessage('requestTalaanMessage',r.message+' Request ID: '+r.requestId,true);$('requestTalaanForm').reset()}catch(err){showModalMessage('requestTalaanMessage',err.message||'Unable to submit request.')}finally{btn.disabled=false;btn.textContent='Submit TALAAN Code Request'}});
 document.querySelectorAll('[data-page]').forEach(el=>el.addEventListener('click',()=>openPage(el.dataset.page)));
 $('logout').addEventListener('click',logout);$('menu').addEventListener('click',()=>$('sidebar').classList.add('open'));$('overlay').addEventListener('click',closeMenu);
+
+
+async function loadTalaanDashboard(selectedDate){
+  const eventSelect=$('talaanEvent');
+  try{
+    const r=await post('TALAAN_DASHBOARD',{sessionId:session.sessionId,date:selectedDate||''});
+    if(!r||r.success!==true) throw new Error(r?.message||r?.error||'Unable to load TALAAN.');
+    const events=Array.isArray(r.events)?r.events:[];
+    if(eventSelect.options.length<=1){
+      eventSelect.innerHTML='<option value="">Select event/date</option>'+events.map(function(e){return '<option value="'+escApproval(e.date)+'">'+escApproval(e.event)+' — '+escApproval(e.date)+'</option>';}).join('');
+      if(r.selectedDate) eventSelect.value=r.selectedDate;
+    }
+    const s=r.selectedSummary||{};
+    $('talaanTotal').textContent=s.totalStudents??'—';
+    $('talaanPresent').textContent=s.present??'—';
+    $('talaanAbsent').textContent=s.absent??'—';
+    $('talaanRate').textContent=(s.attendanceRate!==undefined&&s.attendanceRate!==null)?(String(s.attendanceRate).includes('%')?s.attendanceRate:Number(s.attendanceRate).toFixed(2)+'%'):'—';
+    $('talaanRestriction').textContent=r.restrictedYear?'Restricted to assigned year level':'All year levels';
+    const years=Array.isArray(s.yearLevels)?s.yearLevels:(Array.isArray(r.yearLevels)?r.yearLevels:[]);
+    $('talaanYears').innerHTML=years.length?years.map(function(y){
+      const label=y.yearLevel||y.year||y.label||'';
+      const present=y.present??0, absent=y.absent??0, total=y.totalStudents??y.total??0;
+      return '<div class="module"><div class="module-icon">'+escApproval(String(label).charAt(0))+'</div><h4>'+escApproval(label)+'</h4><p>Present: '+escApproval(present)+' · Absent: '+escApproval(absent)+' · Total: '+escApproval(total)+'</p></div>';
+    }).join(''):'<div class="talaan-empty">No attendance summary available for this event.</div>';
+  }catch(e){
+    $('talaanYears').innerHTML='<div class="talaan-empty">'+escApproval(e.message||'Unable to load TALAAN.')+'</div>';
+  }
+}
+
+async function loadTalaanAttendance(){
+  const sheet=$('talaanSheet').value;
+  if(!sheet)return;
+  const box=$('talaanAttendanceBox');
+  box.innerHTML='<div class="talaan-empty">Loading attendance...</div>';
+  try{
+    const r=await post('TALAAN_ATTENDANCE',{sessionId:session.sessionId,sheet:sheet});
+    if(!r||r.success!==true)throw new Error(r?.message||r?.error||'Unable to load attendance.');
+    const data=Array.isArray(r.data)?r.data:[];
+    if(!data.length){box.innerHTML='<div class="talaan-empty">No attendance data.</div>';return;}
+    const head=data[0]||[];
+    box.innerHTML='<table class="talaan-table"><thead><tr>'+head.map(function(h){return '<th>'+escApproval(h)+'</th>';}).join('')+'</tr></thead><tbody>'+data.slice(1).map(function(row){return '<tr>'+head.map(function(_,i){return '<td>'+escApproval(row[i]||'')+'</td>';}).join('')+'</tr>';}).join('')+'</tbody></table>';
+  }catch(e){box.innerHTML='<div class="talaan-empty">'+escApproval(e.message||'Unable to load attendance.')+'</div>';}
+}
+
+
+async function loadDrsTracker(){
+  const box=$('drsTrackerBox');
+  if(!box)return;
+  box.innerHTML='<div class="placeholder"><div class="placeholder-icon">D</div><h2>Loading DRS</h2><p>Please wait...</p></div>';
+  try{
+    const status=$('drsStatusFilter').value||'';
+    const r=await post('GET_DRS_REQUESTS',{sessionId:session.sessionId,status:status});
+    if(!r||r.success!==true)throw new Error(r?.message||'Unable to load DRS requests.');
+    const requests=Array.isArray(r.requests)?r.requests:[];
+    const all=await post('GET_DRS_REQUESTS',{sessionId:session.sessionId,status:''});
+    const allRows=all&&all.success===true&&Array.isArray(all.requests)?all.requests:requests;
+    const forApproval=allRows.filter(x=>String(x.currentStatus||'').toUpperCase()==='FOR REVIEW').length;
+    const completed=allRows.filter(x=>String(x.currentStatus||'').toUpperCase()==='COMPLETED').length;
+    const inProcess=allRows.filter(x=>['RECEIVED','FOR REVIEW','SCHEDULE FOR MEETING','SCHEDULED','RETURNED'].includes(String(x.currentStatus||'').toUpperCase())).length;
+    $('drsTotal').textContent=allRows.length;
+    $('drsForApproval').textContent=forApproval;
+    $('drsInProcess').textContent=inProcess;
+    $('drsCompleted').textContent=completed;
+    $('drsScopeLabel').textContent=hasPermission('DRS_VIEW_ALL')?'Entire SSG — all offices & committees':(hasPermission('DRS_VIEW_DEPARTMENT')?'Responding office':'Your DRS requests');
+    if(!requests.length){box.innerHTML='<div class="placeholder"><div class="placeholder-icon">✓</div><h2>No DRS Requests</h2><p>No requests match the selected status.</p></div>';return;}
+    box.innerHTML=requests.map(function(q){
+      const jsId=JSON.stringify(String(q.requestId||''));
+      const status=String(q.currentStatus||'').toUpperCase();
+      const canDecide=hasPermission('DRS_DECIDE')&&status==='FOR REVIEW';
+      return `<div class="request-access" style="margin-top:0">
+        <h4>${escApproval(q.referenceNumber||q.requestId)}</h4>
+        <p><strong>Document:</strong> ${escApproval(q.documentType)}</p>
+        <p><strong>Subject:</strong> ${escApproval(q.subject)}</p>
+        <p><strong>Office:</strong> ${escApproval(q.currentOffice||q.requestingOffice||'—')}</p>
+        <p><strong>Committee:</strong> ${escApproval(q.committee||'—')}</p>
+        <p><strong>Status:</strong> ${escApproval(q.currentStatus)}</p>
+        <p><strong>Submitted:</strong> ${escApproval(q.submittedAt)}</p>
+        <p><strong>Request ID:</strong> ${escApproval(q.requestId)}</p>
+        ${canDecide?`<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><button class="profile-btn" type="button" onclick='decideDrsRequest(${jsId},"APPROVED")'>Approve</button><button class="profile-btn" type="button" style="background:#fff;color:var(--navy);border:1px solid var(--border)" onclick='decideDrsRequest(${jsId},"REJECTED")'>Reject</button></div>`:''}
+      </div>`;
+    }).join('');
+  }catch(e){box.innerHTML='<div class="placeholder"><div class="placeholder-icon">!</div><h2>Unable to Load DRS</h2><p>'+escApproval(e.message||'Unable to load DRS.')+'</p></div>';}
+}
+
+async function loadDrsApprovalRequests(){
+  const box=$('drsApprovalRequestsList');
+  if(!box)return;
+  box.innerHTML='<div class="placeholder"><div class="placeholder-icon">D</div><h2>Loading DRS Requests</h2><p>Please wait...</p></div>';
+  try{
+    const r=await post('GET_DRS_APPROVAL_REQUESTS',{sessionId:session.sessionId});
+    if(!r||r.success!==true)throw new Error(r?.message||'Unable to load DRS approval requests.');
+    const requests=Array.isArray(r.requests)?r.requests:[];
+    $('approvalScopeLabel').textContent=hasPermission('DRS_VIEW_ALL')?'Chairperson / Adviser — Entire SSG':(hasPermission('DRS_VIEW_DEPARTMENT')?'Executive Head — Responding Office':'SSG Authorization');
+    if(!requests.length){box.innerHTML='<div class="placeholder"><div class="placeholder-icon">✓</div><h2>No DRS Approval Requests</h2><p>There are no DRS requests awaiting your decision.</p></div>';return;}
+    box.innerHTML=requests.map(function(q){
+      const jsId=JSON.stringify(String(q.requestId||''));
+      return `<div class="request-access" style="margin-top:14px">
+        <h4>${escApproval(q.referenceNumber||q.requestId)}</h4>
+        <p><strong>Document:</strong> ${escApproval(q.documentType)}</p>
+        <p><strong>Subject:</strong> ${escApproval(q.subject)}</p>
+        <p><strong>Office:</strong> ${escApproval(q.currentOffice||q.requestingOffice||'—')}</p>
+        <p><strong>Committee:</strong> ${escApproval(q.committee||'—')}</p>
+        <p><strong>Status:</strong> ${escApproval(q.currentStatus)}</p>
+        <p><strong>Request ID:</strong> ${escApproval(q.requestId)}</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px"><button class="profile-btn" type="button" onclick='decideDrsRequest(${jsId},"APPROVED")'>Approve</button><button class="profile-btn" type="button" style="background:#fff;color:var(--navy);border:1px solid var(--border)" onclick='decideDrsRequest(${jsId},"REJECTED")'>Reject</button></div>
+      </div>`;
+    }).join('');
+  }catch(e){box.innerHTML='<div class="placeholder"><div class="placeholder-icon">!</div><h2>Unable to Load DRS Approvals</h2><p>'+escApproval(e.message||'Unable to load DRS approvals.')+'</p></div>';}
+}
+
+async function decideDrsRequest(requestId,decision){
+  const remarks=prompt((decision==='APPROVED'?'Approval':'Rejection')+' remarks (optional):','');
+  if(remarks===null)return;
+  try{
+    const action=decision==='APPROVED'?'APPROVE_DRS_REQUEST':'REJECT_DRS_REQUEST';
+    const r=await post(action,{sessionId:session.sessionId,requestId:requestId,remarks:remarks});
+    if(!r||r.success!==true)throw new Error(r?.message||'Unable to process DRS decision.');
+    alert(r.message||('DRS request '+decision.toLowerCase()+'.'));
+    loadDrsTracker();
+    loadDrsApprovalRequests();
+  }catch(e){alert(e.message||'Unable to process DRS decision.');}
+}
+$('drsStatusFilter').addEventListener('change',loadDrsTracker);
+$('loadDrsButton').addEventListener('click',loadDrsTracker);
+
+let talaanQrScanner=null;
+async function startTalaanScanner(){
+  const msg=$('talaanScanMessage');
+  try{
+    if(typeof Html5Qrcode==='undefined') throw new Error('QR scanner library is unavailable.');
+    if(talaanQrScanner) return;
+    talaanQrScanner=new Html5Qrcode('talaanScanner');
+    await talaanQrScanner.start(
+      {facingMode:'environment'},
+      {fps:10,qrbox:{width:250,height:250}},
+      async function(decodedText){
+        msg.textContent='QR detected. Recording...';
+        try{
+          const r=await post('TALAAN_RECORD_ATTENDANCE',{sessionId:session.sessionId,qrText:decodedText});
+          msg.textContent=r&&r.success!==false?(r.message||'Attendance recorded.'):(r.message||r.error||'Unable to record attendance.');
+        }catch(e){msg.textContent=e.message||'Unable to record attendance.';}
+      },
+      function(){ }
+    );
+    msg.textContent='Scanner active.';
+  }catch(e){
+    msg.textContent=e.message||'Unable to start scanner.';
+    talaanQrScanner=null;
+  }
+}
+async function stopTalaanScanner(){
+  if(!talaanQrScanner)return;
+  try{await talaanQrScanner.stop();talaanQrScanner.clear();}catch(e){}
+  talaanQrScanner=null;
+  $('talaanScanMessage').textContent='Scanner stopped.';
+}
+$('startTalaanScanner').addEventListener('click',startTalaanScanner);
+$('stopTalaanScanner').addEventListener('click',stopTalaanScanner);
+
+$('talaanEvent').addEventListener('change',function(){loadTalaanDashboard(this.value)});
+$('loadTalaanAttendance').addEventListener('click',loadTalaanAttendance);
+
 (async function(){const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;try{session=JSON.parse(raw);if(!session?.sessionId)throw new Error('Invalid session');loading(true,'Restoring your session...');await loadAccess();openApp()}catch(e){clearSession()}finally{loading(false)}})();
 </script>
 </body>
