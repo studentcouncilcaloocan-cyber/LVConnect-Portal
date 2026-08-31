@@ -600,13 +600,42 @@ setTimeout(lvApplyApprovalAndSearchAccess_,0);
 
   /* Fix attendance: always send selected event date to backend and use its column. */
   window.lvTalaanSelectYear_=async function(year){
-    lvTalaanState_.selectedYear=String(year);lvTalaanState_.selectedSheet='Attendance'+year;lvTalaanRenderYears_();lvTalaanSetStatus_('Loading '+year+' Year attendance…');
-    try{var date=document.getElementById('lvTalaanEventSelect')?.value||lvTalaanState_.dashboard?.selectedDate||'';var r=await post('TALAAN_ATTENDANCE',{sessionId:sess(),sheet:'Attendance'+year,date:date});if(!r?.success)throw new Error(r?.message||r?.error||'Unable to load attendance records.');var parsed=lvTalaanParseRows_(r.data);parsed.selectedDateColumn=Number(r.selectedDateColumn??-1);lvTalaanState_.rows=parsed;lvTalaanRenderTable_();lvTalaanSetStatus_('Showing '+year+' Year attendance records.');
-    }catch(e){document.getElementById('lvTalaanAttendanceTable').innerHTML='<div class="lv-talaan-error">'+esc(e.message||e)+'</div>';lvTalaanSetStatus_(e.message||'Unable to load attendance.',true)}
+    var y=String(year||'').replace(/[^1-4]/g,'');
+    if(!y)return;
+    lvTalaanState_.selectedYear=y;
+    lvTalaanState_.selectedSheet='Attendance'+y;
+    lvTalaanRenderYears_();
+    lvTalaanSetStatus_('Loading '+y+' Year attendance…');
+    var wrap=document.getElementById('lvTalaanAttendanceTable');
+    if(wrap)wrap.innerHTML='<div class="lv-talaan-processing"><span class="scan-spinner"></span> Loading Attendance'+y+'…</div>';
+    try{
+      if(!session||!session.sessionId)throw new Error('Session expired or invalid. Please sign in again.');
+      var eventSelect=document.getElementById('lvTalaanEventSelect');
+      var date=(eventSelect&&eventSelect.value)||lvTalaanState_.dashboard?.selectedDate||'';
+      var r=await post('TALAAN_ATTENDANCE',{
+        sessionId:session.sessionId,
+        sheet:'Attendance'+y,
+        date:String(date||'')
+      });
+      if(r&&r.error&&/session expired|invalid session/i.test(String(r.error)))throw new Error(String(r.error));
+      if(!r||r.success!==true)throw new Error(r?.message||r?.error||'Unable to load Attendance'+y+'.');
+      var parsed=lvTalaanParseRows_(r.data);
+      parsed.selectedDateColumn=Number(r.selectedDateColumn??-1);
+      parsed.sheet=String(r.sheet||('Attendance'+y));
+      parsed.yearLevel=String(r.yearLevel||y);
+      parsed.selectedDate=String(r.selectedDate||date||'');
+      lvTalaanState_.rows=parsed;
+      lvTalaanRenderTable_();
+      lvTalaanSetStatus_('Showing '+y+' Year attendance records from '+parsed.sheet+'.');
+    }catch(e){
+      if(/session expired|invalid session/i.test(String(e.message||e))){clearSession();openLogin();}
+      if(wrap)wrap.innerHTML='<div class="lv-talaan-error">'+esc(e.message||e)+'</div>';
+      lvTalaanSetStatus_(e.message||'Unable to load attendance.',true);
+    }
   };
   window.lvTalaanRenderTable_=function(){
     var wrap=document.getElementById('lvTalaanAttendanceTable'),data=lvTalaanState_.rows||{};if(!data.rows?.length){wrap.innerHTML='<div class="lv-talaan-empty">Select a year level to view records.</div>';return}
-    var h=data.headers||[],rows=data.rows||[],di=Number.isInteger(data.selectedDateColumn)&&data.selectedDateColumn>=0?data.selectedDateColumn:lvTalaanSelectedDateColumn_(h,document.getElementById('lvTalaanEventSelect')?.value||''),q=(document.getElementById('lvTalaanStudentFilter')?.value||'').trim().toLowerCase();var date=document.getElementById('lvTalaanEventSelect')?.value||lvTalaanState_.dashboard?.selectedDate||'';var filtered=rows.filter(r=>{var n=String(r[0]||'').toLowerCase(),s=String(r[1]||'').toLowerCase(),id=String(r[4]||'').toLowerCase();return !q||n.includes(q)||s.includes(q)||id.includes(q)});var html='<table class="lv-talaan-table"><thead><tr><th>Student</th><th>Section</th><th>Event Date</th><th>Status</th></tr></thead><tbody>';if(!filtered.length)html+='<tr><td colspan="4"><div class="lv-talaan-empty">No matching students.</div></td></tr>';else filtered.forEach(r=>{var raw=di>=0?String(r[di]||''):'';var u=raw.toUpperCase().trim(),cls=u==='PRESENT'||u==='P'?'present':u==='ABSENT'||u==='A'?'absent':'nyh',txt=cls==='present'?'PRESENT':cls==='absent'?'ABSENT':raw||'NOT YET HELD';html+='<tr><td class="lv-talaan-name">'+esc(r[0])+'</td><td class="lv-talaan-section">'+esc(r[1])+'</td><td>'+esc(date||'—')+'</td><td><span class="lv-talaan-pill '+cls+'">'+esc(txt)+'</span></td></tr>'});html+='</tbody></table>';wrap.innerHTML=html;document.getElementById('lvTalaanRecordsTitle').textContent='Attendance Records'+(lvTalaanState_.selectedYear?' — '+lvTalaanState_.selectedYear+' Year':'');
+    var h=data.headers||[],rows=data.rows||[],eventDate=String(data.selectedDate||document.getElementById('lvTalaanEventSelect')?.value||lvTalaanState_.dashboard?.selectedDate||''),di=Number.isInteger(data.selectedDateColumn)&&data.selectedDateColumn>=0?data.selectedDateColumn:lvTalaanSelectedDateColumn_(h,eventDate),q=(document.getElementById('lvTalaanStudentFilter')?.value||'').trim().toLowerCase();var date=eventDate;var filtered=rows.filter(r=>{var n=String(r[0]||'').toLowerCase(),s=String(r[1]||'').toLowerCase(),id=String(r[4]||'').toLowerCase();return !q||n.includes(q)||s.includes(q)||id.includes(q)});var html='<table class="lv-talaan-table"><thead><tr><th>Student</th><th>Section</th><th>Event Date</th><th>Status</th></tr></thead><tbody>';if(!filtered.length)html+='<tr><td colspan="4"><div class="lv-talaan-empty">No matching students.</div></td></tr>';else filtered.forEach(r=>{var raw=di>=0?String(r[di]||''):'';var u=raw.toUpperCase().trim(),cls=u==='PRESENT'||u==='P'?'present':u==='ABSENT'||u==='A'?'absent':'nyh',txt=cls==='present'?'PRESENT':cls==='absent'?'ABSENT':raw||'NOT YET HELD';html+='<tr><td class="lv-talaan-name">'+esc(r[0])+'</td><td class="lv-talaan-section">'+esc(r[1])+'</td><td>'+esc(date||'—')+'</td><td><span class="lv-talaan-pill '+cls+'">'+esc(txt)+'</span></td></tr>'});html+='</tbody></table>';wrap.innerHTML=html;document.getElementById('lvTalaanRecordsTitle').textContent='Attendance Records'+(lvTalaanState_.selectedYear?' — '+lvTalaanState_.selectedYear+' Year':'');
   };
 
   /* Event Type + faster dashboard render. */
