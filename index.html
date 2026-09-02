@@ -36,7 +36,9 @@
 .lv-header-search{display:flex;align-items:center;gap:6px;margin-right:8px}.lv-header-search.hidden{display:none}.lv-header-search input{width:230px;height:36px;border:1px solid #d9dee7;border-radius:10px;padding:0 11px;font:inherit;background:#fff}.lv-header-search button{height:36px;border:0;border-radius:10px;padding:0 10px;font-weight:800;background:#1d2a6d;color:#fff;cursor:pointer}
 .lv-talaan-settings-row{display:grid;grid-template-columns:1.5fr .95fr .8fr .8fr .9fr 1.1fr;gap:8px;align-items:center}.lv-talaan-settings-row input,.lv-talaan-settings-row select{min-width:0;width:100%;box-sizing:border-box}.lv-talaan-settings-actions{display:flex;gap:5px}.lv-talaan-settings-row.settings-head{font-weight:900;font-size:9px;color:#687583}.lv-talaan-settings-row.settings-new{margin-top:8px}.lv-talaan-tool.danger{border-color:#f0c9c9}.lv-talaan-processing{display:flex;align-items:center;gap:8px}.scan-spinner{width:13px;height:13px;border:2px solid rgba(0,0,0,.15);border-top-color:currentColor;border-radius:50%;display:inline-block;animation:lvspin .7s linear infinite}@keyframes lvspin{to{transform:rotate(360deg)}}
 @media(max-width:760px){.lv-header-search{position:absolute;left:12px;right:12px;top:56px;z-index:30;margin:0;background:#fff;padding:7px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.12)}.lv-header-search input{flex:1;width:auto}.lv-talaan-app{padding:12px}.lv-talaan-head{display:block}.lv-talaan-head-actions{margin-top:10px;display:grid;grid-template-columns:1fr auto}.lv-talaan-event-select{min-width:0}.lv-talaan-main-grid{grid-template-columns:1fr}.lv-talaan-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.lv-talaan-year-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.lv-talaan-record-tools{display:grid!important;grid-template-columns:1fr;gap:7px}.lv-talaan-table-wrap{overflow-x:auto}.lv-talaan-table{min-width:560px}.lv-talaan-tool-grid{grid-template-columns:1fr}.lv-talaan-settings-row{grid-template-columns:1fr 1fr}.lv-talaan-settings-row.settings-head{display:none}.lv-talaan-settings-actions{grid-column:1/-1}.lv-talaan-settings-row.settings-new{display:grid}.lv-talaan-extra-card{margin:8px 0;padding:12px}.lv-talaan-reader{max-width:100%;height:auto}.topbar{position:relative}.actions{gap:5px}}
-<style>#portalFooter{display:none!important}#app.active~#portalFooter{display:block!important}</style></head>
+<style>#portalFooter{display:none!important}#app.active~#portalFooter{display:block!important}
+.announcement-admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}.announcement-editor-card{border:1px solid var(--border);border-radius:18px;padding:18px;background:var(--panel)}.announcement-editor-card textarea{min-height:120px}.announcement-admin-grid .modal-grid{gap:10px}.announcement-admin-grid .modal-field input,.announcement-admin-grid .modal-field textarea,.announcement-admin-grid .modal-field select{width:100%}.announcement-posted{border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px}.announcement-posted h3{margin:0 0 6px;font-size:18px}.announcement-posted .meta{font-size:11px;color:var(--muted);margin-bottom:7px}.talaan-secretary-badge{display:inline-flex;align-items:center;padding:5px 9px;border-radius:999px;background:var(--soft);font-size:11px;font-weight:800;margin-left:8px}.hidden-force{display:none!important}@media(max-width:760px){.announcement-admin-grid{grid-template-columns:1fr}.announcement-editor-card{padding:14px}}
+</style></head>
 
 <style id="lv-talaan-modern-style">
 .lv-talaan-app{--lt-navy:var(--navy,#183b56);--lt-navy2:var(--navy2,#102c42);--lt-gold:var(--gold,#b58b3b);--lt-bg:#f6f8fa;--lt-border:#e2e8ee;--lt-muted:#6b7785;--lt-text:#17212b;--lt-shadow:0 10px 30px rgba(20,40,60,.07);display:flex;flex-direction:column;gap:18px}
@@ -146,6 +148,7 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
       <button class="nav-item" data-page="talaan"><span class="nav-icon">▣</span>TALAAN</button>
       <button class="nav-item" data-page="eservices"><span class="nav-icon">□</span>E-Services</button>
       <button class="nav-item" data-page="drs" data-permission="DRS_VIEW"><span class="nav-icon">▤</span>Document Routing</button>
+      <button class="nav-item hidden" id="navAnnouncements" data-page="announcements"><span class="nav-icon">!</span>Announcements</button>
       <button class="nav-item hidden" id="navTaskBoard" data-page="taskboard"><span class="nav-icon">☷</span>Task Board</button>
       <button class="nav-item" id="navSsgApprovals" data-page="ssg-approvals" data-access="ssg-approval"><span class="nav-icon">✓</span>Approval Requests</button>
       <div class="nav-label" style="margin-top:20px">Account</div>
@@ -182,6 +185,32 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
 </section>
 <section id="page-eservices" class="page"><div class="portal-box"><div class="box-head"><div><span class="eyebrow">E-SERVICES</span><h1>Forms & Digital Services</h1><p>Complete available forms inside LVConnect. Submitted forms are generated as documents and entered into DRS.</p></div></div><div id="eserviceFillable" class="eservice-groups"></div><div class="portal-box downloadable-box"><div class="box-head"><div><span class="eyebrow">DOWNLOADABLE</span><h2>Forms that remain downloadable</h2><p>These documents are kept outside the digital form workflow because of privacy, sensitivity, or format requirements.</p></div></div><div id="downloadableForms" class="form-grid"></div></div></div></section>
 <section id="page-drs" class="page"><div class="portal-box"><div class="box-head"><div><span class="eyebrow">DOCUMENT ROUTING SYSTEM</span><h1>Document Routing</h1><p>Open a request to view its movement, review the document, and perform actions permitted to your account.</p></div><button class="portal-btn secondary" onclick="loadPortalDrs_()">↻ Refresh</button></div><div id="drsDashboard" class="drs-dashboard"><div class="loading-inline">Loading requests…</div></div></div></section>
+<section id="page-announcements" class="page">
+  <div class="portal-box">
+    <div class="box-head"><div><span class="eyebrow">ADMINISTRATION</span><h1>Announcements</h1><p>Post administrative announcements and upcoming events for the LVConnect community.</p></div><button class="portal-btn secondary" onclick="loadAdminAnnouncements_()">↻ Refresh</button></div>
+    <div class="announcement-admin-grid">
+      <div class="announcement-editor-card">
+        <div class="box-head"><div><span class="eyebrow">ADMINISTRATIVE</span><h2>Administrative Announcement</h2></div></div>
+        <form id="adminAnnouncementForm" class="modal-form">
+          <div class="modal-field full"><label>Title</label><input id="adminAnnTitle" required placeholder="Announcement title"></div>
+          <div class="modal-field full"><label>Message</label><textarea id="adminAnnContent" required placeholder="Write the announcement message…"></textarea></div>
+          <div class="modal-grid"><div class="modal-field"><label>Priority</label><select id="adminAnnPriority"><option>IMPORTANT</option><option>NORMAL</option></select></div><div class="modal-field"><label>Start Date</label><input id="adminAnnStart" type="date"></div><div class="modal-field"><label>End Date</label><input id="adminAnnEnd" type="date"></div></div>
+          <button class="modal-btn" type="submit">Post Administrative Announcement</button><div id="adminAnnMsg" class="modal-message"></div>
+        </form>
+      </div>
+      <div class="announcement-editor-card">
+        <div class="box-head"><div><span class="eyebrow">UPCOMING EVENT</span><h2>Upcoming Event</h2></div></div>
+        <form id="adminUpcomingForm" class="modal-form">
+          <div class="modal-field full"><label>Title</label><input id="adminEvTitle" required placeholder="Event title"></div>
+          <div class="modal-grid"><div class="modal-field"><label>Who</label><input id="adminEvWho" placeholder="Organizer / participants"></div><div class="modal-field"><label>What</label><input id="adminEvWhat" placeholder="Event / activity"></div><div class="modal-field"><label>Where</label><input id="adminEvWhere" placeholder="Venue / platform"></div><div class="modal-field"><label>Date & Time</label><input id="adminEvWhen" type="datetime-local" required></div></div>
+          <div class="modal-field full"><label>Short Description</label><textarea id="adminEvDesc" placeholder="Brief event description…"></textarea></div>
+          <button class="modal-btn" type="submit">Post Upcoming Event</button><div id="adminEvMsg" class="modal-message"></div>
+        </form>
+      </div>
+    </div>
+    <div class="portal-box-inner"><div class="box-head"><div><span class="eyebrow">ACTIVE POSTS</span><h2>Published</h2></div></div><div id="adminAnnouncementsList" class="announcement-list"><div class="loading-inline">Loading…</div></div></div>
+  </div>
+</section>
 <section id="page-taskboard" class="page"><div class="portal-box"><div class="box-head"><div><span class="eyebrow">SSG</span><h1>Task Board</h1><p>Event tracker and task management for authorized SSG users.</p></div><button class="portal-btn secondary" onclick="loadTaskBoard_()">↻ Refresh</button></div><div id="taskBoardBody"><div class="loading-inline">Loading task board…</div></div><div class="dms-box"><div><span class="eyebrow">DMS</span><h2>SSG Data Management System</h2><p>Access your SSG files by folder or upload directly through the school Drive.</p></div><a class="portal-btn" href="https://drive.google.com/drive/folders/0AMCI1lGTh4rcUk9PVA" target="_blank" rel="noopener">Open DMS</a></div></div></section>
 <section id="page-notifications" class="page"><div class="placeholder"><div class="placeholder-icon">N</div><h2>Notifications</h2><p>Your LVConnect notifications and institutional updates will appear here.</p></div></section>
       
@@ -423,18 +452,8 @@ document.addEventListener('DOMContentLoaded',lvTalaanInit_);
 </script>
 
 <script id="lv-talaan-operational-tools">
-function lvTalaanIsChairOrAdviser_(){
-  return (access?.assignments||[]).some(a=>{
-    const p=String(a.position||'').toUpperCase().trim();
-    return p==='CHAIRPERSON'||p==='SSG CHAIRPERSON'||p==='ADVISER'||p==='SSG ADVISER';
-  });
-}
-function lvTalaanIsOVCAA_(){
-  return (access?.assignments||[]).some(a=>{
-    const p=String(a.position||'').toUpperCase().trim(),o=String(a.office||'').toUpperCase().trim();
-    return p==='VCAA'||p.includes('VICE CHAIRPERSON FOR ADMINISTRATIVE AFFAIRS')||(o==='AA'&&p.includes('EXECUTIVE'));
-  });
-}
+function lvTalaanIsChairOrAdviser_(){return (access?.assignments||[]).some(a=>{const p=String(a.position||'').toUpperCase().trim();return p==='CHAIRPERSON'||p==='SSG CHAIRPERSON';});}
+function lvTalaanIsOVCAA_(){return (access?.assignments||[]).some(a=>{const p=String(a.position||'').toUpperCase().trim(),o=String(a.office||'').toUpperCase().trim(),c=String(a.committee||'').toUpperCase().trim();return (o==='OVCAA'||o==='AA'||o.includes('VICE CHAIRPERSON FOR ADMINISTRATIVE AFFAIRS')||c.includes('OVCAA')||c.includes('ADMINISTRATIVE AFFAIRS'))&&!!p;});}
 function lvTalaanHasOperationalAccess_(){return lvTalaanIsChairOrAdviser_()||lvTalaanIsOVCAA_();}
 function lvTalaanApplyOperationalTools_(){const el=document.getElementById('lvTalaanPrivilegedTools');if(el)el.classList.toggle('show',lvTalaanHasOperationalAccess_());}
 const _lvTalaanOldApplyUser=window.applyUser;window.applyUser=function(){_lvTalaanOldApplyUser();lvTalaanApplyOperationalTools_();};
@@ -449,7 +468,7 @@ function lvTalaanExtra_(html){
 }
 function lvTalaanShowSettings_(){
   if(!lvTalaanHasOperationalAccess_())return;
-  lvTalaanExtra_('<div class="lv-talaan-extra-card"><div class="lv-talaan-extra-head"><div><h3>⚙ Event Settings</h3><p>Manage TALAAN events. Available only to the SSG Chairperson/Adviser and OVCAA.</p></div><button class="lv-talaan-tool" onclick="document.getElementById(\'lvTalaanExtra\')?.remove()">Close</button></div><div id="lvTalaanSettingsBody">Loading settings…</div></div>');
+  lvTalaanExtra_('<div class="lv-talaan-extra-card"><div class="lv-talaan-extra-head"><div><h3>⚙ Event Settings</h3><p>Manage TALAAN events. Available only to the SSG Chairperson and OVCAA SSG members.</p></div><button class="lv-talaan-tool" onclick="document.getElementById(\'lvTalaanExtra\')?.remove()">Close</button></div><div id="lvTalaanSettingsBody">Loading settings…</div></div>');
   lvTalaanLoadSettings_();
 }
 async function lvTalaanLoadSettings_(){
@@ -779,5 +798,37 @@ setTimeout(lvApplyApprovalAndSearchAccess_,0);
   // Profile picture should also be reflected in the sidebar/greeting after refresh.
   setTimeout(loadAccessUiExtras,300);
 })();
-</script></body>
+</script><script id="lvconnect-final-role-announcement-performance">
+(function(){
+  function isAdminAccount_(){return String(access?.account?.accountType||'').toUpperCase()==='ADMIN' || hasPermission('ANNOUNCEMENT_MANAGE');}
+  function applyAnnouncementNav_(){const n=document.getElementById('navAnnouncements');if(n)n.classList.toggle('hidden',!isAdminAccount_());}
+  function renderAdminAnnouncements_(items){const box=$('adminAnnouncementsList');if(!box)return;box.innerHTML=(items||[]).map(function(x){let meta={};try{meta=JSON.parse(x.content||'{}')}catch(e){}const upcoming=String(x.type||'').toUpperCase()==='UPCOMING';return '<div class="announcement-posted"><h3>'+esc(x.title||'Untitled')+'</h3><div class="meta">'+esc(upcoming?'UPCOMING EVENT':(x.priority||'NORMAL'))+' · '+esc(x.createdAt||'')+'</div><div>'+esc(upcoming?((meta.who?'Who: '+meta.who+' · ':'')+(meta.what?'What: '+meta.what+' · ':'')+(meta.where?'Where: '+meta.where+' · ':'')+(meta.when?'When: '+meta.when:'')+(meta.description?'\n'+meta.description:'')):x.content||'')+'</div></div>'}).join('')||'<div class="empty-state">No active posts.</div>';}
+  window.loadAdminAnnouncements_=async function(){if(!isAdminAccount_())return;const box=$('adminAnnouncementsList');if(box)box.innerHTML='<div class="loading-inline">Loading announcements…</div>';try{const r=await cachedPortalPost_('GET_ANNOUNCEMENTS',{},15000);if(!r?.success)throw new Error(r?.message||'Unable to load announcements.');renderAdminAnnouncements_(r.announcements||[]);}catch(e){if(box)box.innerHTML='<div class="empty-state">'+esc(e.message||String(e))+'</div>';}};
+  async function postAnnouncement_(type){const upcoming=type==='UPCOMING';const msg=$(upcoming?'adminEvMsg':'adminAnnMsg');msg.className='modal-message';msg.textContent='';const data=upcoming?{type:'UPCOMING',title:$('adminEvTitle').value.trim(),content:JSON.stringify({who:$('adminEvWho').value.trim(),what:$('adminEvWhat').value.trim(),where:$('adminEvWhere').value.trim(),when:$('adminEvWhen').value,description:$('adminEvDesc').value.trim()}),priority:'NORMAL',startDate:$('adminEvWhen').value}:{type:'ADMINISTRATIVE',title:$('adminAnnTitle').value.trim(),content:$('adminAnnContent').value.trim(),priority:$('adminAnnPriority').value,startDate:$('adminAnnStart').value,endDate:$('adminAnnEnd').value};if(!data.title||!data.content)return;try{loading(true,upcoming?'Posting upcoming event…':'Posting announcement…');const r=await portalPost('CREATE_ANNOUNCEMENT',data);if(!r?.success)throw new Error(r?.message||'Unable to post.');msg.textContent='Posted successfully.';msg.classList.add('show','success');$(upcoming?'adminUpcomingForm':'adminAnnouncementForm').reset();clearPortalReadCache_();await loadAdminAnnouncements_();await loadDashboardHome_();}catch(e){msg.textContent=e.message||String(e);msg.classList.add('show','error')}finally{loading(false)}}
+  document.getElementById('adminAnnouncementForm')?.addEventListener('submit',e=>{e.preventDefault();postAnnouncement_('ADMINISTRATIVE')});
+  document.getElementById('adminUpcomingForm')?.addEventListener('submit',e=>{e.preventDefault();postAnnouncement_('UPCOMING')});
+  const oldApply=window.applyUser;window.applyUser=function(){oldApply();applyAnnouncementNav_();setTimeout(applyAnnouncementNav_,50);};
+  const oldOpen=window.openPage;window.openPage=function(page){oldOpen(page);if(page==='announcements')setTimeout(loadAdminAnnouncements_,0);if(page==='drs')setTimeout(()=>window.loadPortalDrs_&&window.loadPortalDrs_(),0);if(page==='taskboard')setTimeout(()=>window.loadTaskBoard_&&window.loadTaskBoard_(),0);if(page==='talaan')setTimeout(()=>window.portalLoadTalaan_&&window.portalLoadTalaan_(),0);};
+  // Lazy-load heavier modules only when opened; keep dashboard fast.
+  window.addEventListener('load',()=>{applyAnnouncementNav_();});
+})();
+</script>
+<script id="lvconnect-role-announcement-final">
+(function(){
+const lvReadCache_={};
+function cachedPortalPost_(action,data,ttl){const key=action+'|'+JSON.stringify(data||{});const hit=lvReadCache_[key];if(hit&&Date.now()-hit.at<ttl)return Promise.resolve(hit.value);return portalPost(action,data).then(r=>{lvReadCache_[key]={at:Date.now(),value:r};return r});}
+function clearPortalReadCache_(){Object.keys(lvReadCache_).forEach(k=>delete lvReadCache_[k]);}
+function isAdmin_(){return String(access?.account?.accountType||'').toUpperCase()==='ADMIN'||hasPermission('ANNOUNCEMENT_MANAGE');}
+function applyAdminNav_(){const n=$('navAnnouncements');if(n)n.classList.toggle('hidden',!isAdmin_());}
+function applyTalaanSecretaryBadge_(){const h=document.querySelector('#page-talaan .talaan-top h1');if(!h)return;let b=document.getElementById('talaanSecretaryBadge');const allowed=!!access?.talaan?.secretaryProfile || lvTalaanHasOperationalAccess_();if(allowed){if(!b){b=document.createElement('span');b.id='talaanSecretaryBadge';b.className='talaan-secretary-badge';b.textContent='Secretary Profile';h.appendChild(b);}}else if(b)b.remove();}
+function renderAdminPosts_(items){const box=$('adminAnnouncementsList');if(!box)return;box.innerHTML=(items||[]).map(x=>{let m={};const up=String(x.type||'').toUpperCase()==='UPCOMING';if(up){try{m=JSON.parse(x.content||'{}')}catch(e){}}const detail=up?[m.who&&'Who: '+m.who,m.what&&'What: '+m.what,m.where&&'Where: '+m.where,m.when&&'When: '+m.when,m.description].filter(Boolean).join(' · '):x.content||'';return '<div class="announcement-posted"><h3>'+esc(x.title||'Untitled')+'</h3><div class="meta">'+esc(up?'UPCOMING EVENT':(x.priority||'NORMAL'))+' · '+esc(x.createdAt||'')+'</div><div style="white-space:pre-line">'+esc(detail)+'</div></div>'}).join('')||'<div class="empty-state">No active posts.</div>';}
+window.loadAdminAnnouncements_=async function(){if(!isAdmin_())return;const b=$('adminAnnouncementsList');if(b)b.innerHTML='<div class="loading-inline">Loading announcements…</div>';try{const r=await portalPost('GET_ANNOUNCEMENTS');if(!r?.success)throw new Error(r?.message||'Unable to load announcements.');renderAdminPosts_(r.announcements||[])}catch(e){if(b)b.innerHTML='<div class="empty-state">'+esc(e.message||String(e))+'</div>';}};
+async function postAnn_(up){const msg=$(up?'adminEvMsg':'adminAnnMsg');const data=up?{type:'UPCOMING',title:$('adminEvTitle').value.trim(),content:JSON.stringify({who:$('adminEvWho').value.trim(),what:$('adminEvWhat').value.trim(),where:$('adminEvWhere').value.trim(),when:$('adminEvWhen').value,description:$('adminEvDesc').value.trim()}),priority:'NORMAL',startDate:$('adminEvWhen').value}:{type:'ADMINISTRATIVE',title:$('adminAnnTitle').value.trim(),content:$('adminAnnContent').value.trim(),priority:$('adminAnnPriority').value,startDate:$('adminAnnStart').value,endDate:$('adminAnnEnd').value};if(!data.title||!data.content)return;try{loading(true,up?'Posting upcoming event…':'Posting announcement…');const r=await portalPost('CREATE_ANNOUNCEMENT',data);if(!r?.success)throw new Error(r?.message||'Unable to post.');msg.textContent='Posted successfully.';msg.className='modal-message show success';$(up?'adminUpcomingForm':'adminAnnouncementForm').reset();await loadAdminAnnouncements_();await loadDashboardHome_()}catch(e){msg.textContent=e.message||String(e);msg.className='modal-message show error'}finally{loading(false)}}
+$('adminAnnouncementForm')?.addEventListener('submit',e=>{e.preventDefault();postAnn_(false)});$('adminUpcomingForm')?.addEventListener('submit',e=>{e.preventDefault();postAnn_(true)});
+const oa=window.applyUser;window.applyUser=function(){oa();applyAdminNav_();setTimeout(applyAdminNav_,60)};
+const rawPortalPost_=window.portalPost;window.portalPost=function(action,data){const safe=['CURRENT_USER','GET_DASHBOARD_HOME','GET_ANNOUNCEMENTS','TALAAN_EVENTS'];if(safe.indexOf(action)>=0)return cachedPortalPost_(action,data||{},15000);return rawPortalPost_(action,data)};
+const op=window.openPage;window.openPage=function(page){op(page);if(page==='announcements')setTimeout(loadAdminAnnouncements_,0);if(page==='talaan')setTimeout(applyTalaanSecretaryBadge_,0)};applyAdminNav_();applyTalaanSecretaryBadge_();
+})();
+</script>
+</body>
 </html>
