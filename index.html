@@ -71,7 +71,8 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
       <button id="loginButton" class="login-btn" type="submit">Sign In</button>
     </form>
     <div class="auth-links">
-      <button type="button" class="auth-link" id="createAccountLink">Create Account</button>
+      <button type="button" class="auth-link" id="createStudentAccountLink">Create Account for Students</button>
+      <button type="button" class="auth-link" id="registerStaffAccountLink">Register for Admin / Staff / Teacher</button>
       <button type="button" class="auth-link" id="requestTalaanLink">Request for TALAAN Code</button>
     </div>
     <p class="note">Use your TALAAN Code and LVConnect password. Your LV email is used for account notifications.</p>
@@ -81,19 +82,16 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
 <!-- ACTIVATE ACCOUNT MODAL -->
 <div id="createAccountModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="createAccountTitle">
   <div class="modal-card">
-    <div class="modal-head"><div><h2 id="createAccountTitle">Create Account</h2><p>For pre-registered Admin, Staff, and Teacher personnel.</p></div><button type="button" class="close-modal" data-close-modal="createAccountModal">×</button></div>
+    <div class="modal-head"><div><h2 id="createAccountTitle">Create Account</h2><p id="createAccountSubtitle">Use your existing TALAAN Code to activate your LVConnect account.</p></div><button type="button" class="close-modal" data-close-modal="createAccountModal">×</button></div>
     <form id="createAccountForm" class="modal-form">
       <div id="createAccountMessage" class="modal-message"></div>
       <div class="modal-grid">
-        <div class="modal-field"><label for="caFirstName">First Name</label><input id="caFirstName" required></div>
-        <div class="modal-field"><label for="caSurname">Surname</label><input id="caSurname" required></div>
-        <div class="modal-field"><label for="caMiddleInitial">Middle Initial</label><input id="caMiddleInitial" maxlength="5"></div>
-        <div class="modal-field"><label for="caEmail">LV Email</label><input id="caEmail" type="email" placeholder="yourname@laverdad.edu.ph" required></div>
-        <div class="modal-field"><label for="caPassword">Password</label><input id="caPassword" type="password" minlength="8" required></div>
-        <div class="modal-field"><label for="caConfirmPassword">Confirm Password</label><input id="caConfirmPassword" type="password" minlength="8" required></div>
+        <div class="modal-field full"><label for="caTalaanCode">TALAAN Code</label><input id="caTalaanCode" type="text" placeholder="Enter your TALAAN Code" autocomplete="username" required></div>
+        <div class="modal-field"><label for="caPassword">Password</label><input id="caPassword" type="password" minlength="8" autocomplete="new-password" required></div>
+        <div class="modal-field"><label for="caConfirmPassword">Confirm Password</label><input id="caConfirmPassword" type="password" minlength="8" autocomplete="new-password" required></div>
       </div>
       <button id="createAccountButton" class="modal-btn" type="submit">Create Account</button>
-      <div class="modal-footnote">Your name must match the pre-registered personnel directory. LVConnect will assign your TALAAN Code automatically.</div>
+      <div class="modal-footnote" id="createAccountFootnote">Your TALAAN Code is checked against the student records. Your LV email is used for notifications and is not your login username.</div>
     </form>
   </div>
 </div>
@@ -254,7 +252,26 @@ function closeModal(id){$(id).classList.remove('show')}
 function showModalMessage(id,message,success=false){const el=$(id);el.textContent=message;el.className='modal-message show '+(success?'success':'error')}
 function clearModalMessage(id){$(id).textContent='';$(id).className='modal-message'}
 $('loginForm').addEventListener('submit',async e=>{e.preventDefault();clearError();const code=$('talaanCode').value.trim();const pass=$('password').value;if(!code||!pass)return error('Please enter your TALAAN Code and password.');$('loginButton').disabled=true;$('loginButton').textContent='Signing in...';loading(true,'Signing in to LVConnect...');try{await login(code,pass);openApp()}catch(err){clearSession();error(err.message||'Unable to sign in.')}finally{loading(false);$('loginButton').disabled=false;$('loginButton').textContent='Sign In'}});
-$('createAccountLink').addEventListener('click',()=>{clearModalMessage('createAccountMessage');$('createAccountForm').reset();openModal('createAccountModal')});
+let createAccountRegistrationType='STUDENT';
+function openCreateAccount_(type){
+  createAccountRegistrationType=type;
+  clearModalMessage('createAccountMessage');
+  $('createAccountForm').reset();
+  if(type==='STAFF'){
+    $('createAccountTitle').textContent='Register for Admin / Staff / Teacher';
+    $('createAccountSubtitle').textContent='Use your pre-registered TALAAN Code to activate your LVConnect account.';
+    $('createAccountFootnote').textContent='Your TALAAN Code must be listed in the pre-registered Admin/Staff/Teacher directory. Your LV email is used for notifications and is not your login username.';
+    $('createAccountButton').textContent='Register Account';
+  }else{
+    $('createAccountTitle').textContent='Create Account for Students';
+    $('createAccountSubtitle').textContent='Use your existing student TALAAN Code to create your LVConnect account.';
+    $('createAccountFootnote').textContent='Your TALAAN Code is checked against the student records. Your LV email is used for notifications and is not your login username.';
+    $('createAccountButton').textContent='Create Account';
+  }
+  openModal('createAccountModal');
+}
+$('createStudentAccountLink').addEventListener('click',()=>openCreateAccount_('STUDENT'));
+$('registerStaffAccountLink').addEventListener('click',()=>openCreateAccount_('STAFF'));
 $('requestTalaanLink').addEventListener('click',()=>{clearModalMessage('requestTalaanMessage');$('requestTalaanForm').reset();openModal('requestTalaanModal')});
 document.querySelectorAll('[data-close-modal]').forEach(btn=>btn.addEventListener('click',()=>closeModal(btn.dataset.closeModal)));
 document.querySelectorAll('.modal').forEach(modal=>modal.addEventListener('click',e=>{if(e.target===modal)closeModal(modal.id)}));
@@ -268,7 +285,7 @@ $('requestAccessButton').addEventListener('click',()=>{clearModalMessage('additi
 $('accessType').addEventListener('change',updateAccessPositions);
 $('accessOffice').addEventListener('change',updateAccessPositions);
 $('additionalAccessForm').addEventListener('submit',async e=>{e.preventDefault();clearModalMessage('additionalAccessMessage');const type=$('accessType').value,position=$('accessPosition').value,office=$('accessOffice').value;if(!type||!position)return showModalMessage('additionalAccessMessage','Please select the access type and position.');if(type==='SSG OFFICER'&&!office)return showModalMessage('additionalAccessMessage','Please select the SSG office.');const btn=$('additionalAccessButton');btn.disabled=true;btn.textContent='Submitting...';try{const r=await post('SUBMIT_ADDITIONAL_ACCESS_REQUEST',{sessionId:session.sessionId,requestType:type,position:position,office:office});if(!r||r.success!==true)throw new Error(r?.message||'Unable to submit access request.');showModalMessage('additionalAccessMessage',(r.message||'Request submitted.')+(r.requestId?' Request ID: '+r.requestId:''),true);$('additionalAccessForm').reset();updateAccessPositions()}catch(err){showModalMessage('additionalAccessMessage',err.message||'Unable to submit access request.')}finally{btn.disabled=false;btn.textContent='Submit Access Request'}});
-$('createAccountForm').addEventListener('submit',async e=>{e.preventDefault();clearModalMessage('createAccountMessage');const password=$('caPassword').value;const confirm=$('caConfirmPassword').value;if(password!==confirm)return showModalMessage('createAccountMessage','Passwords do not match.');const btn=$('createAccountButton');btn.disabled=true;btn.textContent='Creating...';try{const r=await post('CREATE_STAFF_ACCOUNT',{firstName:$('caFirstName').value.trim(),middleInitial:$('caMiddleInitial').value.trim(),surname:$('caSurname').value.trim(),email:$('caEmail').value.trim(),password:password});if(!r||r.success!==true)throw new Error(r?.message||'Unable to create account.');showModalMessage('createAccountMessage',r.message,true);$('createAccountForm').reset()}catch(err){showModalMessage('createAccountMessage',err.message||'Unable to create account.')}finally{btn.disabled=false;btn.textContent='Create Account'}});
+$('createAccountForm').addEventListener('submit',async e=>{e.preventDefault();clearModalMessage('createAccountMessage');const talaanCode=$('caTalaanCode').value.trim();const password=$('caPassword').value;const confirm=$('caConfirmPassword').value;if(!talaanCode)return showModalMessage('createAccountMessage','Please enter your TALAAN Code.');if(password!==confirm)return showModalMessage('createAccountMessage','Passwords do not match.');const btn=$('createAccountButton');btn.disabled=true;btn.textContent='Creating...';try{const r=await post('CREATE_ACCOUNT',{talaanCode:talaanCode,password:password,confirmPassword:confirm,registrationType:createAccountRegistrationType});if(!r||r.success!==true)throw new Error(r?.message||'Unable to create account.');showModalMessage('createAccountMessage',r.message,true);$('createAccountForm').reset()}catch(err){showModalMessage('createAccountMessage',err.message||'Unable to create account.')}finally{btn.disabled=false;btn.textContent=createAccountRegistrationType==='STAFF'?'Register Account':'Create Account'}});
 $('requestTalaanForm').addEventListener('submit',async e=>{e.preventDefault();clearModalMessage('requestTalaanMessage');const btn=$('requestTalaanButton');btn.disabled=true;btn.textContent='Submitting...';try{const r=await post('SUBMIT_ACCOUNT_REQUEST',{requestType:'REQUEST_TALAAN_CODE',email:$('rtEmail').value.trim(),firstName:$('rtFirstName').value.trim(),middleInitial:$('rtMiddleInitial').value.trim(),surname:$('rtSurname').value.trim(),details:$('rtDetails').value.trim()});if(!r||r.success!==true)throw new Error(r?.message||'Unable to submit TALAAN Code request.');showModalMessage('requestTalaanMessage',r.message+' Request ID: '+r.requestId,true);$('requestTalaanForm').reset()}catch(err){showModalMessage('requestTalaanMessage',err.message||'Unable to submit request.')}finally{btn.disabled=false;btn.textContent='Submit TALAAN Code Request'}});
 document.querySelectorAll('[data-page]').forEach(el=>el.addEventListener('click',()=>openPage(el.dataset.page)));
 $('logout').addEventListener('click',logout);$('menu').addEventListener('click',()=>$('sidebar').classList.add('open'));$('overlay').addEventListener('click',closeMenu);
