@@ -236,14 +236,14 @@ function loading(show,text){$('loadingText').textContent=text||'Please wait...';
 function error(msg){$('loginError').textContent=msg||'Unable to sign in.';$('loginError').classList.add('show')}
 function clearError(){$('loginError').textContent='';$('loginError').classList.remove('show')}
 async function post(action,data={}){return new Promise((resolve,reject)=>{const callbackName='__lvconnectCallback_'+Date.now()+'_'+Math.random().toString(36).slice(2);const script=document.createElement('script');const query=new URLSearchParams();query.set('action',action);query.set('callback',callbackName);Object.keys(data).forEach(k=>query.set(k,String(data[k]??'')));let timer=setTimeout(()=>{cleanup();reject(new Error('Request timed out. Please try again.'))},20000);function cleanup(){clearTimeout(timer);delete window[callbackName];if(script.parentNode)script.parentNode.removeChild(script)}window[callbackName]=function(result){cleanup();resolve(result)};script.onerror=function(){cleanup();reject(new Error('Unable to connect to LVConnect Backend.'))};script.src=API_URL+(API_URL.includes('?')?'&':'?')+query.toString();document.head.appendChild(script)})}
-async function login(code,password){const r=await post('LOGIN',{talaanCode:code,password});if(!r||r.success!==true)throw new Error(r?.message||'Invalid TALAAN Code or password.');session={sessionId:r.sessionId,account:r.account};localStorage.setItem(STORAGE_KEY,JSON.stringify(session));await loadAccess()}
+async function login(code,password){const r=await post('LOGIN',{talaanCode:code,password});if(!r||r.success!==true)throw new Error(r?.message||'Invalid TALAAN Code or password.');session={sessionId:r.sessionId,account:r.account};window.currentSessionId=session.sessionId;localStorage.setItem(STORAGE_KEY,JSON.stringify(session));await loadAccess()}
 async function loadAccess(){const r=await post('CURRENT_USER',{sessionId:session?.sessionId||''});if(!r||!r.account)throw new Error(r?.message||'Unable to load account access.');access=r;session.account=r.account;localStorage.setItem(STORAGE_KEY,JSON.stringify(session));applyUser()}
 function applyUser(){const a=access?.account;if(!a)return;const name=[a.firstName,a.middleInitial,a.surname].filter(Boolean).join(' ').trim()||'LVConnect User';$('sideUser').textContent=name;$('sideRole').textContent=a.accountType||'Account';$('welcome').textContent='Welcome, '+(a.firstName||'User')+'.';$('avatar').textContent=((a.firstName||'L')[0]+(a.surname||'V')[0]).toUpperCase();$('profileName').textContent=name;$('profileTalaan').textContent=a.talaanId||'—';$('profileEmail').textContent=a.email||'—';$('profileAccountId').textContent=a.accountId||'—';$('profileType').textContent=a.accountType||'—';$('profilePermissions').textContent=(access.permissions||[]).length?access.permissions.join(', '):'None';applyPermissions()}
 function hasPermission(p){return (access?.permissions||[]).map(x=>String(x).toUpperCase()).includes(String(p).toUpperCase())}
 function applyPermissions(){document.querySelectorAll('[data-permission]').forEach(el=>el.classList.toggle('hidden',!hasPermission(el.dataset.permission)))}
 function openApp(){$('loginScreen').style.display='none';$('app').classList.add('active');ensurePostLoginNavigation_();openPage('dashboard')}
 function ensurePostLoginNavigation_(){try{if(typeof ensureBottom==='function')ensureBottom()}catch(e){}}
-function clearSession(){session=null;access=null;localStorage.removeItem(STORAGE_KEY)}
+function clearSession(){session=null;access=null;window.currentSessionId='';localStorage.removeItem(STORAGE_KEY)}
 async function logout(){try{loading(true,'Signing out...');if(session?.sessionId)await post('LOGOUT',{sessionId:session.sessionId})}catch(e){}finally{clearSession();loading(false);$('app').classList.remove('active');$('loginScreen').style.display='flex';$('loginForm').reset()}}
 const titles={dashboard:['Dashboard','Welcome to LVConnect Portal'],eservices:['E-Services','Digital institutional services'],drs:['Document Routing','Requests and document tracking'],notifications:['Notifications','Updates and transaction alerts'],profile:['My Profile','Account information and settings'],'ssg-approvals':['Approval Requests','Review and approve SSG access requests'],'taskboard':['Task Board','SSG event tracker and task management'],'settings':['Settings','Account settings']};
 function openPage(page){const target=$('page-'+page);if(!target)return;const restricted=document.querySelector('.nav-item[data-page="'+page+'"][data-permission]');if(restricted&&!hasPermission(restricted.dataset.permission))return;document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));target.classList.add('active');document.querySelectorAll('.nav-item').forEach(x=>x.classList.toggle('active',x.dataset.page===page));if(titles[page])$('title').innerHTML='<h2>'+titles[page][0]+'</h2><p>'+titles[page][1]+'</p>';closeMenu()}
@@ -298,7 +298,7 @@ $('createAccountForm').addEventListener('submit',async e=>{e.preventDefault();cl
 $('requestTalaanForm').addEventListener('submit',async e=>{e.preventDefault();clearModalMessage('requestTalaanMessage');const btn=$('requestTalaanButton');btn.disabled=true;btn.textContent='Submitting...';try{const r=await post('SUBMIT_ACCOUNT_REQUEST',{requestType:'REQUEST_TALAAN_CODE',email:$('rtEmail').value.trim(),firstName:$('rtFirstName').value.trim(),middleInitial:$('rtMiddleInitial').value.trim(),surname:$('rtSurname').value.trim(),details:$('rtDetails').value.trim()});if(!r||r.success!==true)throw new Error(r?.message||'Unable to submit TALAAN Code request.');showModalMessage('requestTalaanMessage',r.message+' Request ID: '+r.requestId,true);$('requestTalaanForm').reset()}catch(err){showModalMessage('requestTalaanMessage',err.message||'Unable to submit request.')}finally{btn.disabled=false;btn.textContent='Submit TALAAN Code Request'}});
 document.querySelectorAll('[data-page]').forEach(el=>el.addEventListener('click',()=>openPage(el.dataset.page)));
 $('logout').addEventListener('click',logout);$('menu').addEventListener('click',()=>$('sidebar').classList.add('open'));$('overlay').addEventListener('click',closeMenu);
-(async function(){const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;try{session=JSON.parse(raw);if(!session?.sessionId)throw new Error('Invalid session');loading(true,'Restoring your session...');await loadAccess();openApp()}catch(e){clearSession()}finally{loading(false)}})();
+(async function(){const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;try{session=JSON.parse(raw);if(!session?.sessionId)throw new Error('Invalid session');window.currentSessionId=session.sessionId;loading(true,'Restoring your session...');await loadAccess();openApp()}catch(e){clearSession()}finally{loading(false)}})();
 </script>
 
 <script id="lvconnect-session-heartbeat">
@@ -392,8 +392,8 @@ async function approveSSGRequest(requestId) {
       'APPROVE_ADDITIONAL_ACCESS_REQUEST',
       {
         sessionId:
+          session?.sessionId ||
           window.currentSessionId ||
-          localStorage.getItem('lvconnectSessionId') ||
           '',
         requestId: requestId,
         officerCode: officerCode.trim()
