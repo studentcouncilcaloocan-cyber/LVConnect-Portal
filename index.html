@@ -579,7 +579,7 @@ body.dark .drs-card:hover{border-color:#526675}
     else {input=document.createElement('input');input.type=type||'text';}
     input.name=label; if(value)input.value=value; wrap.appendChild(input); return wrap;
   }
-  function openEserviceForm_(id){
+  window.openEserviceForm_=function(id){
     const title=FORM_TITLES[id]||id, fields=FIELDS[id]; if(!fields){return;}
     const wrap=document.createElement('div');wrap.className='modal show';
     const card=document.createElement('div');card.className='modal-card';card.style.maxWidth='760px';
