@@ -86,7 +86,8 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
     <form id="createAccountForm" class="modal-form">
       <div id="createAccountMessage" class="modal-message"></div>
       <div class="modal-grid">
-        <div class="modal-field full"><label for="caTalaanCode">TALAAN Code</label><input id="caTalaanCode" type="text" placeholder="Enter your TALAAN Code" autocomplete="username" required></div>
+        <div class="modal-field full" id="caTalaanField"><label for="caTalaanCode">TALAAN Code</label><input id="caTalaanCode" type="text" placeholder="Enter your TALAAN Code" autocomplete="username"></div>
+        <div class="modal-field full" id="caNameField" style="display:none"><label for="caName">Full Name</label><input id="caName" type="text" placeholder="Enter your registered full name" autocomplete="name"></div>
         <div class="modal-field"><label for="caPassword">Password</label><input id="caPassword" type="password" minlength="8" autocomplete="new-password" required></div>
         <div class="modal-field"><label for="caConfirmPassword">Confirm Password</label><input id="caConfirmPassword" type="password" minlength="8" autocomplete="new-password" required></div>
       </div>
@@ -259,14 +260,22 @@ function openCreateAccount_(type){
   $('createAccountForm').reset();
   if(type==='STAFF'){
     $('createAccountTitle').textContent='Register for Admin / Staff / Teacher';
-    $('createAccountSubtitle').textContent='Use your pre-registered TALAAN Code to activate your LVConnect account.';
-    $('createAccountFootnote').textContent='Your TALAAN Code must be listed in the pre-registered Admin/Staff/Teacher directory. Your LV email is used for notifications and is not your login username.';
+    $('createAccountSubtitle').textContent='Enter your registered name. LVConnect will find your pre-registered personnel record and generate your TALAAN Code automatically.';
+    $('createAccountFootnote').textContent='Use the name recorded in the Admin/Staff/Teacher directory. Your TALAAN Code will be generated automatically and shown after successful registration.';
     $('createAccountButton').textContent='Register Account';
+    $('caTalaanField').style.display='none';
+    $('caTalaanCode').required=false;
+    $('caNameField').style.display='flex';
+    $('caName').required=true;
   }else{
     $('createAccountTitle').textContent='Create Account for Students';
     $('createAccountSubtitle').textContent='Use your existing student TALAAN Code to create your LVConnect account.';
     $('createAccountFootnote').textContent='Your TALAAN Code is checked against the student records. Your LV email is used for notifications and is not your login username.';
     $('createAccountButton').textContent='Create Account';
+    $('caTalaanField').style.display='flex';
+    $('caTalaanCode').required=true;
+    $('caNameField').style.display='none';
+    $('caName').required=false;
   }
   openModal('createAccountModal');
 }
@@ -285,7 +294,7 @@ $('requestAccessButton').addEventListener('click',()=>{clearModalMessage('additi
 $('accessType').addEventListener('change',updateAccessPositions);
 $('accessOffice').addEventListener('change',updateAccessPositions);
 $('additionalAccessForm').addEventListener('submit',async e=>{e.preventDefault();clearModalMessage('additionalAccessMessage');const type=$('accessType').value,position=$('accessPosition').value,office=$('accessOffice').value;if(!type||!position)return showModalMessage('additionalAccessMessage','Please select the access type and position.');if(type==='SSG OFFICER'&&!office)return showModalMessage('additionalAccessMessage','Please select the SSG office.');const btn=$('additionalAccessButton');btn.disabled=true;btn.textContent='Submitting...';try{const r=await post('SUBMIT_ADDITIONAL_ACCESS_REQUEST',{sessionId:session.sessionId,requestType:type,position:position,office:office});if(!r||r.success!==true)throw new Error(r?.message||'Unable to submit access request.');showModalMessage('additionalAccessMessage',(r.message||'Request submitted.')+(r.requestId?' Request ID: '+r.requestId:''),true);$('additionalAccessForm').reset();updateAccessPositions()}catch(err){showModalMessage('additionalAccessMessage',err.message||'Unable to submit access request.')}finally{btn.disabled=false;btn.textContent='Submit Access Request'}});
-$('createAccountForm').addEventListener('submit',async e=>{e.preventDefault();clearModalMessage('createAccountMessage');const talaanCode=$('caTalaanCode').value.trim();const password=$('caPassword').value;const confirm=$('caConfirmPassword').value;if(!talaanCode)return showModalMessage('createAccountMessage','Please enter your TALAAN Code.');if(password!==confirm)return showModalMessage('createAccountMessage','Passwords do not match.');const btn=$('createAccountButton');btn.disabled=true;btn.textContent='Creating...';try{const r=await post('CREATE_ACCOUNT',{talaanCode:talaanCode,password:password,confirmPassword:confirm,registrationType:createAccountRegistrationType});if(!r||r.success!==true)throw new Error(r?.message||'Unable to create account.');showModalMessage('createAccountMessage',r.message,true);$('createAccountForm').reset()}catch(err){showModalMessage('createAccountMessage',err.message||'Unable to create account.')}finally{btn.disabled=false;btn.textContent=createAccountRegistrationType==='STAFF'?'Register Account':'Create Account'}});
+$('createAccountForm').addEventListener('submit',async e=>{e.preventDefault();clearModalMessage('createAccountMessage');const talaanCode=$('caTalaanCode').value.trim();const name=$('caName').value.trim();const password=$('caPassword').value;const confirm=$('caConfirmPassword').value;if(createAccountRegistrationType==='STUDENT'&&!talaanCode)return showModalMessage('createAccountMessage','Please enter your TALAAN Code.');if(createAccountRegistrationType==='STAFF'&&!name)return showModalMessage('createAccountMessage','Please enter your registered full name.');if(password!==confirm)return showModalMessage('createAccountMessage','Passwords do not match.');const btn=$('createAccountButton');btn.disabled=true;btn.textContent='Creating...';try{const action=createAccountRegistrationType==='STAFF'?'REGISTER_STAFF_ACCOUNT':'CREATE_STUDENT_ACCOUNT';const r=await post(action,{talaanCode:talaanCode,name:name,password:password,confirmPassword:confirm});if(!r||r.success!==true)throw new Error(r?.message||'Unable to create account.');showModalMessage('createAccountMessage',r.message,true);$('createAccountForm').reset()}catch(err){showModalMessage('createAccountMessage',err.message||'Unable to create account.')}finally{btn.disabled=false;btn.textContent=createAccountRegistrationType==='STAFF'?'Register Account':'Create Account'}});
 $('requestTalaanForm').addEventListener('submit',async e=>{e.preventDefault();clearModalMessage('requestTalaanMessage');const btn=$('requestTalaanButton');btn.disabled=true;btn.textContent='Submitting...';try{const r=await post('SUBMIT_ACCOUNT_REQUEST',{requestType:'REQUEST_TALAAN_CODE',email:$('rtEmail').value.trim(),firstName:$('rtFirstName').value.trim(),middleInitial:$('rtMiddleInitial').value.trim(),surname:$('rtSurname').value.trim(),details:$('rtDetails').value.trim()});if(!r||r.success!==true)throw new Error(r?.message||'Unable to submit TALAAN Code request.');showModalMessage('requestTalaanMessage',r.message+' Request ID: '+r.requestId,true);$('requestTalaanForm').reset()}catch(err){showModalMessage('requestTalaanMessage',err.message||'Unable to submit request.')}finally{btn.disabled=false;btn.textContent='Submit TALAAN Code Request'}});
 document.querySelectorAll('[data-page]').forEach(el=>el.addEventListener('click',()=>openPage(el.dataset.page)));
 $('logout').addEventListener('click',logout);$('menu').addEventListener('click',()=>$('sidebar').classList.add('open'));$('overlay').addEventListener('click',closeMenu);
