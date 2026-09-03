@@ -202,7 +202,7 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
     <div class="portal-box-inner"><div class="box-head"><div><span class="eyebrow">ACTIVE POSTS</span><h2>Published</h2></div></div><div id="adminAnnouncementsList" class="announcement-list"><div class="loading-inline">Loading…</div></div></div>
   </div>
 </section>
-<section id="page-taskboard" class="page"><div class="portal-box"><div class="box-head"><div><span class="eyebrow">SSG</span><h1>Task Board</h1><p>Event tracker and task management for authorized SSG users.</p></div><button class="portal-btn secondary" onclick="loadTaskBoard_()">↻ Refresh</button></div><div id="taskBoardBody"><div class="loading-inline">Loading task board…</div></div><div class="dms-box"><div><span class="eyebrow">DMS</span><h2>SSG Data Management System</h2><p>Access your SSG files by folder or upload directly through the school Drive.</p></div><a class="portal-btn" href="https://drive.google.com/drive/folders/0AMCI1lGTh4rcUk9PVA" target="_blank" rel="noopener">Open DMS</a></div></div></section>
+<section id="page-taskboard" class="page"><div class="portal-box"><div class="box-head"><div><span class="eyebrow">SSG</span><h1>Task Board</h1><p>SSG event tracker and task management.</p></div><button class="portal-btn secondary" type="button" onclick="refreshEventTracker_()">↻ Refresh</button></div><div class="event-tracker-wrap"><iframe id="eventTrackerFrame" title="SSG Event Tracker" src="https://docs.google.com/spreadsheets/d/1ujg16zYA9qiRK8yqYBIpFQqdDBEd-keexpspyvlIWsk/edit?usp=sharing" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><div class="event-tracker-note">The SSG Event Tracker is connected directly to the official Google Sheet. Your Google account must have access to the spreadsheet.</div><div class="dms-box"><div><span class="eyebrow">DMS</span><h2>SSG Data Management System</h2><p>Access your SSG files by folder or upload directly through the school Drive.</p></div><a class="portal-btn" href="https://drive.google.com/drive/folders/0AMCI1lGTh4rcUk9PVA" target="_blank" rel="noopener">Open DMS</a></div></div></section>
 <section id="page-notifications" class="page"><div class="placeholder"><div class="placeholder-icon">N</div><h2>Notifications</h2><p>Your LVConnect notifications and institutional updates will appear here.</p></div></section>
       
 <!-- SSG ADDITIONAL ACCESS APPROVALS -->
@@ -434,6 +434,35 @@ setTimeout(lvApplyApprovalAccess_,0);
 .lv-approval-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.lv-approval-card{background:#fff;border:1px solid var(--border);border-radius:15px;padding:17px;box-shadow:var(--shadow)}.lv-approval-card h3{font-size:13px}.lv-approval-meta{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:12px 0}.lv-approval-meta div{background:#f8fafc;border:1px solid #edf0f3;border-radius:9px;padding:8px}.lv-approval-meta span{display:block;color:var(--muted);font-size:9px}.lv-approval-meta b{display:block;margin-top:3px;font-size:10px}.lv-approval-card button{height:38px;border:0;border-radius:9px;background:var(--navy);color:#fff;padding:0 12px;font-weight:800;font-size:11px}.lv-approval-refresh{height:38px;border:1px solid var(--border);border-radius:9px;background:#fff;padding:0 12px;font-weight:800}
 .lv-drs-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.lv-drs-toolbar input,.lv-drs-toolbar select{height:40px;border:1px solid var(--border);border-radius:9px;padding:0 10px;background:#fff}.lv-drs-table{width:100%;border-collapse:collapse;font-size:11px}.lv-drs-table th,.lv-drs-table td{padding:10px;border-bottom:1px solid #eef1f4;text-align:left}.lv-drs-table th{font-size:9px;color:var(--muted);text-transform:uppercase;background:#f7f9fa}.lv-drs-status{display:inline-flex;padding:4px 7px;border-radius:7px;background:#edf3f7;color:var(--navy);font-size:9px;font-weight:900}.lv-drs-card{background:#fff;border:1px solid var(--border);border-radius:17px;box-shadow:var(--shadow);padding:20px}.lv-mobile-bottom{display:none}
 @media(max-width:760px){.lv-final-search-card{display:block}.lv-header-search{display:none!important}.lv-student-profile-grid{grid-template-columns:1fr}.lv-approval-grid{grid-template-columns:1fr}.lv-drs-card{padding:14px}.lv-drs-table-wrap{overflow:auto}.lv-drs-table{min-width:720px}.lv-mobile-bottom{position:fixed;display:flex;left:10px;right:10px;bottom:10px;height:58px;background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:0 12px 35px rgba(20,40,60,.16);z-index:80;align-items:center;justify-content:space-around;padding:5px}.lv-mobile-bottom button{border:0;background:transparent;color:var(--muted);font-size:9px;font-weight:800;display:flex;flex-direction:column;align-items:center;gap:2px}.lv-mobile-bottom button b{font-size:18px;line-height:18px}.content{padding-bottom:82px}}
+
+/* Dark-mode consistency + external SSG Event Tracker */
+body.dark .portal-btn.secondary,
+body.dark .portal-tool,
+body.dark .lv-approval-refresh{background:var(--white);color:var(--text);border-color:var(--border)}
+body.dark .eservice-group,
+body.dark .form-card,
+body.dark .downloadable-box,
+body.dark .drs-card,
+body.dark .lv-drs-card,
+body.dark .lv-final-search-card,
+body.dark .lv-student-profile-card,
+body.dark .lv-student-qr,
+body.dark .lv-approval-card,
+body.dark .lv-search-result{background:var(--white);border-color:var(--border);color:var(--text)}
+body.dark .form-card:hover{border-color:#526675}
+body.dark .lv-student-field,
+body.dark .lv-approval-meta div,
+body.dark .drs-detail,
+body.dark .lv-drs-table th{background:#101c25;border-color:var(--border);color:var(--text)}
+body.dark .lv-drs-table td{border-bottom-color:var(--border);color:var(--text)}
+body.dark .drs-status,
+body.dark .lv-drs-status{background:#20313d;color:#edf3f7}
+body.dark .drs-card:hover{border-color:#526675}
+.event-tracker-wrap{height:720px;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--white)}
+.event-tracker-wrap iframe{width:100%;height:100%;border:0;display:block;background:var(--white)}
+.event-tracker-note{font-size:10px;color:var(--muted);margin-top:8px}
+@media(max-width:760px){.event-tracker-wrap{height:620px;border-radius:12px}}
+
 </style>
 
 <script id="lvconnect-final-functional-patch">
@@ -549,15 +578,16 @@ setTimeout(lvApplyApprovalAccess_,0);
   window.loadPortalDrs_=loadPortalDrs_;
   window.openDrsWorkspace_=async function(id){loading(true,'Opening DRS request…');try{const r=await portalPost('GET_DRS_REQUEST_WORKSPACE',{requestId:id});if(!r?.success)throw new Error(r?.message||'Unable to open request.');const w=r.workspace||{},req=w.request||{},hist=w.history||{},activity=w.activity||[],wf=r.workflow;const wrap=document.createElement('div');wrap.className='modal show';wrap.innerHTML='<div class="modal-card drs-modal-card"><div class="modal-head"><div><span class="eyebrow">'+esc(req['Reference Number']||req.referenceNumber||id)+'</span><h2>'+esc(req['Title']||req['Subject']||'DRS Request')+'</h2><p>'+esc(req['Document Type']||req.documentType||'')+' · '+esc(req['Current Status']||req.currentStatus||'')+'</p></div><button class="close-modal">×</button></div><h3 style="font-size:14px;margin-bottom:7px">Request Track</h3><div class="drs-track">'+(activity.length?activity.map((a,i)=>'<div class="drs-step '+(i===activity.length-1?'active':'')+'"><div class="drs-dot"></div><b>'+esc(a.data?.action||a.data?.status||a.type||'Activity')+'</b><span>'+esc(a.data?.createdAt||a.data?.timestamp||'')+'</span></div>').join(''):'<div class="empty-state">No history yet.</div>')+'</div><h3 style="font-size:14px;margin:10px 0">Review</h3><div class="drs-detail-grid">'+Object.keys(req).slice(0,18).map(k=>'<div class="drs-detail"><span>'+esc(k)+'</span><b>'+esc(req[k])+'</b></div>').join('')+'</div><div style="margin-top:14px"><span class="eyebrow">CURRENT WORKFLOW</span><p style="font-size:11px;color:var(--muted);margin-top:4px">'+esc(wf?.stepName||'No workflow step available.')+'</p></div><div class="drs-actions"><button class="portal-btn" onclick="performDrsUiAction_(\''+esc(id).replace(/'/g,"\\'")+'\',\'APPROVE\')">Approve</button><button class="portal-btn secondary" onclick="performDrsUiAction_(\''+esc(id).replace(/'/g,"\\'")+'\',\'REVISION\')">Request Revision</button><button class="portal-btn secondary" onclick="performDrsUiAction_(\''+esc(id).replace(/'/g,"\\'")+'\',\'SCHEDULE\')">For Schedule</button><button class="portal-btn secondary" onclick="performDrsUiAction_(\''+esc(id).replace(/'/g,"\\'")+'\',\'DECLINE\')">Decline</button></div></div>';wrap.querySelector('.close-modal').onclick=()=>wrap.remove();document.body.appendChild(wrap)}catch(e){alert(e.message||String(e))}finally{loading(false)}};
   window.performDrsUiAction_=async function(id,action){const remarks=prompt(action==='APPROVE'?'Approval remarks (optional):':'Remarks / reason (optional):');if(remarks===null)return;loading(true,'Processing DRS action…');try{const r=await portalPost('PERFORM_DRS_ACTION',{requestId:id,actionType:action,remarks:remarks});if(!r?.success)throw new Error(r?.message||'Unable to perform action.');alert('DRS action completed.');document.querySelectorAll('.modal.show').forEach(m=>m.remove());await loadPortalDrs_()}catch(e){alert(e.message||String(e))}finally{loading(false)}};
-  async function loadTaskBoard_(){const box=$('taskBoardBody');if(!box)return;box.innerHTML='<div class="loading-inline">Loading task board…</div>';try{const r=await portalPost('GET_SSG_TASK_BOARD');if(!r?.success)throw new Error(r?.message||'Unable to load task board.');if(!r.available){box.innerHTML='<div class="empty-state">'+esc(r.message||'No task board connected.')+'</div>';return}const headers=r.headers||[],rows=r.rows||[];box.innerHTML='<div class="portal-table-wrap"><table class="portal-table"><thead><tr>'+headers.map(h=>'<th>'+esc(h)+'</th>').join('')+'</tr></thead><tbody>'+rows.map(row=>'<tr>'+row.map(v=>'<td>'+esc(v)+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>'}catch(e){box.innerHTML='<div class="empty-state">'+esc(e.message||String(e))+'</div>'}}
-  window.loadTaskBoard_=loadTaskBoard_;
+  function initEventTracker_(){const f=$('eventTrackerFrame');if(f&&!f.dataset.ready){f.dataset.ready='1';}}
+  window.refreshEventTracker_=function(){const f=$('eventTrackerFrame');if(f){const src=f.src;f.src='about:blank';setTimeout(()=>f.src=src,30);}};
   async function loadAccessUiExtras(){try{const r=await portalPost('CURRENT_USER');if(r?.account){access=r;const pic=r.account.profilePicture||'';setProfilePicture(pic);const assigns=r.assignments||[];const pos=assigns.map(a=>a.position).filter(Boolean).join(', ');const off=assigns.map(a=>a.office).filter(Boolean).join(', ');if($('profilePosition'))$('profilePosition').textContent=pos||'—';if($('profileOffice'))$('profileOffice').textContent=off||'—';}const tb=$('navTaskBoard');if(tb)tb.classList.toggle('hidden',!canTask())}catch(e){}}
   window.toggleTheme_=function(){document.body.classList.toggle('dark');localStorage.setItem('lvconnectTheme',document.body.classList.contains('dark')?'dark':'light')};
   if(localStorage.getItem('lvconnectTheme')==='dark')document.body.classList.add('dark');
   const oldApply=window.applyUser;window.applyUser=function(){oldApply();loadAccessUiExtras();renderEservices();loadDashboardHome_();setTimeout(()=>{const pic=access?.account?.profilePicture||'';setProfilePicture(pic)},0)};
-  const oldOpen=window.openPage;window.openPage=function(page){oldOpen(page);if(page==='dashboard')loadDashboardHome_();if(page==='eservices')renderEservices();if(page==='drs')loadPortalDrs_();if(page==='taskboard')loadTaskBoard_();if(page==='settings'){} };
+  const oldOpen=window.openPage;window.openPage=function(page){oldOpen(page);if(page==='dashboard')loadDashboardHome_();if(page==='eservices')renderEservices();if(page==='drs')loadPortalDrs_();if(page==='taskboard')setTimeout(initEventTracker_,30);if(page==='settings'){} };
   document.addEventListener('DOMContentLoaded',function(){
     renderEservices();
+    initEventTracker_();
     const pictureInput=$('profilePictureInput');
     if(pictureInput) pictureInput.addEventListener('change',function(){
       const file=this.files&&this.files[0]; if(!file)return;
