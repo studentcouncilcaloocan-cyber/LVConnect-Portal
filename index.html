@@ -33,7 +33,7 @@
  * ===================================================== */
 .lv-header-search{display:flex;align-items:center;gap:6px;margin-right:8px}.lv-header-search.hidden{display:none}.lv-header-search input{width:230px;height:36px;border:1px solid #d9dee7;border-radius:10px;padding:0 11px;font:inherit;background:#fff}.lv-header-search button{height:36px;border:0;border-radius:10px;padding:0 10px;font-weight:800;background:#1d2a6d;color:#fff;cursor:pointer}
 <style>#portalFooter{display:none!important}#app.active~#portalFooter{display:block!important}
-.announcement-admin-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:16px}.board-display-grid{margin-bottom:16px;grid-template-columns:1fr}.board-display-card{min-height:220px}.announcement-editor-card{border:1px solid var(--border);border-radius:18px;padding:18px;background:var(--panel)}.announcement-editor-card textarea{min-height:120px}.announcement-admin-grid .modal-grid{gap:10px}.announcement-admin-grid .modal-field input,.announcement-admin-grid .modal-field textarea,.announcement-admin-grid .modal-field select{width:100%}.announcement-posted{border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px}.announcement-posted h3{margin:0 0 6px;font-size:18px}.announcement-posted .meta{font-size:11px;color:var(--muted);margin-bottom:7px}.hidden-force{display:none!important}@media(max-width:1000px){.announcement-admin-grid{grid-template-columns:1fr 1fr}}@media(max-width:760px){.announcement-admin-grid{grid-template-columns:1fr}.announcement-editor-card{padding:14px}}
+.announcement-admin-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:16px}.board-display-grid{margin-bottom:16px;grid-template-columns:1fr}#boardEditorGrid,#upcomingEditorGrid{grid-template-columns:1fr}.board-display-card{min-height:220px}.announcement-editor-card{border:1px solid var(--border);border-radius:18px;padding:18px;background:var(--panel)}.announcement-editor-card textarea{min-height:120px}.announcement-admin-grid .modal-grid{gap:10px}.announcement-admin-grid .modal-field input,.announcement-admin-grid .modal-field textarea,.announcement-admin-grid .modal-field select{width:100%}.announcement-posted{border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px}.announcement-posted h3{margin:0 0 6px;font-size:18px}.announcement-posted .meta{font-size:11px;color:var(--muted);margin-bottom:7px}.hidden-force{display:none!important}@media(max-width:1000px){.announcement-admin-grid{grid-template-columns:1fr 1fr}}@media(max-width:760px){.announcement-admin-grid{grid-template-columns:1fr}.announcement-editor-card{padding:14px}}
 </style>
 <style id="lvconnect-branding-assets">
 .brand-logo-img{display:block;width:min(100%,330px);height:auto;max-height:115px;object-fit:contain;margin:0 auto 18px}
@@ -183,21 +183,21 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
     <div class="box-head"><div><span class="eyebrow">MESSAGES</span><h1>Bulletin Board</h1><p>Administrative messages and bulletin posts are controlled by your account authority.</p></div><button class="portal-btn secondary" onclick="loadPortalMessages_()">↻ Refresh</button></div>
     <div class="announcement-admin-grid board-display-grid" id="boardDisplayGrid">
       <div class="announcement-editor-card board-display-card" id="adminAnnouncementDisplay">
-        <div class="box-head"><div><span class="eyebrow">ADMIN ANNOUNCEMENT</span><h2>Administrative Announcement</h2></div></div>
+        <div class="box-head"><div><span class="eyebrow">ADMIN ANNOUNCEMENT</span><h2>Administrative Announcement Message Box</h2></div></div>
         <div id="boardAdminAnnouncements" class="announcement-list"><div class="loading-inline">Loading announcements…</div></div>
       </div>
       <div class="announcement-editor-card board-display-card hidden-force" id="bulletinDisplay">
-        <div class="box-head"><div><span class="eyebrow">BULLETIN BOARD</span><h2>Bulletin Board Message</h2></div></div>
+        <div class="box-head"><div><span class="eyebrow">BULLETIN BOARD</span><h2>Bulletin Board Message Box</h2></div></div>
         <div id="boardBulletins" class="bulletin-list"><div class="loading-inline">Loading bulletin…</div></div>
       </div>
       <div class="announcement-editor-card board-display-card" id="upcomingDisplay">
-        <div class="box-head"><div><span class="eyebrow">UPCOMING EVENT</span><h2>Upcoming Event</h2></div></div>
+        <div class="box-head"><div><span class="eyebrow">UPCOMING EVENT</span><h2>Upcoming Activities Box</h2></div></div>
         <div id="boardUpcoming" class="upcoming-list"><div class="loading-inline">Loading activities…</div></div>
       </div>
     </div>
     <div class="announcement-admin-grid">
       <div class="announcement-editor-card" id="adminAnnouncementEditor">
-        <div class="box-head"><div><span class="eyebrow">ADMINISTRATIVE</span><h2>Administrative Announcement</h2></div></div>
+        <div class="box-head"><div><span class="eyebrow">ADMINISTRATIVE</span><h2>Administrative Announcement Message Box</h2></div></div>
         <form id="adminAnnouncementForm" class="modal-form">
           <div class="modal-field full"><label>Title</label><input id="adminAnnTitle" required placeholder="Announcement title"></div>
           <div class="modal-field full"><label>Message</label><textarea id="adminAnnContent" required placeholder="Write the announcement message…"></textarea></div>
@@ -212,7 +212,7 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
         </form>
       </div>
       <div class="announcement-editor-card" id="bulletinEditor">
-        <div class="box-head"><div><span class="eyebrow">BULLETIN</span><h2>Bulletin Board Message</h2></div></div>
+        <div class="box-head"><div><span class="eyebrow">BULLETIN</span><h2>Bulletin Board Message Box</h2></div></div>
         <form id="adminBulletinForm" class="modal-form">
           <div class="modal-field full"><label>Title</label><input id="adminBulletinTitle" required placeholder="Bulletin title"></div>
           <div class="modal-field full"><label>Message</label><textarea id="adminBulletinContent" required placeholder="Write the bulletin message…"></textarea></div>
@@ -227,6 +227,26 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
         </form>
       </div>
     </div>
+    <div class="announcement-admin-grid" id="upcomingEditorGrid">
+      <div class="announcement-editor-card" id="upcomingEditor">
+        <div class="box-head"><div><span class="eyebrow">UPCOMING</span><h2>Upcoming Activities Box</h2><p>Manage activities that appear in the Upcoming Activities Box and the integrated Event Tracker.</p></div></div>
+        <form id="upcomingEventForm" class="task-form">
+          <div><label>Title</label><input id="upcomingTitle" required></div>
+          <div><label>Organized By</label><input id="upcomingOrganizer" required></div>
+          <div><label>Venue</label><input id="upcomingVenue"></div>
+          <div><label>Limited To</label><select id="upcomingLimited"><option value="ALL">All</option><option value="STUDENTS ONLY">Students Only</option><option value="SPECIFIC STUDENTS">Specific Students</option></select></div>
+          <div><label>Specific Section</label><input id="upcomingSection"></div>
+          <div><label>Specific Year Level</label><select id="upcomingYear"><option value="">Any</option><option>1ST YEAR</option><option>2ND YEAR</option><option>3RD YEAR</option><option>4TH YEAR</option></select></div>
+          <div><label>Can Be Viewed By</label><select id="upcomingAudience"><option value="ALL">All</option><option value="STUDENT">Students Only</option><option value="TEACHER_STAFF">Teachers and Staff Only</option></select></div>
+          <div><label>Date</label><input id="upcomingDate" type="date" required></div>
+          <div><label>Time</label><input id="upcomingTime" type="time" required></div>
+          <div><label>Approval Code (SSG)</label><input id="upcomingApprovalCode"></div>
+          <div><label>DRS / Form Reference (SSG)</label><input id="upcomingDrsRef"></div>
+          <div class="full"><label>Short Description</label><textarea id="upcomingDescription"></textarea></div>
+          <div class="full"><button class="modal-btn" type="submit">Create Activity</button><div id="upcomingMessage" class="modal-message"></div></div>
+        </form>
+      </div>
+    </div>
     <div id="portalPendingReview" class="portal-box-inner hidden-force" style="margin-top:16px">
       <div class="box-head"><div><span class="eyebrow">ADMIN REVIEW</span><h2>Messages Pending Approval</h2></div></div>
       <div id="portalPendingReviewList"></div>
@@ -236,10 +256,10 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
 </section>
 <section id="page-taskboard" class="page">
   <div class="portal-box">
-    <div class="box-head"><div><span class="eyebrow">SSG TASK BOARD</span><h1>Event Tracker</h1><p>Create, track and manage SSG activities directly inside LVConnect.</p></div><button class="portal-btn secondary" onclick="loadPortalEvents_()">↻ Refresh</button></div>
+    <div class="box-head"><div><span class="eyebrow">SSG TASK BOARD</span><h1>Event Tracker</h1><p>Create, track and manage activities using the LVConnect Events sheet as the Event Tracker data source.</p></div><button class="portal-btn secondary" onclick="loadPortalEvents_()">↻ Refresh</button></div>
     <div class="task-grid" id="taskMetrics"></div>
     <div class="portal-box-inner">
-      <div class="box-head"><div><span class="eyebrow">EVENT MANAGEMENT</span><h2>Create Event</h2><p>SSG activities require an approved DRS/form reference and approval code.</p></div></div>
+      <div class="box-head"><div><span class="eyebrow">EVENT MANAGEMENT</span><h2>Create Event</h2><p>Events are saved to the LVConnect Events sheet. SSG-posted activities require an approved DRS/form reference and approval code.</p></div></div>
       <form id="portalEventForm" class="task-form">
         <div><label>Title</label><input id="evtTitle" required></div>
         <div><label>Organized By</label><input id="evtOrganizer" required></div>
@@ -309,41 +329,35 @@ function applyRoleSpecificPortalAccess_(){
   const type=String(access?.account?.accountType||'').toUpperCase();
   const assigns=access?.assignments||[];
   const hasAssign=(re)=>assigns.some(a=>re.test(String((a.position||'')+' '+(a.office||'')+' '+(a.assignmentName||''))));
-  const isAdmin=type==='ADMIN';
-  const isStaff=type==='STAFF';
-  const isTeacher=type==='TEACHER';
-  const isStudent=type==='STUDENT';
+  const isAdmin=type==='ADMIN', isStaff=type==='STAFF', isTeacher=type==='TEACHER', isStudent=type==='STUDENT';
   const isSsg=hasAssign(/SSG|CHAIRPERSON|VICE CHAIR|TREASURER|OFFICER|ADVISER/i);
-  const isSsgAdviser=hasAssign(/SSG\s*ADVISER/i);
   const canSearch=isAdmin||isStaff||isTeacher||isSsg;
   const canDrs=isAdmin||isStaff||isTeacher||isSsg;
-  const canEservices=isTeacher||isStudent||isSsg;
-  const canBulletin=isAdmin||isStaff||isTeacher||isSsg;
+  const canEservices=hasPermission('ESERVICES_VIEW')||isTeacher||isStudent||isSsg;
+  const canBulletinView=hasPermission('BULLETIN_BOARD_VIEW')||isStaff||isTeacher||isSsg;
+  const canBulletinEdit=isStaff||isTeacher||isSsg;
+  const canAdminAnnouncementEdit=isAdmin&&hasPermission('ANNOUNCEMENT_MANAGE');
+  const canUpcomingEdit=isAdmin||isStaff||isTeacher||isSsg;
+  const canUpcomingView=canUpcomingEdit||hasPermission('TASK_BOARD_VIEW');
   const setNav=(id,show)=>{const el=$(id);if(el)el.classList.toggle('hidden',!show);};
-
-  // Sidebar is role-driven here; data-permission remains the backend authorization layer.
   const search=$('globalSearch');
   if(search){search.classList.toggle('hidden-force',!canSearch);search.classList.toggle('show',canSearch);}
   setNav('navEservices',canEservices);
-  setNav('navBulletinBoard',canBulletin);
+  setNav('navDrs',canDrs);
+  setNav('navBulletinBoard',canAdminAnnouncementEdit||canBulletinView||canUpcomingView);
+  setNav('navAdminMessages',isAdmin&&hasPermission('ANNOUNCEMENT_MANAGE'));
   setNav('navTaskBoard',hasPermission('TASK_BOARD_VIEW'));
-  setNav('navAdminMessages',isAdmin);
-  setNav('navSsgApprovals',!!(access?.canApproveAdditionalAccess || hasAssign(/CHAIRPERSON|SSG\s*ADVISER/i)));
-  const drs=$('navDrs');
-  if(drs)drs.classList.toggle('hidden',!canDrs);
-
-  // Bulletin Board tab: Admin = Admin Announcement + Upcoming Event;
-  // Teacher/Staff/SSG = Bulletin Board Message + Upcoming Event.
-  const adminDisplay=$('adminAnnouncementDisplay');
-  const bulletinDisplay=$('bulletinDisplay');
-  const upcomingDisplay=$('upcomingDisplay');
-  if(adminDisplay) adminDisplay.classList.toggle('hidden-force',!isAdmin);
-  if(bulletinDisplay) bulletinDisplay.classList.toggle('hidden-force',!isAdmin && !canBulletin);
-  if(upcomingDisplay) upcomingDisplay.classList.remove('hidden-force');
-  const adminEditor=$('adminAnnouncementEditor');
-  const bulletinEditor=$('bulletinEditor');
-  if(adminEditor) adminEditor.classList.toggle('hidden-force',!isAdmin);
-  if(bulletinEditor) bulletinEditor.classList.toggle('hidden-force',!(isStaff||isTeacher||isSsg));
+  setNav('navSsgApprovals',!!(access?.canApproveAdditionalAccess||hasAssign(/CHAIRPERSON|SSG\s*ADVISER/i)));
+  const adminDisplay=$('adminAnnouncementDisplay'), bulletinDisplay=$('bulletinDisplay'), upcomingDisplay=$('upcomingDisplay');
+  if(adminDisplay)adminDisplay.classList.toggle('hidden-force',!canAdminAnnouncementEdit);
+  if(bulletinDisplay)bulletinDisplay.classList.toggle('hidden-force',!canBulletinView);
+  if(upcomingDisplay)upcomingDisplay.classList.toggle('hidden-force',!canUpcomingView);
+  const adminEditor=$('adminAnnouncementEditor'), bulletinEditor=$('bulletinEditor'), upcomingEditor=$('upcomingEditor');
+  if(adminEditor)adminEditor.classList.toggle('hidden-force',!canAdminAnnouncementEdit);
+  if(bulletinEditor)bulletinEditor.classList.toggle('hidden-force',!canBulletinEdit);
+  if(upcomingEditor)upcomingEditor.classList.toggle('hidden-force',!canUpcomingEdit);
+  const taskForm=$('portalEventForm')?.closest('.portal-box-inner');
+  if(taskForm)taskForm.classList.toggle('hidden-force',!hasPermission('TASK_BOARD_VIEW'));
 }
 
 function hasPermission(p){return (access?.permissions||[]).map(x=>String(x).toUpperCase()).includes(String(p).toUpperCase())}
@@ -882,6 +896,12 @@ body.dark .drs-card:hover{border-color:#526675}
   };
   window.deletePortalEventUi_=async function(id){if(!confirm('Delete this event?'))return;loading(true,'Deleting event…');try{const r=await portalPost('DELETE_PORTAL_EVENT',{eventId:id});if(!r?.success)throw new Error(r?.message||'Unable to delete event.');await loadPortalEvents_()}catch(e){alert(e.message||String(e))}finally{loading(false)}};
   $('evtLimited')?.addEventListener('change',function(){const on=this.value==='SPECIFIC STUDENTS';$('evtSectionWrap').classList.toggle('hidden',!on);$('evtYearWrap').classList.toggle('hidden',!on)});
+  $('upcomingEventForm')?.addEventListener('submit',async function(e){
+    e.preventDefault();setMsg('upcomingMessage','',false);
+    const data={title:$('upcomingTitle').value.trim(),organizedBy:$('upcomingOrganizer').value.trim(),venue:$('upcomingVenue').value.trim(),limitedTo:$('upcomingLimited').value,section:$('upcomingSection').value.trim(),yearLevel:$('upcomingYear').value,viewAudience:$('upcomingAudience').value,eventDate:$('upcomingDate').value,eventTime:$('upcomingTime').value,approvalCode:$('upcomingApprovalCode').value.trim(),drsReference:$('upcomingDrsRef').value.trim(),description:$('upcomingDescription').value.trim()};
+    try{loading(true,'Creating activity…');const r=await portalPost('CREATE_PORTAL_EVENT',data);if(!r?.success)throw new Error(r?.message||'Unable to create activity.');setMsg('upcomingMessage',r.message||'Activity created.',true);this.reset();await loadPortalEvents_();await loadBoardDisplay_();}catch(e){setMsg('upcomingMessage',e.message||String(e),false)}finally{loading(false)}
+  });
+
   $('portalEventForm')?.addEventListener('submit',async function(e){
     e.preventDefault();setMsg('evtMessage','',false);
     const data={title:$('evtTitle').value.trim(),organizedBy:$('evtOrganizer').value.trim(),venue:$('evtVenue').value.trim(),limitedTo:$('evtLimited').value,section:$('evtSection').value.trim(),yearLevel:$('evtYear').value,viewAudience:$('evtAudience').value,eventDate:$('evtDate').value,eventTime:$('evtTime').value,approvalCode:$('evtApprovalCode').value.trim(),drsReference:$('evtDrsRef').value.trim(),dmsFolderId:$('evtDmsFolder').value.trim(),dmsReference:$('evtDmsRef').value.trim(),description:$('evtDescription').value.trim()};
@@ -923,7 +943,7 @@ body.dark .drs-card:hover{border-color:#526675}
   window.loadBoardDisplay_=loadBoardDisplay_;
   window.reviewPortalAnnouncementUi_=async function(id,decision){const remarks=prompt('Remarks (optional):')||'';loading(true,'Processing review…');try{const r=await portalPost('REVIEW_PORTAL_ANNOUNCEMENT',{announcementId:id,decision:decision,remarks:remarks});if(!r?.success)throw new Error(r?.message||'Unable to process review.');await loadPortalMessages_()}catch(e){alert(e.message||String(e))}finally{loading(false)}};
   function prepareAnnouncementForms_(){
-    const now=new Date();const ds=now.toISOString().slice(0,10);['adminAnnStart','adminBulletinStart'].forEach(id=>{const e=$(id);if(e&&!e.value)e.value=ds});
+    const now=new Date();const ds=now.toISOString().slice(0,10);['adminAnnStart','adminBulletinStart','upcomingDate'].forEach(id=>{const e=$(id);if(e&&!e.value)e.value=ds});
     $('adminAnnouncementForm')?.addEventListener('submit',async e=>{e.preventDefault();await submitMessage_('ADMINISTRATIVE')});
     $('adminBulletinForm')?.addEventListener('submit',async e=>{e.preventDefault();await submitMessage_('BULLETIN')});
   }
