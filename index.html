@@ -43,6 +43,14 @@
   .sidebar-brand-logo{width:170px;max-height:54px}
 }
 body.dark .brand-logo-img,body.dark .sidebar-brand-logo{filter:none}
+
+/* FINAL INTEGRATED MODULES */
+.password-wrap{position:relative;display:flex;align-items:center}.password-wrap input{padding-right:44px!important;width:100%}.password-toggle{position:absolute;right:7px;top:50%;transform:translateY(-50%);height:30px;min-width:32px;border:0;background:transparent;color:var(--muted);cursor:pointer;border-radius:7px}.password-toggle:hover{background:var(--bg);color:var(--navy)}
+.global-search{display:none;min-width:260px;max-width:390px;flex:1;margin-left:18px;position:relative}.global-search.show{display:flex}.global-search input{width:100%;height:38px;border:1px solid var(--border);border-radius:9px;padding:0 78px 0 12px;background:var(--white);color:var(--text);font-size:11px}.global-search button{position:absolute;right:4px;top:4px;height:30px;border:0;border-radius:7px;background:var(--navy);color:#fff;font-size:10px;font-weight:800;padding:0 10px}.topbar{gap:12px}.topbar .title{min-width:0}.topbar .actions{margin-left:auto}
+.talaan-toolbar,.task-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.talaan-toolbar select,.talaan-toolbar input,.task-toolbar select{height:38px;border:1px solid var(--border);border-radius:9px;padding:0 10px;background:var(--white);color:var(--text);font-size:11px}.talaan-summary-grid,.task-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}.metric-card{padding:15px;border:1px solid var(--border);border-radius:12px;background:var(--white)}.metric-card span{font-size:9px;color:var(--muted);text-transform:uppercase;font-weight:800}.metric-card strong{display:block;font-size:22px;margin-top:5px}.talaan-table-wrap{overflow:auto;border:1px solid var(--border);border-radius:12px}.talaan-table{width:100%;border-collapse:collapse;min-width:680px;font-size:10px}.talaan-table th,.talaan-table td{padding:9px 10px;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap}.talaan-table th{font-size:8px;color:var(--muted);text-transform:uppercase;background:var(--bg)}.talaan-table tr:last-child td{border-bottom:0}.event-card{border:1px solid var(--border);border-radius:13px;padding:15px;background:var(--white)}.event-card h3{font-size:14px;margin-bottom:5px}.event-meta{display:flex;gap:7px;flex-wrap:wrap;margin:7px 0}.event-chip{font-size:8px;font-weight:900;padding:5px 7px;border-radius:7px;background:var(--bg);color:var(--muted)}.event-desc{font-size:10px;line-height:1.55;color:var(--muted)}.event-actions{display:flex;gap:7px;margin-top:12px;flex-wrap:wrap}.task-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.task-form .full{grid-column:1/-1}.task-form label,.admin-review label{display:block;color:var(--muted);font-size:9px;margin-bottom:5px}.task-form input,.task-form select,.task-form textarea,.admin-review textarea{width:100%;border:1px solid var(--border);border-radius:9px;background:var(--white);color:var(--text);padding:10px;font-size:11px}.task-form input,.task-form select{height:40px}.task-form textarea,.admin-review textarea{min-height:85px;resize:vertical}.review-card{border:1px solid var(--border);border-radius:12px;padding:13px;background:var(--white);margin-bottom:8px}.review-card strong{font-size:11px}.review-card p{font-size:10px;color:var(--muted);margin-top:4px}.review-actions{display:flex;gap:7px;margin-top:9px}.search-result-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.search-result-field{padding:10px;border:1px solid var(--border);border-radius:9px}.search-result-field span{display:block;font-size:8px;color:var(--muted);text-transform:uppercase}.search-result-field b{display:block;font-size:11px;margin-top:3px}.dms-link-row{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+@media(max-width:900px){.talaan-summary-grid,.task-grid{grid-template-columns:repeat(2,1fr)}.global-search{min-width:190px}.task-form{grid-template-columns:1fr}}
+@media(max-width:650px){.global-search{display:none!important}.talaan-summary-grid,.task-grid{grid-template-columns:1fr}.search-result-grid{grid-template-columns:1fr}.talaan-toolbar{align-items:stretch}.talaan-toolbar>*{width:100%}}
+
 </style>
 </head>
 
@@ -88,11 +96,11 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
       <div class="modal-grid">
         <div class="modal-field full" id="caTalaanField"><label for="caTalaanCode">TALAAN Code</label><input id="caTalaanCode" type="text" placeholder="Enter your TALAAN Code" autocomplete="username"></div>
         <div class="modal-field full" id="caNameField" style="display:none"><label for="caName">Full Name</label><input id="caName" type="text" placeholder="Enter your registered full name" autocomplete="name"></div>
-        <div class="modal-field"><label for="caPassword">Password</label><input id="caPassword" type="password" minlength="8" autocomplete="new-password" required></div>
-        <div class="modal-field"><label for="caConfirmPassword">Confirm Password</label><input id="caConfirmPassword" type="password" minlength="8" autocomplete="new-password" required></div>
+        <div class="modal-field"><label for="caPassword">Password</label><input id="caPassword" type="password" minlength="12" autocomplete="new-password" required></div>
+        <div class="modal-field"><label for="caConfirmPassword">Confirm Password</label><input id="caConfirmPassword" type="password" minlength="12" autocomplete="new-password" required></div>
       </div>
       <button id="createAccountButton" class="modal-btn" type="submit">Create Account</button>
-      <div class="modal-footnote" id="createAccountFootnote">Your TALAAN Code is checked against the student records. Your LV email is used for notifications and is not your login username.</div>
+      <div class="modal-footnote" id="createAccountFootnote">Your TALAAN Code is checked against the student records. Your LV email is used for notifications and is not your login username. Passwords require 12+ characters with uppercase, lowercase, number, and special character.</div>
     </form>
   </div>
 </div>
@@ -142,6 +150,7 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
       <button class="nav-item active" data-page="dashboard"><span class="nav-icon">⌂</span>Dashboard</button>
       <div class="nav-label" style="margin-top:20px">Services</div>
       <button class="nav-item" data-page="eservices"><span class="nav-icon">□</span>E-Services</button>
+      <button class="nav-item" data-page="talaan" data-permission="TALAAN_VIEW"><span class="nav-icon">◫</span>TALAAN</button>
       <button class="nav-item" data-page="drs" data-permission="DRS_VIEW"><span class="nav-icon">▤</span>Document Routing</button>
       <button class="nav-item hidden" id="navAnnouncements" data-page="announcements"><span class="nav-icon">!</span>Bulletin Board</button>
       <button class="nav-item hidden" id="navTaskBoard" data-page="taskboard"><span class="nav-icon">☷</span>Task Board</button>
@@ -155,7 +164,7 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
   </aside>
   <div id="overlay" class="overlay"></div>
   <main class="main">
-    <header class="topbar"><div id="title" class="title"><h2>Dashboard</h2><p>Welcome to LVConnect Portal</p></div><div class="actions"><button id="menu" class="icon menu" type="button">☰</button><button class="icon" type="button" title="Notifications" data-page="notifications">◌</button><button id="logout" class="icon" type="button" title="Sign out">↪</button></div></header>
+    <header class="topbar"><div id="title" class="title"><h2>Dashboard</h2><p>Welcome to LVConnect Portal</p></div><div id="globalSearch" class="global-search"><input id="globalSearchInput" type="search" placeholder="Search student name or TALAAN Code"><button type="button" id="globalSearchButton">Search</button></div><div class="actions"><button id="menu" class="icon menu" type="button">☰</button><button class="icon" type="button" title="Notifications" data-page="notifications">◌</button><button id="logout" class="icon" type="button" title="Sign out">↪</button></div></header>
     <div class="content">
       <section id="page-dashboard" class="page active">
   <div class="portal-welcome"><div><span class="eyebrow">LVCONNECT PORTAL</span><h1 id="welcome">Welcome to LVConnect</h1><p>Your unified portal for school services, records, and digital transactions.</p></div><button class="theme-btn" type="button" onclick="toggleTheme_()">◐</button></div>
@@ -168,44 +177,96 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
   </div>
 </section>
 <section id="page-eservices" class="page"><div class="portal-box"><div class="box-head"><div><span class="eyebrow">E-SERVICES</span><h1>Forms & Digital Services</h1><p>Complete available forms inside LVConnect. Submitted forms are generated as documents and entered into DRS.</p></div></div><div id="eserviceFillable" class="eservice-groups"></div><div class="portal-box downloadable-box"><div class="box-head"><div><span class="eyebrow">DOWNLOADABLE</span><h2>Forms that remain downloadable</h2><p>These documents are kept outside the digital form workflow because of privacy, sensitivity, or format requirements.</p></div></div><div id="downloadableForms" class="form-grid"></div></div></div></section>
+<section id="page-talaan" class="page">
+  <div class="portal-box">
+    <div class="box-head"><div><span class="eyebrow">TALAAN</span><h1>Attendance Management</h1><p>Integrated TALAAN attendance data for the access level assigned to your account.</p></div><button class="portal-btn secondary" onclick="loadTalaanPortal_()">↻ Refresh</button></div>
+    <div class="talaan-toolbar" style="margin-bottom:14px">
+      <input id="talaanDate" type="date">
+      <select id="talaanAttendanceYear"><option value="1">1st Year</option><option value="2">2nd Year</option><option value="3">3rd Year</option><option value="4">4th Year</option></select>
+      <button class="portal-btn secondary" type="button" id="loadTalaanAttendanceButton">Load Attendance</button>
+    </div>
+    <div id="talaanMetrics" class="talaan-summary-grid"></div>
+    <div class="portal-box-inner">
+      <div class="box-head"><div><span class="eyebrow">ATTENDANCE</span><h2>Attendance Records</h2></div></div>
+      <div id="talaanAttendanceTable"><div class="loading-inline">Select a year level to load attendance.</div></div>
+    </div>
+  </div>
+</section>
 <section id="page-drs" class="page"><div class="portal-box"><div class="box-head"><div><span class="eyebrow">DOCUMENT ROUTING SYSTEM</span><h1>Document Routing</h1><p>Open a request to view its movement, review the document, and perform actions permitted to your account.</p></div><button class="portal-btn secondary" onclick="loadPortalDrs_()">↻ Refresh</button></div><div id="drsDashboard" class="drs-dashboard"><div class="loading-inline">Loading requests…</div></div></div></section>
 <section id="page-announcements" class="page">
   <div class="portal-box">
-    <div class="box-head"><div><span class="eyebrow">ADMINISTRATION</span><h1>Bulletin Board</h1><p>Manage SSG bulletin messages and upcoming activities for the LVConnect community.</p></div><button class="portal-btn secondary" onclick="loadAdminAnnouncements_()">↻ Refresh</button></div>
+    <div class="box-head"><div><span class="eyebrow">MESSAGES</span><h1>Bulletin Board</h1><p>Administrative messages and bulletin posts are controlled by your account authority.</p></div><button class="portal-btn secondary" onclick="loadPortalMessages_()">↻ Refresh</button></div>
     <div class="announcement-admin-grid">
       <div class="announcement-editor-card" id="adminAnnouncementEditor">
         <div class="box-head"><div><span class="eyebrow">ADMINISTRATIVE</span><h2>Administrative Announcement</h2></div></div>
         <form id="adminAnnouncementForm" class="modal-form">
           <div class="modal-field full"><label>Title</label><input id="adminAnnTitle" required placeholder="Announcement title"></div>
           <div class="modal-field full"><label>Message</label><textarea id="adminAnnContent" required placeholder="Write the announcement message…"></textarea></div>
-          <div class="modal-grid"><div class="modal-field"><label>Priority</label><select id="adminAnnPriority"><option>IMPORTANT</option><option>NORMAL</option></select></div><div class="modal-field"><label>Start Date</label><input id="adminAnnStart" type="date"></div><div class="modal-field"><label>End Date</label><input id="adminAnnEnd" type="date"></div></div>
-          <button class="modal-btn" type="submit">Post Administrative Announcement</button><div id="adminAnnMsg" class="modal-message"></div>
+          <div class="modal-grid">
+            <div class="modal-field"><label>Priority</label><select id="adminAnnPriority"><option>IMPORTANT</option><option>NORMAL</option></select></div>
+            <div class="modal-field"><label>Can Be Viewed By</label><select id="adminAnnTarget"><option value="ALL">All</option><option value="STUDENT">Students Only</option><option value="TEACHER_STAFF">Teachers and Staff Only</option></select></div>
+            <div class="modal-field"><label>Starting Date</label><input id="adminAnnStart" type="date" required></div>
+            <div class="modal-field"><label>End Date</label><input id="adminAnnEnd" type="date"></div>
+            <div class="modal-field"><label>Time</label><input id="adminAnnTime" type="time"></div>
+          </div>
+          <button class="modal-btn" type="submit">Post</button><div id="adminAnnMsg" class="modal-message"></div>
         </form>
       </div>
       <div class="announcement-editor-card" id="bulletinEditor">
-        <div class="box-head"><div><span class="eyebrow">SSG BULLETIN</span><h2>Bulletin Board Message</h2></div></div>
+        <div class="box-head"><div><span class="eyebrow">BULLETIN</span><h2>Bulletin Board Message</h2></div></div>
         <form id="adminBulletinForm" class="modal-form">
           <div class="modal-field full"><label>Title</label><input id="adminBulletinTitle" required placeholder="Bulletin title"></div>
           <div class="modal-field full"><label>Message</label><textarea id="adminBulletinContent" required placeholder="Write the bulletin message…"></textarea></div>
-          <div class="modal-grid"><div class="modal-field"><label>Start Date</label><input id="adminBulletinStart" type="date"></div><div class="modal-field"><label>End Date</label><input id="adminBulletinEnd" type="date"></div></div>
-          <button class="modal-btn" type="submit">Post Bulletin Message</button><div id="adminBulletinMsg" class="modal-message"></div>
-        </form>
-      </div>
-      <div class="announcement-editor-card">
-        <div class="box-head"><div><span class="eyebrow">UPCOMING EVENT</span><h2>Upcoming Event</h2></div></div>
-        <form id="adminUpcomingForm" class="modal-form">
-          <div class="modal-field full"><label>Title</label><input id="adminEvTitle" required placeholder="Event title"></div>
-          <div class="modal-grid"><div class="modal-field"><label>Who</label><input id="adminEvWho" placeholder="Organizer / participants"></div><div class="modal-field"><label>What</label><input id="adminEvWhat" placeholder="Event / activity"></div><div class="modal-field"><label>Where</label><input id="adminEvWhere" placeholder="Venue / platform"></div><div class="modal-field"><label>Date & Time</label><input id="adminEvWhen" type="datetime-local" required></div></div>
-          <div class="modal-field full"><label>Short Description</label><textarea id="adminEvDesc" placeholder="Brief event description…"></textarea></div>
-          <button class="modal-btn" type="submit">Post Upcoming Event</button><div id="adminEvMsg" class="modal-message"></div>
+          <div class="modal-grid">
+            <div class="modal-field"><label>Priority</label><select id="adminBulletinPriority"><option>NORMAL</option><option>IMPORTANT</option></select></div>
+            <div class="modal-field"><label>Can Be Viewed By</label><select id="adminBulletinTarget"><option value="ALL">All</option><option value="STUDENT">Students Only</option><option value="TEACHER_STAFF">Teachers and Staff Only</option></select></div>
+            <div class="modal-field"><label>Starting Date</label><input id="adminBulletinStart" type="date" required></div>
+            <div class="modal-field"><label>End Date</label><input id="adminBulletinEnd" type="date"></div>
+            <div class="modal-field"><label>Time</label><input id="adminBulletinTime" type="time"></div>
+          </div>
+          <button class="modal-btn" type="submit" id="bulletinSubmitButton">Post</button><div id="adminBulletinMsg" class="modal-message"></div>
         </form>
       </div>
     </div>
-    <div class="portal-box-inner"><div class="box-head"><div><span class="eyebrow">ACTIVE POSTS</span><h2>Published</h2></div></div><div id="adminAnnouncementsList" class="announcement-list"><div class="loading-inline">Loading…</div></div></div>
+    <div id="portalPendingReview" class="portal-box-inner hidden-force" style="margin-top:16px">
+      <div class="box-head"><div><span class="eyebrow">ADMIN REVIEW</span><h2>Messages Pending Approval</h2></div></div>
+      <div id="portalPendingReviewList"></div>
+    </div>
+    <div class="portal-box-inner" style="margin-top:16px"><div class="box-head"><div><span class="eyebrow">ACTIVE POSTS</span><h2>Published</h2></div></div><div id="adminAnnouncementsList" class="announcement-list"><div class="loading-inline">Loading…</div></div></div>
   </div>
 </section>
-<section id="page-taskboard" class="page"><div class="portal-box"><div class="box-head"><div><span class="eyebrow">SSG</span><h1>Task Board</h1><p>SSG event tracker and task management.</p></div><button class="portal-btn secondary" type="button" onclick="refreshEventTracker_()">↻ Refresh</button></div><div class="event-tracker-wrap"><iframe id="eventTrackerFrame" title="SSG Event Tracker" src="https://docs.google.com/spreadsheets/d/1ujg16zYA9qiRK8yqYBIpFQqdDBEd-keexpspyvlIWsk/edit?usp=sharing" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><div class="event-tracker-note">The SSG Event Tracker is connected directly to the official Google Sheet. Your Google account must have access to the spreadsheet.</div><div class="dms-box"><div><span class="eyebrow">DMS</span><h2>SSG Data Management System</h2><p>Access your SSG files by folder or upload directly through the school Drive.</p></div><a class="portal-btn" href="https://drive.google.com/drive/folders/0AMCI1lGTh4rcUk9PVA" target="_blank" rel="noopener">Open DMS</a></div></div></section>
-<section id="page-notifications" class="page"><div class="placeholder"><div class="placeholder-icon">N</div><h2>Notifications</h2><p>Your LVConnect notifications and institutional updates will appear here.</p></div></section>
+<section id="page-taskboard" class="page">
+  <div class="portal-box">
+    <div class="box-head"><div><span class="eyebrow">SSG TASK BOARD</span><h1>Event Tracker</h1><p>Create, track and manage SSG activities directly inside LVConnect.</p></div><button class="portal-btn secondary" onclick="loadPortalEvents_()">↻ Refresh</button></div>
+    <div class="task-grid" id="taskMetrics"></div>
+    <div class="portal-box-inner">
+      <div class="box-head"><div><span class="eyebrow">EVENT MANAGEMENT</span><h2>Create Event</h2><p>SSG activities require an approved DRS/form reference and approval code.</p></div></div>
+      <form id="portalEventForm" class="task-form">
+        <div><label>Title</label><input id="evtTitle" required></div>
+        <div><label>Organized By</label><input id="evtOrganizer" required></div>
+        <div><label>Venue</label><input id="evtVenue"></div>
+        <div><label>Limited To</label><select id="evtLimited"><option value="ALL">All</option><option value="STUDENTS ONLY">Students Only</option><option value="SPECIFIC STUDENTS">Specific Students</option></select></div>
+        <div id="evtSectionWrap" class="hidden"><label>Specific Section</label><input id="evtSection"></div>
+        <div id="evtYearWrap" class="hidden"><label>Specific Year Level</label><select id="evtYear"><option value="">Select year level</option><option>1ST YEAR</option><option>2ND YEAR</option><option>3RD YEAR</option><option>4TH YEAR</option></select></div>
+        <div><label>Can Be Viewed By</label><select id="evtAudience"><option value="ALL">All</option><option value="STUDENT">Students Only</option><option value="TEACHER_STAFF">Teachers and Staff Only</option></select></div>
+        <div><label>Date</label><input id="evtDate" type="date" required></div>
+        <div><label>Time</label><input id="evtTime" type="time" required></div>
+        <div><label>Approval Code</label><input id="evtApprovalCode" placeholder="Required for SSG posting"></div>
+        <div><label>DRS / Form Reference</label><input id="evtDrsRef" placeholder="Approved DRS reference"></div>
+        <div><label>DMS Folder ID (optional)</label><input id="evtDmsFolder"></div>
+        <div><label>DMS Reference (optional)</label><input id="evtDmsRef"></div>
+        <div class="full"><label>Short Description</label><textarea id="evtDescription"></textarea></div>
+        <div class="full"><button class="modal-btn" type="submit">Submit</button><div id="evtMessage" class="modal-message"></div></div>
+      </form>
+    </div>
+    <div class="portal-box-inner" style="margin-top:16px">
+      <div class="box-head"><div><span class="eyebrow">ACTIVITIES</span><h2>Event Tracker</h2></div></div>
+      <div id="portalEventsList" class="task-grid"><div class="loading-inline">Loading events…</div></div>
+    </div>
+    <div class="dms-box"><div><span class="eyebrow">DMS</span><h2>SSG Data Management System</h2><p>Operations files remain in the existing Shared Drive structure.</p></div><a class="portal-btn" href="https://drive.google.com/drive/folders/0AMCI1lGTh4rcUk9PVA" target="_blank" rel="noopener">Open DMS</a></div>
+  </div>
+</section>
+<section id="page-notifications" class="page"><div class="portal-box"><div class="box-head"><div><span class="eyebrow">ACCOUNT</span><h1>Notifications</h1><p>Your LVConnect notifications and transaction alerts.</p></div><button class="portal-btn secondary" onclick="loadNotifications_()">↻ Refresh</button></div><div id="notificationsList"><div class="loading-inline">Loading notifications…</div></div></div></section>
       
 <!-- SSG ADDITIONAL ACCESS APPROVALS -->
 <section id="page-ssg-approvals" class="page">
@@ -221,7 +282,7 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
 </section>
 
 <section id="page-profile" class="page"><div class="profile portal-box"><div class="profile-hero"><div id="profilePicturePreview" class="profile-photo">LV</div><div><span class="eyebrow">MY PROFILE</span><h1>Account information</h1><p>Your current LVConnect identity and SSG assignments.</p><label class="portal-btn secondary upload-photo">Add Picture<input id="profilePictureInput" type="file" accept="image/*"></label></div></div><div class="profile-rows"><div class="row"><span>Name</span><span id="profileName">—</span></div><div class="row"><span>TALAAN Code</span><span id="profileTalaan">—</span></div><div class="row"><span>LV Email</span><span id="profileEmail">—</span></div><div class="row"><span>Account ID</span><span id="profileAccountId">—</span></div><div class="row"><span>Account Type</span><span id="profileType">—</span></div><div class="row"><span>SSG / Class Position</span><span id="profilePosition">—</span></div><div class="row"><span>Office</span><span id="profileOffice">—</span></div><div class="row"><span>Permissions</span><span id="profilePermissions">—</span></div></div><div class="request-access"><h3>Request Additional Access</h3><p>If you hold a class officer or SSG officer position, submit it for verification and approval.</p><button id="requestAccessButton" class="profile-btn" type="button">Request Additional Access</button></div></div></section>
-          <section id="page-settings" class="page"><div class="portal-box settings-box"><div class="box-head"><div><span class="eyebrow">ACCOUNT</span><h1>Settings</h1><p>Only your LV email and password can be changed here.</p></div></div><div class="settings-section"><h2>Change Password</h2><div class="settings-grid"><div><label>Current Password</label><input id="setCurrentPassword" type="password"></div><div><label>New Password</label><input id="setNewPassword" type="password" minlength="8"></div><div><label>Confirm New Password</label><input id="setConfirmPassword" type="password" minlength="8"></div></div><button class="portal-btn" onclick="savePasswordSettings_()">Change Password</button></div><div class="settings-section"><h2>Change LV Email</h2><div class="settings-grid"><div><label>New LV Email</label><input id="setNewEmail" type="email" placeholder="yourname@laverdad.edu.ph"></div><div><label>Verification Code</label><input id="setEmailCode" inputmode="numeric" maxlength="6" placeholder="6-digit code"></div></div><div class="settings-actions"><button class="portal-btn secondary" onclick="requestEmailVerification_()">Send Verification</button><button class="portal-btn" onclick="confirmEmailSettings_()">Verify & Save Email</button></div><div id="settingsMessage" class="portal-status"></div></div></div></section>
+          <section id="page-settings" class="page"><div class="portal-box settings-box"><div class="box-head"><div><span class="eyebrow">ACCOUNT</span><h1>Settings</h1><p>Only your LV email and password can be changed here.</p></div></div><div class="settings-section"><h2>Change Password</h2><p style="color:var(--muted);font-size:10px">12+ characters with uppercase, lowercase, number, and special character. Previous passwords cannot be reused.</p><div class="settings-grid"><div><label>Current Password</label><input id="setCurrentPassword" type="password"></div><div><label>New Password</label><input id="setNewPassword" type="password" minlength="12"></div><div><label>Confirm New Password</label><input id="setConfirmPassword" type="password" minlength="12"></div></div><button class="portal-btn" onclick="savePasswordSettings_()">Change Password</button></div><div class="settings-section"><h2>Change LV Email</h2><div class="settings-grid"><div><label>New LV Email</label><input id="setNewEmail" type="email" placeholder="yourname@laverdad.edu.ph"></div><div><label>Verification Code</label><input id="setEmailCode" inputmode="numeric" maxlength="6" placeholder="6-digit code"></div></div><div class="settings-actions"><button class="portal-btn secondary" onclick="requestEmailVerification_()">Send Verification</button><button class="portal-btn" onclick="confirmEmailSettings_()">Verify & Save Email</button></div><div id="settingsMessage" class="portal-status"></div></div></div></section>
 </div>
   </main>
 </section>
@@ -236,16 +297,16 @@ function loading(show,text){$('loadingText').textContent=text||'Please wait...';
 function error(msg){$('loginError').textContent=msg||'Unable to sign in.';$('loginError').classList.add('show')}
 function clearError(){$('loginError').textContent='';$('loginError').classList.remove('show')}
 async function post(action,data={}){return new Promise((resolve,reject)=>{const callbackName='__lvconnectCallback_'+Date.now()+'_'+Math.random().toString(36).slice(2);const script=document.createElement('script');const query=new URLSearchParams();query.set('action',action);query.set('callback',callbackName);Object.keys(data).forEach(k=>query.set(k,String(data[k]??'')));let timer=setTimeout(()=>{cleanup();reject(new Error('Request timed out. Please try again.'))},20000);function cleanup(){clearTimeout(timer);delete window[callbackName];if(script.parentNode)script.parentNode.removeChild(script)}window[callbackName]=function(result){cleanup();resolve(result)};script.onerror=function(){cleanup();reject(new Error('Unable to connect to LVConnect Backend.'))};script.src=API_URL+(API_URL.includes('?')?'&':'?')+query.toString();document.head.appendChild(script)})}
-async function login(code,password){const r=await post('LOGIN',{talaanCode:code,password});if(!r||r.success!==true)throw new Error(r?.message||'Invalid TALAAN Code or password.');session={sessionId:r.sessionId,account:r.account};window.currentSessionId=session.sessionId;localStorage.setItem(STORAGE_KEY,JSON.stringify(session));await loadAccess()}
+async function login(code,password){const r=await post('LOGIN',{talaanCode:code,password});if(!r||r.success!==true)throw new Error(r?.message||'Invalid TALAAN Code or password.');session={sessionId:r.sessionId,account:r.account};localStorage.setItem(STORAGE_KEY,JSON.stringify(session));await loadAccess()}
 async function loadAccess(){const r=await post('CURRENT_USER',{sessionId:session?.sessionId||''});if(!r||!r.account)throw new Error(r?.message||'Unable to load account access.');access=r;session.account=r.account;localStorage.setItem(STORAGE_KEY,JSON.stringify(session));applyUser()}
 function applyUser(){const a=access?.account;if(!a)return;const name=[a.firstName,a.middleInitial,a.surname].filter(Boolean).join(' ').trim()||'LVConnect User';$('sideUser').textContent=name;$('sideRole').textContent=a.accountType||'Account';$('welcome').textContent='Welcome, '+(a.firstName||'User')+'.';$('avatar').textContent=((a.firstName||'L')[0]+(a.surname||'V')[0]).toUpperCase();$('profileName').textContent=name;$('profileTalaan').textContent=a.talaanId||'—';$('profileEmail').textContent=a.email||'—';$('profileAccountId').textContent=a.accountId||'—';$('profileType').textContent=a.accountType||'—';$('profilePermissions').textContent=(access.permissions||[]).length?access.permissions.join(', '):'None';applyPermissions()}
 function hasPermission(p){return (access?.permissions||[]).map(x=>String(x).toUpperCase()).includes(String(p).toUpperCase())}
 function applyPermissions(){document.querySelectorAll('[data-permission]').forEach(el=>el.classList.toggle('hidden',!hasPermission(el.dataset.permission)))}
 function openApp(){$('loginScreen').style.display='none';$('app').classList.add('active');ensurePostLoginNavigation_();openPage('dashboard')}
 function ensurePostLoginNavigation_(){try{if(typeof ensureBottom==='function')ensureBottom()}catch(e){}}
-function clearSession(){session=null;access=null;window.currentSessionId='';localStorage.removeItem(STORAGE_KEY)}
+function clearSession(){session=null;access=null;localStorage.removeItem(STORAGE_KEY)}
 async function logout(){try{loading(true,'Signing out...');if(session?.sessionId)await post('LOGOUT',{sessionId:session.sessionId})}catch(e){}finally{clearSession();loading(false);$('app').classList.remove('active');$('loginScreen').style.display='flex';$('loginForm').reset()}}
-const titles={dashboard:['Dashboard','Welcome to LVConnect Portal'],eservices:['E-Services','Digital institutional services'],drs:['Document Routing','Requests and document tracking'],notifications:['Notifications','Updates and transaction alerts'],profile:['My Profile','Account information and settings'],'ssg-approvals':['Approval Requests','Review and approve SSG access requests'],'taskboard':['Task Board','SSG event tracker and task management'],'settings':['Settings','Account settings']};
+const titles={talaan:['TALAAN','Attendance management'],taskboard:['Event Tracker','SSG event tracker and task management'],dashboard:['Dashboard','Welcome to LVConnect Portal'],eservices:['E-Services','Digital institutional services'],drs:['Document Routing','Requests and document tracking'],notifications:['Notifications','Updates and transaction alerts'],profile:['My Profile','Account information and settings'],'ssg-approvals':['Approval Requests','Review and approve SSG access requests'],'taskboard':['Task Board','SSG event tracker and task management'],'settings':['Settings','Account settings']};
 function openPage(page){const target=$('page-'+page);if(!target)return;const restricted=document.querySelector('.nav-item[data-page="'+page+'"][data-permission]');if(restricted&&!hasPermission(restricted.dataset.permission))return;document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));target.classList.add('active');document.querySelectorAll('.nav-item').forEach(x=>x.classList.toggle('active',x.dataset.page===page));if(titles[page])$('title').innerHTML='<h2>'+titles[page][0]+'</h2><p>'+titles[page][1]+'</p>';closeMenu()}
 function closeMenu(){$('sidebar').classList.remove('open');$('overlay').classList.remove('active')}
 function openModal(id){$(id).classList.add('show')}
@@ -294,11 +355,11 @@ $('requestAccessButton').addEventListener('click',()=>{clearModalMessage('additi
 $('accessType').addEventListener('change',updateAccessPositions);
 $('accessOffice').addEventListener('change',updateAccessPositions);
 $('additionalAccessForm').addEventListener('submit',async e=>{e.preventDefault();clearModalMessage('additionalAccessMessage');const type=$('accessType').value,position=$('accessPosition').value,office=$('accessOffice').value;if(!type||!position)return showModalMessage('additionalAccessMessage','Please select the access type and position.');if(type==='SSG OFFICER'&&!office)return showModalMessage('additionalAccessMessage','Please select the SSG office.');const btn=$('additionalAccessButton');btn.disabled=true;btn.textContent='Submitting...';try{const r=await post('SUBMIT_ADDITIONAL_ACCESS_REQUEST',{sessionId:session.sessionId,requestType:type,position:position,office:office});if(!r||r.success!==true)throw new Error(r?.message||'Unable to submit access request.');showModalMessage('additionalAccessMessage',(r.message||'Request submitted.')+(r.requestId?' Request ID: '+r.requestId:''),true);$('additionalAccessForm').reset();updateAccessPositions()}catch(err){showModalMessage('additionalAccessMessage',err.message||'Unable to submit access request.')}finally{btn.disabled=false;btn.textContent='Submit Access Request'}});
-$('createAccountForm').addEventListener('submit',async e=>{e.preventDefault();clearModalMessage('createAccountMessage');const talaanCode=$('caTalaanCode').value.trim();const name=$('caName').value.trim();const password=$('caPassword').value;const confirm=$('caConfirmPassword').value;if(createAccountRegistrationType==='STUDENT'&&!talaanCode)return showModalMessage('createAccountMessage','Please enter your TALAAN Code.');if(createAccountRegistrationType==='STAFF'&&!name)return showModalMessage('createAccountMessage','Please enter your registered full name.');if(password!==confirm)return showModalMessage('createAccountMessage','Passwords do not match.');const btn=$('createAccountButton');btn.disabled=true;btn.textContent='Creating...';try{const action=createAccountRegistrationType==='STAFF'?'REGISTER_STAFF_ACCOUNT':'CREATE_STUDENT_ACCOUNT';const r=await post(action,{talaanCode:talaanCode,name:name,password:password,confirmPassword:confirm});if(!r||r.success!==true)throw new Error(r?.message||'Unable to create account.');showModalMessage('createAccountMessage',r.message,true);$('createAccountForm').reset()}catch(err){showModalMessage('createAccountMessage',err.message||'Unable to create account.')}finally{btn.disabled=false;btn.textContent=createAccountRegistrationType==='STAFF'?'Register Account':'Create Account'}});
+$('createAccountForm').addEventListener('submit',async e=>{e.preventDefault();clearModalMessage('createAccountMessage');const talaanCode=$('caTalaanCode').value.trim();const name=$('caName').value.trim();const password=$('caPassword').value;const confirm=$('caConfirmPassword').value;if(createAccountRegistrationType==='STUDENT'&&!talaanCode)return showModalMessage('createAccountMessage','Please enter your TALAAN Code.');if(createAccountRegistrationType==='STAFF'&&!name)return showModalMessage('createAccountMessage','Please enter your registered full name.');if(password!==confirm)return showModalMessage('createAccountMessage','Passwords do not match.');const btn=$('createAccountButton');btn.disabled=true;btn.textContent='Creating...';try{const action=createAccountRegistrationType==='STAFF'?'REGISTER_STAFF_ACCOUNT':'CREATE_STUDENT_ACCOUNT';const r=await post(action,{talaanCode:talaanCode,name:name,password:password,confirmPassword:confirm});if(!r||r.success!==true)throw new Error(r?.message||'Unable to create account.');const codeText=createAccountRegistrationType==='STAFF'&&r.talaanCode?'<div style="margin-top:10px;padding:12px;border:1px solid var(--border);border-radius:10px;text-align:center"><span class="eyebrow">YOUR TALAAN CODE</span><strong style="display:block;font-size:20px;letter-spacing:1px;margin-top:4px">'+String(r.talaanCode).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</strong><small style="display:block;color:var(--muted);margin-top:5px">Use this code as your LVConnect login username.</small></div>':'';const msg=$('createAccountMessage');msg.innerHTML='<span>'+String(r.message||'Account created successfully.').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</span>'+codeText;msg.className='modal-message show success';if(createAccountRegistrationType==='STUDENT')$('createAccountForm').reset();}catch(err){showModalMessage('createAccountMessage',err.message||'Unable to create account.')}finally{btn.disabled=false;btn.textContent=createAccountRegistrationType==='STAFF'?'Register Account':'Create Account'}});
 $('requestTalaanForm').addEventListener('submit',async e=>{e.preventDefault();clearModalMessage('requestTalaanMessage');const btn=$('requestTalaanButton');btn.disabled=true;btn.textContent='Submitting...';try{const r=await post('SUBMIT_ACCOUNT_REQUEST',{requestType:'REQUEST_TALAAN_CODE',email:$('rtEmail').value.trim(),firstName:$('rtFirstName').value.trim(),middleInitial:$('rtMiddleInitial').value.trim(),surname:$('rtSurname').value.trim(),details:$('rtDetails').value.trim()});if(!r||r.success!==true)throw new Error(r?.message||'Unable to submit TALAAN Code request.');showModalMessage('requestTalaanMessage',r.message+' Request ID: '+r.requestId,true);$('requestTalaanForm').reset()}catch(err){showModalMessage('requestTalaanMessage',err.message||'Unable to submit request.')}finally{btn.disabled=false;btn.textContent='Submit TALAAN Code Request'}});
 document.querySelectorAll('[data-page]').forEach(el=>el.addEventListener('click',()=>openPage(el.dataset.page)));
 $('logout').addEventListener('click',logout);$('menu').addEventListener('click',()=>$('sidebar').classList.add('open'));$('overlay').addEventListener('click',closeMenu);
-(async function(){const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;try{session=JSON.parse(raw);if(!session?.sessionId)throw new Error('Invalid session');window.currentSessionId=session.sessionId;loading(true,'Restoring your session...');await loadAccess();openApp()}catch(e){clearSession()}finally{loading(false)}})();
+(async function(){const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;try{session=JSON.parse(raw);if(!session?.sessionId)throw new Error('Invalid session');loading(true,'Restoring your session...');await loadAccess();openApp()}catch(e){clearSession()}finally{loading(false)}})();
 </script>
 
 <script id="lvconnect-session-heartbeat">
@@ -392,8 +453,8 @@ async function approveSSGRequest(requestId) {
       'APPROVE_ADDITIONAL_ACCESS_REQUEST',
       {
         sessionId:
-          session?.sessionId ||
           window.currentSessionId ||
+          localStorage.getItem('lvconnectSessionId') ||
           '',
         requestId: requestId,
         officerCode: officerCode.trim()
@@ -692,24 +753,136 @@ body.dark .drs-card:hover{border-color:#526675}
   // Profile picture should also be reflected in the sidebar/greeting after refresh.
   setTimeout(loadAccessUiExtras,300);
 })();
-</script><script id="lvconnect-announcements-final">
+</script>
+
+<script id="lvconnect-final-integrated-ui">
 (function(){
-  const cache={};
-  function esc(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
-  function cached(action,data,ttl){const key=action+'|'+JSON.stringify(data||{});const hit=cache[key];if(hit&&Date.now()-hit.at<ttl)return Promise.resolve(hit.value);return window.portalPost(action,data).then(r=>{cache[key]={at:Date.now(),value:r};return r});}
-  function clearCache(){Object.keys(cache).forEach(k=>delete cache[k]);}
-  function isAdmin(){return String(access?.account?.accountType||'').toUpperCase()==='ADMIN'||hasPermission('ANNOUNCEMENT_MANAGE');}
-  function isSsg(){return !!(access?.assignments||[]).length && (access.assignments||[]).some(a=>/SSG|CHAIR|VICE CHAIR|TREASURER|OFFICER|ADVISER|PUBLIC INFORMATION/i.test((a.position||'')+' '+(a.office||'')));}
-  function canManageBoard(){return isAdmin()||isSsg();}
-  function applyNav(){const n=$('navAnnouncements');if(n)n.classList.toggle('hidden',!canManageBoard());const ae=$('adminAnnouncementEditor');if(ae)ae.classList.toggle('hidden-force',!isAdmin());const be=$('bulletinEditor');if(be)be.classList.toggle('hidden-force',!canManageBoard());}
-  function render(items){const box=$('adminAnnouncementsList');if(!box)return;box.innerHTML=(items||[]).map(x=>{let m={};const up=String(x.type||'').toUpperCase()==='UPCOMING';if(up){try{m=JSON.parse(x.content||'{}')}catch(e){}}const detail=up?[m.who&&'Who: '+m.who,m.what&&'What: '+m.what,m.where&&'Where: '+m.where,m.when&&'When: '+m.when,m.description].filter(Boolean).join(' · '):x.content||'';return '<div class="announcement-posted"><h3>'+esc(x.title||'Untitled')+'</h3><div class="meta">'+esc(up?'UPCOMING EVENT':(x.priority||'NORMAL'))+' · '+esc(x.createdAt||'')+'</div><div style="white-space:pre-line">'+esc(detail)+'</div></div>'}).join('')||'<div class="empty-state">No active posts.</div>';}
-  window.loadAdminAnnouncements_=async function(){if(!canManageBoard())return;const b=$('adminAnnouncementsList');if(b)b.innerHTML='<div class="loading-inline">Loading announcements…</div>';try{const r=await cached('GET_ANNOUNCEMENTS',{},15000);if(!r?.success)throw new Error(r?.message||'Unable to load announcements.');render(r.announcements||[])}catch(e){if(b)b.innerHTML='<div class="empty-state">'+esc(e.message||e)+'</div>'}};
-  window.postAnnouncement_=async function postAnnouncement_(mode){const isUp=mode==='upcoming',isBulletin=mode==='bulletin';const msg=$(isUp?'adminEvMsg':isBulletin?'adminBulletinMsg':'adminAnnMsg');let data,formId,loadingText;if(isUp){data={type:'UPCOMING',title:$('adminEvTitle').value.trim(),content:JSON.stringify({who:$('adminEvWho').value.trim(),what:$('adminEvWhat').value.trim(),where:$('adminEvWhere').value.trim(),when:$('adminEvWhen').value,description:$('adminEvDesc').value.trim()}),priority:'NORMAL',startDate:$('adminEvWhen').value};formId='adminUpcomingForm';loadingText='Posting upcoming activity…';}else if(isBulletin){data={type:'BULLETIN',title:$('adminBulletinTitle').value.trim(),content:$('adminBulletinContent').value.trim(),priority:'NORMAL',startDate:$('adminBulletinStart').value,endDate:$('adminBulletinEnd').value};formId='adminBulletinForm';loadingText='Posting bulletin message…';}else{data={type:'ADMINISTRATIVE',title:$('adminAnnTitle').value.trim(),content:$('adminAnnContent').value.trim(),priority:$('adminAnnPriority').value,startDate:$('adminAnnStart').value,endDate:$('adminAnnEnd').value};formId='adminAnnouncementForm';loadingText='Posting announcement…';}if(!data.title||!data.content)return;try{loading(true,loadingText);const r=await window.portalPost('CREATE_ANNOUNCEMENT',data);if(!r?.success)throw new Error(r?.message||'Unable to post.');msg.textContent='Posted successfully.';msg.className='modal-message show success';$(formId).reset();clearCache();await window.loadAdminAnnouncements_();await window.loadDashboardHome_()}catch(e){msg.textContent=e.message||String(e);msg.className='modal-message show error'}finally{loading(false)}}
-  $('adminAnnouncementForm')?.addEventListener('submit',e=>{e.preventDefault();postAnnouncement_('admin')});$('adminBulletinForm')?.addEventListener('submit',e=>{e.preventDefault();postAnnouncement_('bulletin')});$('adminUpcomingForm')?.addEventListener('submit',e=>{e.preventDefault();postAnnouncement_('upcoming')});
-  const oldApply=window.applyUser;window.applyUser=function(){oldApply();applyNav();setTimeout(applyNav,60)};
-  const oldOpen=window.openPage;window.openPage=function(page){oldOpen(page);if(page==='announcements')setTimeout(window.loadAdminAnnouncements_,0);};
-  window.addEventListener('load',applyNav);applyNav();
+  const esc=v=>String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+  function accountType(){return String(access?.account?.accountType||'').toUpperCase();}
+  function isSsg(){return (access?.assignments||[]).some(a=>/SSG|CHAIRPERSON|VICE CHAIR|TREASURER|OFFICER|ADVISER/i.test((a.position||'')+' '+(a.office||'')+' '+(a.assignmentName||'')));}
+  function isAdminHead(){return accountType()==='ADMIN';}
+  function isStaff(){return accountType()==='STAFF';}
+  function setMsg(id,msg,ok){const e=$(id);if(!e)return;e.textContent=msg||'';e.className='modal-message show '+(ok?'success':'error');}
+  window.savePasswordSettings_=async function(){
+    const current=$('setCurrentPassword').value,newPass=$('setNewPassword').value,confirmPass=$('setConfirmPassword').value;
+    if(newPass!==confirmPass){alert('New passwords do not match.');return;}
+    if(newPass.length<12||!/[A-Z]/.test(newPass)||!/[a-z]/.test(newPass)||!/[0-9]/.test(newPass)||!/[^A-Za-z0-9]/.test(newPass)){alert('Password must contain at least 12 characters, including uppercase, lowercase, number, and special character.');return;}
+    loading(true,'Changing password…');
+    try{const r=await portalPost('CHANGE_PASSWORD',{currentPassword:current,newPassword:newPass});if(!r?.success)throw new Error(r?.message||'Unable to change password.');$('settingsMessage').textContent=r.message||'Password changed successfully.';$('setCurrentPassword').value='';$('setNewPassword').value='';$('setConfirmPassword').value='';}
+    catch(e){alert(e.message||String(e))}finally{loading(false)}
+  };
+  function initPasswordToggles_(){
+    document.querySelectorAll('input[type="password"]').forEach(function(input){
+      if(input.dataset.toggleReady)return;
+      input.dataset.toggleReady='1';
+      const wrap=document.createElement('div');wrap.className='password-wrap';
+      input.parentNode.insertBefore(wrap,input);wrap.appendChild(input);
+      const b=document.createElement('button');b.type='button';b.className='password-toggle';b.textContent='◉';b.setAttribute('aria-label','Show password');
+      b.onclick=function(){const show=input.type==='password';input.type=show?'text':'password';b.textContent=show?'○':'◉';b.setAttribute('aria-label',show?'Hide password':'Show password');};
+      wrap.appendChild(b);
+    });
+  }
+  function initGlobalSearch_(){
+    const box=$('globalSearch');if(box&&hasPermission('STUDENT_SEARCH'))box.classList.add('show');
+    $('globalSearchButton')?.addEventListener('click',runGlobalSearch_);
+    $('globalSearchInput')?.addEventListener('keydown',e=>{if(e.key==='Enter')runGlobalSearch_()});
+  }
+  async function runGlobalSearch_(){
+    const q=$('globalSearchInput')?.value.trim();if(!q)return;
+    loading(true,'Searching student record…');
+    try{
+      const r=await portalPost('SEARCH_STUDENT',{query:q});if(!r?.success)throw new Error(r?.message||'Student record not found.');
+      const raw=r.record||r.student||r;
+      const hiddenCode=['ADMIN','STAFF'].includes(accountType());
+      const entries=Object.keys(raw).filter(k=>hiddenCode&&!/TALAAN/i.test(k)).map(k=>'<div class="search-result-field"><span>'+esc(k)+'</span><b>'+esc(raw[k])+'</b></div>').join('');
+      const wrap=document.createElement('div');wrap.className='modal show';wrap.innerHTML='<div class="modal-card"><div class="modal-head"><div><span class="eyebrow">TALAAN SEARCH</span><h2>Student Record</h2><p>Student record returned by the TALAAN database.</p></div><button class="close-modal">×</button></div><div class="search-result-grid">'+entries+'</div></div>';wrap.querySelector('.close-modal').onclick=()=>wrap.remove();document.body.appendChild(wrap);
+    }catch(e){alert(e.message||String(e))}finally{loading(false)}
+  }
+  window.loadTalaanPortal_=async function(){
+    if(!hasPermission('TALAAN_VIEW'))return;
+    const date=$('talaanDate');if(date&&!date.value)date.value=new Date().toISOString().slice(0,10);
+    try{
+      const r=await portalPost('TALAAN_DASHBOARD',{date:date?.value||''});if(!r?.success)throw new Error(r?.message||r?.error||'Unable to load TALAAN.');
+      const s=r.selectedSummary||{};const m=$('talaanMetrics');
+      m.innerHTML=[['Total Students',s.totalStudents||0],['Present',s.present||0],['Absent',s.absent||0],['Attendance Rate',(s.attendanceRate??0)+'%']].map(x=>'<div class="metric-card"><span>'+esc(x[0])+'</span><strong>'+esc(x[1])+'</strong></div>').join('');
+      await loadTalaanAttendance_();
+    }catch(e){$('talaanMetrics').innerHTML='<div class="empty-state">'+esc(e.message||String(e))+'</div>'}
+  };
+  async function loadTalaanAttendance_(){
+    const year=$('talaanAttendanceYear')?.value||'1', sheet='Attendance'+year, box=$('talaanAttendanceTable');
+    box.innerHTML='<div class="loading-inline">Loading attendance…</div>';
+    try{
+      const r=await portalPost('TALAAN_ATTENDANCE',{sheet:sheet});if(!r?.success)throw new Error(r?.message||r?.error||'Unable to load attendance.');
+      const data=r.data||[];if(!data.length){box.innerHTML='<div class="empty-state">No attendance data.</div>';return;}
+      const headers=data[0]||[];const rows=data.slice(1).filter(x=>x.some(v=>String(v||'').trim()));
+      box.innerHTML='<div class="talaan-table-wrap"><table class="talaan-table"><thead><tr>'+headers.map(h=>'<th>'+esc(h)+'</th>').join('')+'</tr></thead><tbody>'+rows.slice(0,500).map(row=>'<tr>'+row.map(v=>'<td>'+esc(v)+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';
+    }catch(e){box.innerHTML='<div class="empty-state">'+esc(e.message||String(e))+'</div>'}
+  }
+  $('loadTalaanAttendanceButton')?.addEventListener('click',loadTalaanAttendance_);
+  $('talaanAttendanceYear')?.addEventListener('change',loadTalaanAttendance_);
+  $('talaanDate')?.addEventListener('change',window.loadTalaanPortal_);
+
+  window.loadPortalEvents_=async function(){
+    const box=$('portalEventsList');if(!box)return;box.innerHTML='<div class="loading-inline">Loading events…</div>';
+    try{
+      const r=await portalPost('GET_PORTAL_EVENTS');if(!r?.success)throw new Error(r?.message||'Unable to load events.');
+      const rows=r.events||[];const counts={total:rows.length,approved:rows.filter(x=>/APPROVED|POSTED/i.test(x['Activity Status']||'')).length,pending:rows.filter(x=>/PENDING/i.test(x['Activity Status']||'')).length};
+      $('taskMetrics').innerHTML=[['Activities',counts.total],['Approved',counts.approved],['Pending',counts.pending],['DMS-linked',rows.filter(x=>x['DMS Folder ID']||x['DMS Reference']).length]].map(x=>'<div class="metric-card"><span>'+x[0]+'</span><strong>'+x[1]+'</strong></div>').join('');
+      if(!rows.length){box.innerHTML='<div class="empty-state">No events available.</div>';return;}
+      box.innerHTML=rows.map(x=>{
+        const canDelete=isAdminHead() && String(x['Created By']||'')===String(access?.account?.accountId||'');
+        return '<div class="event-card"><h3>'+esc(x.Title||'Untitled')+'</h3><div class="event-meta"><span class="event-chip">'+esc(x['Activity Status']||'')+'</span><span class="event-chip">'+esc(x['Event Date']||'')+'</span><span class="event-chip">'+esc(x['Event Time']||'')+'</span><span class="event-chip">'+esc(x['Organized By']||'')+'</span></div><div class="event-desc">'+esc(x['Short Description']||'')+'</div><div class="event-actions">'+(canDelete?'<button class="portal-btn secondary event-delete-button" type="button" data-event-id="'+esc(x['Event ID'])+'">Delete</button>':'')+'</div></div>';
+      }).join('');
+      box.querySelectorAll('.event-delete-button').forEach(b=>b.addEventListener('click',()=>window.deletePortalEventUi_(b.dataset.eventId)));
+    }catch(e){box.innerHTML='<div class="empty-state">'+esc(e.message||String(e))+'</div>'}
+  };
+  window.deletePortalEventUi_=async function(id){if(!confirm('Delete this event?'))return;loading(true,'Deleting event…');try{const r=await portalPost('DELETE_PORTAL_EVENT',{eventId:id});if(!r?.success)throw new Error(r?.message||'Unable to delete event.');await loadPortalEvents_()}catch(e){alert(e.message||String(e))}finally{loading(false)}};
+  $('evtLimited')?.addEventListener('change',function(){const on=this.value==='SPECIFIC STUDENTS';$('evtSectionWrap').classList.toggle('hidden',!on);$('evtYearWrap').classList.toggle('hidden',!on)});
+  $('portalEventForm')?.addEventListener('submit',async function(e){
+    e.preventDefault();setMsg('evtMessage','',false);
+    const data={title:$('evtTitle').value.trim(),organizedBy:$('evtOrganizer').value.trim(),venue:$('evtVenue').value.trim(),limitedTo:$('evtLimited').value,section:$('evtSection').value.trim(),yearLevel:$('evtYear').value,viewAudience:$('evtAudience').value,eventDate:$('evtDate').value,eventTime:$('evtTime').value,approvalCode:$('evtApprovalCode').value.trim(),drsReference:$('evtDrsRef').value.trim(),dmsFolderId:$('evtDmsFolder').value.trim(),dmsReference:$('evtDmsRef').value.trim(),description:$('evtDescription').value.trim()};
+    try{loading(true,'Submitting event…');const r=await portalPost('CREATE_PORTAL_EVENT',data);if(!r?.success)throw new Error(r?.message||'Unable to create event.');setMsg('evtMessage',r.message||'Event submitted.',true);this.reset();$('evtSectionWrap').classList.add('hidden');$('evtYearWrap').classList.add('hidden');await loadPortalEvents_()}catch(e){setMsg('evtMessage',e.message||String(e),false)}finally{loading(false)}
+  });
+
+  async function loadPortalMessages_(){
+    try{
+      const r=await portalPost('GET_ANNOUNCEMENTS');if(!r?.success)throw new Error(r?.message||'Unable to load posts.');
+      const list=$('adminAnnouncementsList');const rows=r.announcements||[];
+      list.innerHTML=rows.map(x=>'<div class="announcement-posted"><h3>'+esc(x.title||x.Title||'Untitled')+'</h3><div class="meta">'+esc(x.priority||x.Priority||'NORMAL')+' · '+esc(x.startDate||x['Start Date']||'')+'</div><div style="white-space:pre-line">'+esc(x.content||x.Content||'')+'</div></div>').join('')||'<div class="empty-state">No active posts.</div>';
+      const pb=$('portalPendingReview'),pl=$('portalPendingReviewList');
+      if(isAdminHead()){
+        const p=await portalPost('GET_PENDING_PORTAL_ANNOUNCEMENTS');
+        if(p?.success&&p.items?.length){
+          pb.classList.remove('hidden-force');
+          pl.innerHTML=p.items.map(x=>'<div class="review-card"><strong>'+esc(x.Title||'')+'</strong><p>'+esc(x.Content||'')+'</p><div class="review-actions"><button class="portal-btn review-ann-button" data-ann-id="'+esc(x['Announcement ID'])+'" data-ann-decision="APPROVE">Approve</button><button class="portal-btn secondary review-ann-button" data-ann-id="'+esc(x['Announcement ID'])+'" data-ann-decision="DECLINE">Decline</button></div></div>').join('');
+          pl.querySelectorAll('.review-ann-button').forEach(b=>b.addEventListener('click',()=>window.reviewPortalAnnouncementUi_(b.dataset.annId,b.dataset.annDecision)));
+        }else pb.classList.add('hidden-force');
+      }else pb.classList.add('hidden-force');
+    }catch(e){const list=$('adminAnnouncementsList');if(list)list.innerHTML='<div class="empty-state">'+esc(e.message||String(e))+'</div>'}
+  }
+  window.loadPortalMessages_=loadPortalMessages_;
+  window.reviewPortalAnnouncementUi_=async function(id,decision){const remarks=prompt('Remarks (optional):')||'';loading(true,'Processing review…');try{const r=await portalPost('REVIEW_PORTAL_ANNOUNCEMENT',{announcementId:id,decision:decision,remarks:remarks});if(!r?.success)throw new Error(r?.message||'Unable to process review.');await loadPortalMessages_()}catch(e){alert(e.message||String(e))}finally{loading(false)}};
+  function prepareAnnouncementForms_(){
+    const now=new Date();const ds=now.toISOString().slice(0,10);['adminAnnStart','adminBulletinStart'].forEach(id=>{const e=$(id);if(e&&!e.value)e.value=ds});
+    $('adminAnnouncementForm')?.addEventListener('submit',async e=>{e.preventDefault();await submitMessage_('ADMINISTRATIVE')});
+    $('adminBulletinForm')?.addEventListener('submit',async e=>{e.preventDefault();await submitMessage_('BULLETIN')});
+  }
+  async function submitMessage_(type){
+    const admin=type==='ADMINISTRATIVE';const prefix=admin?'adminAnn':'adminBulletin';
+    const data={type:type,title:$(prefix+'Title').value.trim(),content:$(prefix+'Content').value.trim(),priority:$(prefix+'Priority').value,targetType:$(prefix+'Target').value,startDate:$(prefix+'Start').value,endDate:$(prefix+'End').value,time:$(prefix+'Time').value};
+    const msg=admin?'adminAnnMsg':'adminBulletinMsg';if(!data.title||!data.content)return setMsg(msg,'Title and message are required.',false);
+    try{loading(true,'Saving message…');const r=await portalPost('CREATE_PORTAL_ANNOUNCEMENT',data);if(!r?.success)throw new Error(r?.message||'Unable to save message.');setMsg(msg,r.message||'Saved.',true);$(admin?'adminAnnouncementForm':'adminBulletinForm').reset();await loadPortalMessages_()}catch(e){setMsg(msg,e.message||String(e),false)}finally{loading(false)}
+  }
+  async function loadNotifications_(){const box=$('notificationsList');if(!box)return;try{const r=await portalPost('GET_NOTIFICATIONS');if(!r?.success)throw new Error(r?.message||'Unable to load notifications.');const rows=r.notifications||[];box.innerHTML=rows.map(x=>'<div class="announcement-item"><h3>'+esc(x.title||x['Title']||'Notification')+'</h3><p>'+esc(x.message||x['Message']||'')+'</p><span>'+esc(x.createdAt||x['Created At']||'')+'</span></div>').join('')||'<div class="empty-state">No notifications.</div>'}catch(e){box.innerHTML='<div class="empty-state">'+esc(e.message||String(e))+'</div>'}}
+  window.loadNotifications_=loadNotifications_;
+
+  const oldApply=window.applyUser;window.applyUser=function(){oldApply();initPasswordToggles_();initGlobalSearch_();setTimeout(function(){if(hasPermission('TALAAN_VIEW'))document.querySelector('[data-page="talaan"]')?.classList.remove('hidden');if(hasPermission('TASK_BOARD_VIEW'))document.querySelector('[data-page="taskboard"]')?.classList.remove('hidden');},50)};
+  const oldOpen=window.openPage;window.openPage=function(page){oldOpen(page);if(page==='talaan')setTimeout(loadTalaanPortal_,0);if(page==='taskboard')setTimeout(loadPortalEvents_,0);if(page==='announcements')setTimeout(loadPortalMessages_,0);if(page==='notifications')setTimeout(loadNotifications_,0)};
+  initPasswordToggles_();initGlobalSearch_();prepareAnnouncementForms_();
+  // Session keep-alive prevents long review screens from expiring.
+  setInterval(async function(){if(session?.sessionId){try{const r=await portalPost('REFRESH_SESSION');if(!r?.success)throw new Error('expired')}catch(e){clearSession();location.reload()}}},10*60*1000);
 })();
 </script>
+
 </body>
 </html>
