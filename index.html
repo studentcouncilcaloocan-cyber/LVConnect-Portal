@@ -313,18 +313,60 @@ function error(msg){$('loginError').textContent=msg||'Unable to sign in.';$('log
 function clearError(){$('loginError').textContent='';$('loginError').classList.remove('show')}
 async function post(action,data={}){
   return new Promise((resolve,reject)=>{
-    const requestId='lvreq_'+Date.now()+'_'+Math.random().toString(36).slice(2);
-    const iframe=document.createElement('iframe'); iframe.name=requestId; iframe.style.display='none'; document.body.appendChild(iframe);
-    const form=document.createElement('form'); form.method='POST'; form.action=API_URL; form.target=requestId; form.style.display='none';
-    const payload=Object.assign({},data||{}, {action:action,__lvconnectRequestId:requestId});
-    Object.keys(payload).forEach(k=>{const input=document.createElement('input');input.type='hidden';input.name=k;input.value=String(payload[k]??'');form.appendChild(input)});
+    const requestId='lvreq_'+Date.now()+'_'+Math.random().toString(36).slice(2)+'_'+Math.random().toString(36).slice(2);
+    const iframe=document.createElement('iframe');
+    iframe.name=requestId;
+    iframe.style.display='none';
+    document.body.appendChild(iframe);
+
+    const form=document.createElement('form');
+    form.method='POST';
+    form.action=API_URL;
+    form.target=requestId;
+    form.style.display='none';
+
+    const payload=Object.assign({},data||{},{action:action,__lvconnectRequestId:requestId});
+    Object.keys(payload).forEach(k=>{
+      const input=document.createElement('input');
+      input.type='hidden';
+      input.name=k;
+      input.value=String(payload[k]??'');
+      form.appendChild(input);
+    });
     document.body.appendChild(form);
+
     let done=false;
     const timer=setTimeout(()=>finish(new Error('Request timed out. Please try again.')),30000);
-    function finish(err,result){if(done)return;done=true;clearTimeout(timer);window.removeEventListener('message',onMessage);form.remove();iframe.remove();if(err)reject(err);else resolve(result);}
-    function onMessage(event){const d=event.data||{};if(d.type!=='LVCONNECT_API_RESPONSE'||d.requestId!==requestId||!Object.prototype.hasOwnProperty.call(d,'payload'))return;finish(null,d.payload);}
-    window.addEventListener('message',onMessage);
-    try{form.submit();}catch(e){finish(e);}
+
+    function cleanup(){
+      clearTimeout(timer);
+      window.removeEventListener('message',handleMessage);
+      try{form.remove()}catch(e){}
+      try{iframe.remove()}catch(e){}
+    }
+
+    function finish(err,result){
+      if(done)return;
+      done=true;
+      cleanup();
+      if(err)reject(err);
+      else resolve(result);
+    }
+
+    function handleMessage(event){
+      const message=event&&event.data;
+      if(!message||message.type!=='LVCONNECT_API_RESPONSE')return;
+      if(String(message.requestId||'')!==requestId)return;
+      finish(null,message.payload);
+    }
+
+    window.addEventListener('message',handleMessage);
+
+    try{
+      form.submit();
+    }catch(e){
+      finish(e);
+    }
   });
 }
 async function login(code,password){const r=await post('LOGIN',{talaanCode:code,password});if(!r||r.success!==true)throw new Error(r?.message||'Invalid TALAAN Code or password.');session={sessionId:r.sessionId,account:r.account};localStorage.setItem(STORAGE_KEY,JSON.stringify(session));await loadAccess()}
