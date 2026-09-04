@@ -46,11 +46,8 @@ body.dark .brand-logo-img,body.dark .sidebar-brand-logo{filter:none}
 
 /* FINAL INTEGRATED MODULES */
 .password-wrap{position:relative;display:flex;align-items:center}.password-wrap input{padding-right:44px!important;width:100%}.password-toggle{position:absolute;right:7px;top:50%;transform:translateY(-50%);height:30px;min-width:32px;border:0;background:transparent;color:var(--muted);cursor:pointer;border-radius:7px}.password-toggle:hover{background:var(--bg);color:var(--navy)}
-.global-search{display:none;min-width:260px;max-width:390px;flex:1;margin-left:18px;position:relative}.global-search.show{display:flex}.global-search.hidden-force{display:none!important}.global-search input{width:100%;height:38px;border:1px solid var(--border);border-radius:9px;padding:0 78px 0 12px;background:var(--white);color:var(--text);font-size:11px}.global-search button{position:absolute;right:4px;top:4px;height:30px;border:0;border-radius:7px;background:var(--navy);color:#fff;font-size:10px;font-weight:800;padding:0 10px}.topbar{gap:12px}.topbar .title{min-width:0}.topbar .actions{margin-left:auto}
 .talaan-toolbar,.task-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.talaan-toolbar select,.talaan-toolbar input,.task-toolbar select{height:38px;border:1px solid var(--border);border-radius:9px;padding:0 10px;background:var(--white);color:var(--text);font-size:11px}.talaan-summary-grid,.task-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}.metric-card{padding:15px;border:1px solid var(--border);border-radius:12px;background:var(--white)}.metric-card span{font-size:9px;color:var(--muted);text-transform:uppercase;font-weight:800}.metric-card strong{display:block;font-size:22px;margin-top:5px}.talaan-table-wrap{overflow:auto;border:1px solid var(--border);border-radius:12px}.talaan-table{width:100%;border-collapse:collapse;min-width:680px;font-size:10px}.talaan-table th,.talaan-table td{padding:9px 10px;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap}.talaan-table th{font-size:8px;color:var(--muted);text-transform:uppercase;background:var(--bg)}.talaan-table tr:last-child td{border-bottom:0}.event-card{border:1px solid var(--border);border-radius:13px;padding:15px;background:var(--white)}.event-card h3{font-size:14px;margin-bottom:5px}.event-meta{display:flex;gap:7px;flex-wrap:wrap;margin:7px 0}.event-chip{font-size:8px;font-weight:900;padding:5px 7px;border-radius:7px;background:var(--bg);color:var(--muted)}.event-desc{font-size:10px;line-height:1.55;color:var(--muted)}.event-actions{display:flex;gap:7px;margin-top:12px;flex-wrap:wrap}.task-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.task-form .full{grid-column:1/-1}.task-form label,.admin-review label{display:block;color:var(--muted);font-size:9px;margin-bottom:5px}.task-form input,.task-form select,.task-form textarea,.admin-review textarea{width:100%;border:1px solid var(--border);border-radius:9px;background:var(--white);color:var(--text);padding:10px;font-size:11px}.task-form input,.task-form select{height:40px}.task-form textarea,.admin-review textarea{min-height:85px;resize:vertical}.review-card{border:1px solid var(--border);border-radius:12px;padding:13px;background:var(--white);margin-bottom:8px}.review-card strong{font-size:11px}.review-card p{font-size:10px;color:var(--muted);margin-top:4px}.review-actions{display:flex;gap:7px;margin-top:9px}.search-result-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.search-result-field{padding:10px;border:1px solid var(--border);border-radius:9px}.search-result-field span{display:block;font-size:8px;color:var(--muted);text-transform:uppercase}.search-result-field b{display:block;font-size:11px;margin-top:3px}.dms-link-row{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
-@media(max-width:900px){.talaan-summary-grid,.task-grid{grid-template-columns:repeat(2,1fr)}.global-search{min-width:190px}.task-form{grid-template-columns:1fr}}
-@media(max-width:650px){.global-search{display:none!important}.talaan-summary-grid,.task-grid{grid-template-columns:1fr}.search-result-grid{grid-template-columns:1fr}.talaan-toolbar{align-items:stretch}.talaan-toolbar>*{width:100%}}
-
+@media(max-width:900px){.talaan-summary-grid,.task-grid{grid-template-columns:repeat(2,1fr)}@media(max-width:650px){
 </style>
 </head>
 
@@ -130,10 +127,10 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
 <!-- ADDITIONAL ACCESS MODAL -->
 <div id="additionalAccessModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="additionalAccessTitle">
   <div class="modal-card">
-    <div class="modal-head"><div><h2 id="additionalAccessTitle">Request Additional Access</h2><p>Submit your class officer or SSG officer role for verification and approval.</p></div><button type="button" class="close-modal" data-close-modal="additionalAccessModal">×</button></div>
+    <div class="modal-head"><div><h2 id="additionalAccessTitle">Request Additional Access</h2><p>Submit your SSG officer role for verification and approval.</p></div><button type="button" class="close-modal" data-close-modal="additionalAccessModal">×</button></div>
     <form id="additionalAccessForm" class="modal-form">
       <div id="additionalAccessMessage" class="modal-message"></div>
-      <div class="modal-field full"><label for="accessType">Access Type</label><select id="accessType" class="select" required><option value="">Select access type</option><option value="CLASS OFFICER">Class Officer</option><option value="SSG OFFICER">SSG Officer</option></select></div>
+      <input id="accessType" type="hidden" value="SSG OFFICER">
       <div class="modal-field full"><label for="accessPosition">Position</label><select id="accessPosition" class="select" required><option value="">Select position</option></select></div>
       <div id="officeField" class="modal-field full" style="display:none"><label for="accessOffice">SSG Office</label><select id="accessOffice" class="select"><option value="">Select SSG office</option><option value="SA">SA — Student Affairs</option><option value="EA">EA — External Affairs</option><option value="AA">AA — Administrative Affairs</option><option value="OP">OP — Operations</option><option value="FA">FA — Financial Affairs</option><option value="PI">PI — Public Information</option><option value="EX">EX — Executive Committee</option></select></div>
       <button id="additionalAccessButton" class="modal-btn" type="submit">Submit Access Request</button>
@@ -151,7 +148,6 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
       <div class="nav-label" style="margin-top:20px">Services</div>
       <button class="nav-item" id="navEservices" data-page="eservices" data-permission="ESERVICES_VIEW"><span class="nav-icon">□</span>E-Services</button>
       <button class="nav-item" id="navDrs" data-page="drs" data-permission="DRS_VIEW"><span class="nav-icon">▤</span>Document Routing</button>
-      <button class="nav-item hidden" id="navAdminMessages" data-page="announcements"><span class="nav-icon">!</span>Messages &amp; Announcements</button>
       <button class="nav-item hidden" id="navBulletinBoard" data-page="announcements"><span class="nav-icon">!</span>Bulletin Board</button>
       <button class="nav-item hidden" id="navTaskBoard" data-page="taskboard"><span class="nav-icon">☷</span>Task Board</button>
       <button class="nav-item hidden" id="navSsgApprovals" data-page="ssg-approvals" data-permission="SSG_ACCESS_APPROVAL_VIEW"><span class="nav-icon">✓</span>Approval Requests</button>
@@ -164,7 +160,7 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
   </aside>
   <div id="overlay" class="overlay"></div>
   <main class="main">
-    <header class="topbar"><div id="title" class="title"><h2>Dashboard</h2><p>Welcome to LVConnect Portal</p></div><div id="globalSearch" class="global-search" data-permission="STUDENT_SEARCH"><input id="globalSearchInput" type="search" placeholder="Search student name or TALAAN Code"><button type="button" id="globalSearchButton">Search</button></div><div class="actions"><button id="menu" class="icon menu" type="button">☰</button><button class="icon" type="button" title="Notifications" data-page="notifications">◌</button><button id="logout" class="icon" type="button" title="Sign out">↪</button></div></header>
+    <header class="topbar"><div id="title" class="title"><h2>Dashboard</h2><p>Welcome to LVConnect Portal</p></div><div class="actions"><button id="menu" class="icon menu" type="button">☰</button><button class="icon" type="button" title="Notifications" data-page="notifications">◌</button><button id="logout" class="icon" type="button" title="Sign out">↪</button></div></header>
     <div class="content">
       <section id="page-dashboard" class="page active">
   <div class="portal-welcome"><div><span class="eyebrow">LVCONNECT PORTAL</span><h1 id="welcome">Welcome to LVConnect</h1><p>Your unified portal for school services, records, and digital transactions.</p></div><button class="theme-btn" type="button" onclick="toggleTheme_()">◐</button></div>
@@ -300,7 +296,7 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
   </div>
 </section>
 
-<section id="page-profile" class="page"><div class="profile portal-box"><div class="profile-hero"><div id="profilePicturePreview" class="profile-photo">LV</div><div><span class="eyebrow">MY PROFILE</span><h1>Account information</h1><p>Your current LVConnect identity and SSG assignments.</p><label class="portal-btn secondary upload-photo">Add Picture<input id="profilePictureInput" type="file" accept="image/*"></label></div></div><div class="profile-rows"><div class="row"><span>Name</span><span id="profileName">—</span></div><div class="row"><span>LV Email</span><span id="profileEmail">—</span></div><div class="row"><span>Account ID</span><span id="profileAccountId">—</span></div><div class="row"><span>Account Type</span><span id="profileType">—</span></div><div class="row"><span>SSG / Class Position</span><span id="profilePosition">—</span></div><div class="row"><span>Office</span><span id="profileOffice">—</span></div><div class="row"><span>Permissions</span><span id="profilePermissions">—</span></div></div><div class="request-access"><h3>Request Additional Access</h3><p>If you hold a class officer or SSG officer position, submit it for verification and approval.</p><button id="requestAccessButton" class="profile-btn" type="button">Request Additional Access</button></div></div></section>
+<section id="page-profile" class="page"><div class="profile portal-box"><div class="profile-hero"><div id="profilePicturePreview" class="profile-photo">LV</div><div><span class="eyebrow">MY PROFILE</span><h1>Account information</h1><p>Your current LVConnect identity and SSG assignments.</p><label class="portal-btn secondary upload-photo">Add Picture<input id="profilePictureInput" type="file" accept="image/*"></label></div></div><div class="profile-rows"><div class="row"><span>Name</span><span id="profileName">—</span></div><div class="row"><span>LV Email</span><span id="profileEmail">—</span></div><div class="row"><span>Account ID</span><span id="profileAccountId">—</span></div><div class="row"><span>Account Type</span><span id="profileType">—</span></div><div class="row"><span>SSG Position</span><span id="profilePosition">—</span></div><div class="row"><span>Office</span><span id="profileOffice">—</span></div><div class="row"><span>Permissions</span><span id="profilePermissions">—</span></div></div><div class="request-access"><h3>Request SSG Access</h3><p>If you hold an SSG officer position that is not yet reflected in your account, submit it for verification and approval.</p><button id="requestAccessButton" class="profile-btn" type="button">Request Additional Access</button></div></div></section>
           <section id="page-settings" class="page"><div class="portal-box settings-box"><div class="box-head"><div><span class="eyebrow">ACCOUNT</span><h1>Settings</h1><p>Only your LV email and password can be changed here.</p></div></div><div class="settings-section"><h2>Change Password</h2><p style="color:var(--muted);font-size:10px">12+ characters with uppercase, lowercase, number, and special character. Previous passwords cannot be reused.</p><div class="settings-grid"><div><label>Current Password</label><input id="setCurrentPassword" type="password"></div><div><label>New Password</label><input id="setNewPassword" type="password" minlength="12"></div><div><label>Confirm New Password</label><input id="setConfirmPassword" type="password" minlength="12"></div></div><button class="portal-btn" onclick="savePasswordSettings_()">Change Password</button></div><div class="settings-section"><h2>Change LV Email</h2><div class="settings-grid"><div><label>New LV Email</label><input id="setNewEmail" type="email" placeholder="yourname@laverdad.edu.ph"></div><div><label>Verification Code</label><input id="setEmailCode" inputmode="numeric" maxlength="6" placeholder="6-digit code"></div></div><div class="settings-actions"><button class="portal-btn secondary" onclick="requestEmailVerification_()">Send Verification</button><button class="portal-btn" onclick="confirmEmailSettings_()">Verify & Save Email</button></div><div id="settingsMessage" class="portal-status"></div></div></div></section>
 </div>
   </main>
@@ -315,7 +311,22 @@ const $=id=>document.getElementById(id);
 function loading(show,text){$('loadingText').textContent=text||'Please wait...';$('loading').classList.toggle('show',!!show)}
 function error(msg){$('loginError').textContent=msg||'Unable to sign in.';$('loginError').classList.add('show')}
 function clearError(){$('loginError').textContent='';$('loginError').classList.remove('show')}
-async function post(action,data={}){return new Promise((resolve,reject)=>{const callbackName='__lvconnectCallback_'+Date.now()+'_'+Math.random().toString(36).slice(2);const script=document.createElement('script');const query=new URLSearchParams();query.set('action',action);query.set('callback',callbackName);Object.keys(data).forEach(k=>query.set(k,String(data[k]??'')));let timer=setTimeout(()=>{cleanup();reject(new Error('Request timed out. Please try again.'))},20000);function cleanup(){clearTimeout(timer);delete window[callbackName];if(script.parentNode)script.parentNode.removeChild(script)}window[callbackName]=function(result){cleanup();resolve(result)};script.onerror=function(){cleanup();reject(new Error('Unable to connect to LVConnect Backend.'))};script.src=API_URL+(API_URL.includes('?')?'&':'?')+query.toString();document.head.appendChild(script)})}
+async function post(action,data={}){
+  return new Promise((resolve,reject)=>{
+    const requestId='lvreq_'+Date.now()+'_'+Math.random().toString(36).slice(2);
+    const iframe=document.createElement('iframe'); iframe.name=requestId; iframe.style.display='none'; document.body.appendChild(iframe);
+    const form=document.createElement('form'); form.method='POST'; form.action=API_URL; form.target=requestId; form.style.display='none';
+    const payload=Object.assign({},data||{}, {action:action,__lvconnectRequestId:requestId});
+    Object.keys(payload).forEach(k=>{const input=document.createElement('input');input.type='hidden';input.name=k;input.value=String(payload[k]??'');form.appendChild(input)});
+    document.body.appendChild(form);
+    let done=false;
+    const timer=setTimeout(()=>finish(new Error('Request timed out. Please try again.')),30000);
+    function finish(err,result){if(done)return;done=true;clearTimeout(timer);window.removeEventListener('message',onMessage);form.remove();iframe.remove();if(err)reject(err);else resolve(result);}
+    function onMessage(event){const d=event.data||{};if(d.type!=='LVCONNECT_API_RESPONSE'||d.requestId!==requestId||!Object.prototype.hasOwnProperty.call(d,'payload'))return;finish(null,d.payload);}
+    window.addEventListener('message',onMessage);
+    try{form.submit();}catch(e){finish(e);}
+  });
+}
 async function login(code,password){const r=await post('LOGIN',{talaanCode:code,password});if(!r||r.success!==true)throw new Error(r?.message||'Invalid TALAAN Code or password.');session={sessionId:r.sessionId,account:r.account};localStorage.setItem(STORAGE_KEY,JSON.stringify(session));await loadAccess()}
 async function loadAccess(){const r=await post('CURRENT_USER',{sessionId:session?.sessionId||''});if(!r||!r.account)throw new Error(r?.message||'Unable to load account access.');access=r;session.account=r.account;localStorage.setItem(STORAGE_KEY,JSON.stringify(session));applyUser()}
 function applyUser(){
@@ -340,13 +351,10 @@ function applyRoleSpecificPortalAccess_(){
   const canUpcomingEdit=isAdmin||isStaff||isTeacher||isSsg;
   const canUpcomingView=canUpcomingEdit||hasPermission('TASK_BOARD_VIEW');
   const setNav=(id,show)=>{const el=$(id);if(el)el.classList.toggle('hidden',!show);};
-  const search=$('globalSearch');
-  if(search){search.classList.toggle('hidden-force',!canSearch);search.classList.toggle('show',canSearch);}
   setNav('navEservices',canEservices);
   setNav('navDrs',canDrs);
   setNav('navBulletinBoard',canAdminAnnouncementEdit||canBulletinView||canUpcomingView);
-  setNav('navAdminMessages',isAdmin&&hasPermission('ANNOUNCEMENT_MANAGE'));
-  setNav('navTaskBoard',hasPermission('TASK_BOARD_VIEW'));
+    setNav('navTaskBoard',hasPermission('TASK_BOARD_VIEW'));
   setNav('navSsgApprovals',!!(access?.canApproveAdditionalAccess||hasAssign(/CHAIRPERSON|SSG\s*ADVISER/i)));
   const adminDisplay=$('adminAnnouncementDisplay'), bulletinDisplay=$('bulletinDisplay'), upcomingDisplay=$('upcomingDisplay');
   if(adminDisplay)adminDisplay.classList.toggle('hidden-force',!canAdminAnnouncementEdit);
@@ -407,14 +415,12 @@ document.querySelectorAll('[data-close-modal]').forEach(btn=>btn.addEventListene
 document.querySelectorAll('.modal').forEach(modal=>modal.addEventListener('click',e=>{if(e.target===modal)closeModal(modal.id)}));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal.show').forEach(m=>closeModal(m.id))});
 
-const classOfficerPositions=['President','Vice President','Secretary','Treasurer','Auditor','Public Information Officer','Peace Officer','Class Representative','Other'];
 const ssgOfficerPositions=['Executive Member','Committee Head','Junior Officer'];
 const executiveCommitteePositions=['Chairperson','Adviser'];
-function updateAccessPositions(){const type=$('accessType').value;const office=$('accessOffice').value;const sel=$('accessPosition');sel.innerHTML='<option value="">Select position</option>';let list=[];if(type==='SSG OFFICER'){list=office==='EX'?executiveCommitteePositions:ssgOfficerPositions;}else if(type==='CLASS OFFICER'){list=classOfficerPositions;}list.forEach(x=>{const o=document.createElement('option');o.value=x;o.textContent=x;sel.appendChild(o)});$('officeField').style.display=type==='SSG OFFICER'?'flex':'none';$('accessOffice').required=type==='SSG OFFICER';}
+function updateAccessPositions(){const type=$('accessType').value;const office=$('accessOffice').value;const sel=$('accessPosition');sel.innerHTML='<option value="">Select position</option>';let list=office==='EX'?['Chairperson','Adviser']:['Executive Member','Committee Head','Junior Officer'];list.forEach(x=>{const o=document.createElement('option');o.value=x;o.textContent=x;sel.appendChild(o)});$('officeField').style.display='flex';$('accessOffice').required=true;}
 $('requestAccessButton').addEventListener('click',()=>{clearModalMessage('additionalAccessMessage');$('additionalAccessForm').reset();updateAccessPositions();openModal('additionalAccessModal')});
-$('accessType').addEventListener('change',updateAccessPositions);
 $('accessOffice').addEventListener('change',updateAccessPositions);
-$('additionalAccessForm').addEventListener('submit',async e=>{e.preventDefault();clearModalMessage('additionalAccessMessage');const type=$('accessType').value,position=$('accessPosition').value,office=$('accessOffice').value;if(!type||!position)return showModalMessage('additionalAccessMessage','Please select the access type and position.');if(type==='SSG OFFICER'&&!office)return showModalMessage('additionalAccessMessage','Please select the SSG office.');const btn=$('additionalAccessButton');btn.disabled=true;btn.textContent='Submitting...';try{const r=await post('SUBMIT_ADDITIONAL_ACCESS_REQUEST',{sessionId:session.sessionId,requestType:type,position:position,office:office});if(!r||r.success!==true)throw new Error(r?.message||'Unable to submit access request.');showModalMessage('additionalAccessMessage',(r.message||'Request submitted.')+(r.requestId?' Request ID: '+r.requestId:''),true);$('additionalAccessForm').reset();updateAccessPositions()}catch(err){showModalMessage('additionalAccessMessage',err.message||'Unable to submit access request.')}finally{btn.disabled=false;btn.textContent='Submit Access Request'}});
+$('additionalAccessForm').addEventListener('submit',async e=>{e.preventDefault();clearModalMessage('additionalAccessMessage');const type='SSG OFFICER',position=$('accessPosition').value,office=$('accessOffice').value;if(type!=='SSG OFFICER')return showModalMessage('additionalAccessMessage','Only SSG Officer access requests are available.');if(!position)return showModalMessage('additionalAccessMessage','Please select a position.');if(!office)return showModalMessage('additionalAccessMessage','Please select the SSG office.');const btn=$('additionalAccessButton');btn.disabled=true;btn.textContent='Submitting...';try{const r=await post('SUBMIT_ADDITIONAL_ACCESS_REQUEST',{sessionId:session.sessionId,requestType:type,position:position,office:office});if(!r||r.success!==true)throw new Error(r?.message||'Unable to submit access request.');showModalMessage('additionalAccessMessage',(r.message||'Request submitted.')+(r.requestId?' Request ID: '+r.requestId:''),true);$('additionalAccessForm').reset();updateAccessPositions()}catch(err){showModalMessage('additionalAccessMessage',err.message||'Unable to submit access request.')}finally{btn.disabled=false;btn.textContent='Submit Access Request'}});
 $('createAccountForm').addEventListener('submit',async e=>{e.preventDefault();clearModalMessage('createAccountMessage');const talaanCode=$('caTalaanCode').value.trim();const name=$('caName').value.trim();const password=$('caPassword').value;const confirm=$('caConfirmPassword').value;if(createAccountRegistrationType==='STUDENT'&&!talaanCode)return showModalMessage('createAccountMessage','Please enter your TALAAN Code.');if(createAccountRegistrationType==='STAFF'&&!name)return showModalMessage('createAccountMessage','Please enter your registered full name.');if(password!==confirm)return showModalMessage('createAccountMessage','Passwords do not match.');const btn=$('createAccountButton');btn.disabled=true;btn.textContent='Creating...';try{const action=createAccountRegistrationType==='STAFF'?'REGISTER_STAFF_ACCOUNT':'CREATE_STUDENT_ACCOUNT';const r=await post(action,{talaanCode:talaanCode,name:name,password:password,confirmPassword:confirm});if(!r||r.success!==true)throw new Error(r?.message||'Unable to create account.');const codeText=createAccountRegistrationType==='STAFF'&&r.talaanCode?'<div style="margin-top:10px;padding:12px;border:1px solid var(--border);border-radius:10px;text-align:center"><span class="eyebrow">YOUR TALAAN CODE</span><strong style="display:block;font-size:20px;letter-spacing:1px;margin-top:4px">'+String(r.talaanCode).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</strong><small style="display:block;color:var(--muted);margin-top:5px">Use this code as your LVConnect login username.</small></div>':'';const msg=$('createAccountMessage');msg.innerHTML='<span>'+String(r.message||'Account created successfully.').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</span>'+codeText;msg.className='modal-message show success';if(createAccountRegistrationType==='STUDENT')$('createAccountForm').reset();}catch(err){showModalMessage('createAccountMessage',err.message||'Unable to create account.')}finally{btn.disabled=false;btn.textContent=createAccountRegistrationType==='STAFF'?'Register Account':'Create Account'}});
 $('requestTalaanForm').addEventListener('submit',async e=>{e.preventDefault();clearModalMessage('requestTalaanMessage');const btn=$('requestTalaanButton');btn.disabled=true;btn.textContent='Submitting...';try{const r=await post('SUBMIT_ACCOUNT_REQUEST',{requestType:'REQUEST_TALAAN_CODE',email:$('rtEmail').value.trim(),firstName:$('rtFirstName').value.trim(),middleInitial:$('rtMiddleInitial').value.trim(),surname:$('rtSurname').value.trim(),details:$('rtDetails').value.trim()});if(!r||r.success!==true)throw new Error(r?.message||'Unable to submit TALAAN Code request.');showModalMessage('requestTalaanMessage',r.message+' Request ID: '+r.requestId,true);$('requestTalaanForm').reset()}catch(err){showModalMessage('requestTalaanMessage',err.message||'Unable to submit request.')}finally{btn.disabled=false;btn.textContent='Submit TALAAN Code Request'}});
 document.querySelectorAll('[data-page]').forEach(el=>el.addEventListener('click',()=>openPage(el.dataset.page)));
@@ -577,13 +583,13 @@ setTimeout(lvApplyApprovalAccess_,0);
 
 <style id="lvconnect-final-usability">
 /* FINAL additive usability layer */
-.lv-final-search-card{display:none;background:#fff;border:1px solid var(--border);border-radius:15px;padding:12px;margin-bottom:16px;box-shadow:var(--shadow)}
-.lv-final-search-row{display:flex;gap:8px}.lv-final-search-row input{flex:1;height:42px;border:1px solid var(--border);border-radius:10px;padding:0 12px}.lv-final-search-row button{height:42px;border:0;border-radius:10px;background:var(--navy);color:#fff;padding:0 14px;font-weight:800}
-.lv-search-results{display:flex;flex-direction:column;gap:8px;margin-top:10px}.lv-search-result{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--border);border-radius:11px;padding:12px;background:#fbfcfd}.lv-search-result strong{font-size:12px}.lv-search-result small{display:block;color:var(--muted);font-size:10px;margin-top:3px}.lv-search-actions{display:flex;gap:6px;flex-wrap:wrap}.lv-search-actions button{height:34px;border:1px solid var(--border);background:#fff;border-radius:8px;padding:0 9px;font-size:10px;font-weight:800}.lv-search-actions .primary{background:var(--navy);border-color:var(--navy);color:#fff}
+
+.lv-final-search-row input{flex:1;height:42px;border:1px solid var(--border);border-radius:10px;padding:0 12px}.lv-final-search-row button{height:42px;border:0;border-radius:10px;background:var(--navy);color:#fff;padding:0 14px;font-weight:800}
+
 .lv-student-profile-card{background:#fff;border:1px solid var(--border);border-radius:17px;box-shadow:var(--shadow);padding:20px;margin-top:14px}.lv-student-profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.lv-student-field{padding:11px;border:1px solid #edf0f3;border-radius:10px;background:#fbfcfd}.lv-student-field span{display:block;color:var(--muted);font-size:9px;text-transform:uppercase;font-weight:800;letter-spacing:.5px}.lv-student-field b{display:block;margin-top:4px;font-size:12px}.lv-student-qr{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;border:1px solid #edf0f3;border-radius:12px;background:#fff}.lv-student-attendance{margin-top:15px}.lv-student-attendance table{width:100%;border-collapse:collapse;font-size:11px}.lv-student-attendance th,.lv-student-attendance td{padding:9px;border-bottom:1px solid #eef1f4;text-align:left}.lv-student-attendance th{font-size:9px;color:var(--muted);text-transform:uppercase}
 .lv-approval-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.lv-approval-card{background:#fff;border:1px solid var(--border);border-radius:15px;padding:17px;box-shadow:var(--shadow)}.lv-approval-card h3{font-size:13px}.lv-approval-meta{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:12px 0}.lv-approval-meta div{background:#f8fafc;border:1px solid #edf0f3;border-radius:9px;padding:8px}.lv-approval-meta span{display:block;color:var(--muted);font-size:9px}.lv-approval-meta b{display:block;margin-top:3px;font-size:10px}.lv-approval-card button{height:38px;border:0;border-radius:9px;background:var(--navy);color:#fff;padding:0 12px;font-weight:800;font-size:11px}.lv-approval-refresh{height:38px;border:1px solid var(--border);border-radius:9px;background:#fff;padding:0 12px;font-weight:800}
 .lv-drs-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.lv-drs-toolbar input,.lv-drs-toolbar select{height:40px;border:1px solid var(--border);border-radius:9px;padding:0 10px;background:#fff}.lv-drs-table{width:100%;border-collapse:collapse;font-size:11px}.lv-drs-table th,.lv-drs-table td{padding:10px;border-bottom:1px solid #eef1f4;text-align:left}.lv-drs-table th{font-size:9px;color:var(--muted);text-transform:uppercase;background:#f7f9fa}.lv-drs-status{display:inline-flex;padding:4px 7px;border-radius:7px;background:#edf3f7;color:var(--navy);font-size:9px;font-weight:900}.lv-drs-card{background:#fff;border:1px solid var(--border);border-radius:17px;box-shadow:var(--shadow);padding:20px}.lv-mobile-bottom{display:none}
-@media(max-width:760px){.lv-final-search-card{display:block}.lv-header-search{display:none!important}.lv-student-profile-grid{grid-template-columns:1fr}.lv-approval-grid{grid-template-columns:1fr}.lv-drs-card{padding:14px}.lv-drs-table-wrap{overflow:auto}.lv-drs-table{min-width:720px}.lv-mobile-bottom{position:fixed;display:flex;left:10px;right:10px;bottom:10px;height:58px;background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:0 12px 35px rgba(20,40,60,.16);z-index:80;align-items:center;justify-content:space-around;padding:5px}.lv-mobile-bottom button{border:0;background:transparent;color:var(--muted);font-size:9px;font-weight:800;display:flex;flex-direction:column;align-items:center;gap:2px}.lv-mobile-bottom button b{font-size:18px;line-height:18px}.content{padding-bottom:82px}}
+@media(max-width:760px){.lv-header-search{display:none!important}.lv-student-profile-grid{grid-template-columns:1fr}.lv-approval-grid{grid-template-columns:1fr}.lv-drs-card{padding:14px}.lv-drs-table-wrap{overflow:auto}.lv-drs-table{min-width:720px}.lv-mobile-bottom{position:fixed;display:flex;left:10px;right:10px;bottom:10px;height:58px;background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:0 12px 35px rgba(20,40,60,.16);z-index:80;align-items:center;justify-content:space-around;padding:5px}.lv-mobile-bottom button{border:0;background:transparent;color:var(--muted);font-size:9px;font-weight:800;display:flex;flex-direction:column;align-items:center;gap:2px}.lv-mobile-bottom button b{font-size:18px;line-height:18px}.content{padding-bottom:82px}}
 
 /* Dark-mode consistency + external SSG Event Tracker */
 body.dark .portal-btn.secondary,
@@ -598,7 +604,7 @@ body.dark .lv-final-search-card,
 body.dark .lv-student-profile-card,
 body.dark .lv-student-qr,
 body.dark .lv-approval-card,
-body.dark .lv-search-result{background:var(--white);border-color:var(--border);color:var(--text)}
+body.dark 
 body.dark .form-card:hover{border-color:#526675}
 body.dark .lv-student-field,
 body.dark .lv-approval-meta div,
@@ -840,45 +846,6 @@ body.dark .drs-card:hover{border-color:#526675}
       wrap.appendChild(b);
     });
   }
-  function initGlobalSearch_(){
-    const box=$('globalSearch');if(box){const allowed=hasPermission('STUDENT_SEARCH')||['ADMIN','STAFF','TEACHER'].includes(accountType())||isSsg();box.classList.toggle('show',allowed);box.classList.toggle('hidden-force',!allowed);}
-    $('globalSearchButton')?.addEventListener('click',runGlobalSearch_);
-    $('globalSearchInput')?.addEventListener('keydown',e=>{if(e.key==='Enter')runGlobalSearch_()});
-  }
-  async function runGlobalSearch_(){
-    const q=$('globalSearchInput')?.value.trim();if(!q)return;
-    loading(true,'Searching student record…');
-    try{
-      const r=await portalPost('SEARCH_STUDENT',{query:q});if(!r?.success)throw new Error(r?.message||'Student record not found.');
-      const raw=r.record||r.student||r;
-      const hiddenCode=['ADMIN','STAFF'].includes(accountType());
-      const entries=Object.keys(raw).filter(k=>hiddenCode&&!/TALAAN/i.test(k)).map(k=>'<div class="search-result-field"><span>'+esc(k)+'</span><b>'+esc(raw[k])+'</b></div>').join('');
-      const wrap=document.createElement('div');wrap.className='modal show';wrap.innerHTML='<div class="modal-card"><div class="modal-head"><div><span class="eyebrow">TALAAN SEARCH</span><h2>Student Record</h2><p>Student record returned by the TALAAN database.</p></div><button class="close-modal">×</button></div><div class="search-result-grid">'+entries+'</div></div>';wrap.querySelector('.close-modal').onclick=()=>wrap.remove();document.body.appendChild(wrap);
-    }catch(e){alert(e.message||String(e))}finally{loading(false)}
-  }
-  window.loadTalaanPortal_=async function(){
-    if(!hasPermission('TALAAN_VIEW'))return;
-    const date=$('talaanDate');if(date&&!date.value)date.value=new Date().toISOString().slice(0,10);
-    try{
-      const r=await portalPost('TALAAN_DASHBOARD',{date:date?.value||''});if(!r?.success)throw new Error(r?.message||r?.error||'Unable to load TALAAN.');
-      const s=r.selectedSummary||{};const m=$('talaanMetrics');
-      m.innerHTML=[['Total Students',s.totalStudents||0],['Present',s.present||0],['Absent',s.absent||0],['Attendance Rate',(s.attendanceRate??0)+'%']].map(x=>'<div class="metric-card"><span>'+esc(x[0])+'</span><strong>'+esc(x[1])+'</strong></div>').join('');
-      await loadTalaanAttendance_();
-    }catch(e){$('talaanMetrics').innerHTML='<div class="empty-state">'+esc(e.message||String(e))+'</div>'}
-  };
-  async function loadTalaanAttendance_(){
-    const year=$('talaanAttendanceYear')?.value||'1', sheet='Attendance'+year, box=$('talaanAttendanceTable');
-    box.innerHTML='<div class="loading-inline">Loading attendance…</div>';
-    try{
-      const r=await portalPost('TALAAN_ATTENDANCE',{sheet:sheet});if(!r?.success)throw new Error(r?.message||r?.error||'Unable to load attendance.');
-      const data=r.data||[];if(!data.length){box.innerHTML='<div class="empty-state">No attendance data.</div>';return;}
-      const headers=data[0]||[];const rows=data.slice(1).filter(x=>x.some(v=>String(v||'').trim()));
-      box.innerHTML='<div class="talaan-table-wrap"><table class="talaan-table"><thead><tr>'+headers.map(h=>'<th>'+esc(h)+'</th>').join('')+'</tr></thead><tbody>'+rows.slice(0,500).map(row=>'<tr>'+row.map(v=>'<td>'+esc(v)+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';
-    }catch(e){box.innerHTML='<div class="empty-state">'+esc(e.message||String(e))+'</div>'}
-  }
-  $('loadTalaanAttendanceButton')?.addEventListener('click',loadTalaanAttendance_);
-  $('talaanAttendanceYear')?.addEventListener('change',loadTalaanAttendance_);
-  $('talaanDate')?.addEventListener('change',window.loadTalaanPortal_);
 
   window.loadPortalEvents_=async function(){
     const box=$('portalEventsList');if(!box)return;box.innerHTML='<div class="loading-inline">Loading events…</div>';
@@ -956,19 +923,17 @@ body.dark .drs-card:hover{border-color:#526675}
   async function loadNotifications_(){const box=$('notificationsList');if(!box)return;try{const r=await portalPost('GET_NOTIFICATIONS');if(!r?.success)throw new Error(r?.message||'Unable to load notifications.');const rows=r.notifications||[];box.innerHTML=rows.map(x=>'<div class="announcement-item"><h3>'+esc(x.title||x['Title']||'Notification')+'</h3><p>'+esc(x.message||x['Message']||'')+'</p><span>'+esc(x.createdAt||x['Created At']||'')+'</span></div>').join('')||'<div class="empty-state">No notifications.</div>'}catch(e){box.innerHTML='<div class="empty-state">'+esc(e.message||String(e))+'</div>'}}
   window.loadNotifications_=loadNotifications_;
 
-  const oldApply=window.applyUser;window.applyUser=function(){oldApply();initPasswordToggles_();initGlobalSearch_();setTimeout(function(){
+  const oldApply=window.applyUser;window.applyUser=function(){oldApply();initPasswordToggles_();setTimeout(function(){
     applyRoleSpecificPortalAccess_();
     const approval=document.getElementById('navSsgApprovals');
     if(approval)approval.classList.toggle('hidden',!hasPermission('SSG_ACCESS_APPROVAL_VIEW'));
     const accountType=String(access?.account?.accountType||'').toUpperCase();
     const isAdmin=accountType==='ADMIN';
-    const adminMsg=document.getElementById('navAdminMessages');
-    if(adminMsg)adminMsg.classList.toggle('hidden',!isAdmin);
     applyRoleSpecificPortalAccess_();
     setTimeout(loadBoardDisplay_,80);
   },50)};
   const oldOpen=window.openPage;window.openPage=function(page){oldOpen(page);if(page==='taskboard')setTimeout(loadPortalEvents_,0);if(page==='announcements'){setTimeout(loadPortalMessages_,0);setTimeout(loadBoardDisplay_,0);}if(page==='notifications')setTimeout(loadNotifications_,0)};
-  initPasswordToggles_();initGlobalSearch_();prepareAnnouncementForms_();
+  initPasswordToggles_();prepareAnnouncementForms_();
   // Session keep-alive prevents long review screens from expiring.
   setInterval(async function(){if(session?.sessionId){try{const r=await portalPost('REFRESH_SESSION');if(!r?.success)throw new Error('expired')}catch(e){clearSession();location.reload()}}},10*60*1000);
 })();
