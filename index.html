@@ -33,7 +33,7 @@
  * ===================================================== */
 .lv-header-search{display:flex;align-items:center;gap:6px;margin-right:8px}.lv-header-search.hidden{display:none}.lv-header-search input{width:230px;height:36px;border:1px solid #d9dee7;border-radius:10px;padding:0 11px;font:inherit;background:#fff}.lv-header-search button{height:36px;border:0;border-radius:10px;padding:0 10px;font-weight:800;background:#1d2a6d;color:#fff;cursor:pointer}
 <style>#portalFooter{display:none!important}#app.active~#portalFooter{display:block!important}
-.announcement-admin-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:16px}.announcement-editor-card{border:1px solid var(--border);border-radius:18px;padding:18px;background:var(--panel)}.announcement-editor-card textarea{min-height:120px}.announcement-admin-grid .modal-grid{gap:10px}.announcement-admin-grid .modal-field input,.announcement-admin-grid .modal-field textarea,.announcement-admin-grid .modal-field select{width:100%}.announcement-posted{border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px}.announcement-posted h3{margin:0 0 6px;font-size:18px}.announcement-posted .meta{font-size:11px;color:var(--muted);margin-bottom:7px}.hidden-force{display:none!important}@media(max-width:1000px){.announcement-admin-grid{grid-template-columns:1fr 1fr}}@media(max-width:760px){.announcement-admin-grid{grid-template-columns:1fr}.announcement-editor-card{padding:14px}}
+.announcement-admin-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:16px}.board-display-grid{margin-bottom:16px}.board-display-card{min-height:220px}.announcement-editor-card{border:1px solid var(--border);border-radius:18px;padding:18px;background:var(--panel)}.announcement-editor-card textarea{min-height:120px}.announcement-admin-grid .modal-grid{gap:10px}.announcement-admin-grid .modal-field input,.announcement-admin-grid .modal-field textarea,.announcement-admin-grid .modal-field select{width:100%}.announcement-posted{border:1px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px}.announcement-posted h3{margin:0 0 6px;font-size:18px}.announcement-posted .meta{font-size:11px;color:var(--muted);margin-bottom:7px}.hidden-force{display:none!important}@media(max-width:1000px){.announcement-admin-grid{grid-template-columns:1fr 1fr}}@media(max-width:760px){.announcement-admin-grid{grid-template-columns:1fr}.announcement-editor-card{padding:14px}}
 </style>
 <style id="lvconnect-branding-assets">
 .brand-logo-img{display:block;width:min(100%,330px);height:auto;max-height:115px;object-fit:contain;margin:0 auto 18px}
@@ -149,12 +149,12 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
       <div class="nav-label">Main</div>
       <button class="nav-item active" data-page="dashboard"><span class="nav-icon">⌂</span>Dashboard</button>
       <div class="nav-label" style="margin-top:20px">Services</div>
-      <button class="nav-item" data-page="eservices"><span class="nav-icon">□</span>E-Services</button>
-      <button class="nav-item" data-page="talaan" data-permission="TALAAN_VIEW"><span class="nav-icon">◫</span>TALAAN</button>
+      <button class="nav-item" data-page="eservices" data-permission="ESERVICES_VIEW"><span class="nav-icon">□</span>E-Services</button>
       <button class="nav-item" data-page="drs" data-permission="DRS_VIEW"><span class="nav-icon">▤</span>Document Routing</button>
-      <button class="nav-item hidden" id="navAnnouncements" data-page="announcements"><span class="nav-icon">!</span>Bulletin Board</button>
+      <button class="nav-item hidden" id="navAdminMessages" data-page="announcements"><span class="nav-icon">!</span>Messages &amp; Announcements</button>
+      <button class="nav-item hidden" id="navBulletinBoard" data-page="announcements"><span class="nav-icon">!</span>Bulletin Board</button>
       <button class="nav-item hidden" id="navTaskBoard" data-page="taskboard"><span class="nav-icon">☷</span>Task Board</button>
-      <button class="nav-item" id="navSsgApprovals" data-page="ssg-approvals" data-access="ssg-approval"><span class="nav-icon">✓</span>Approval Requests</button>
+      <button class="nav-item hidden" id="navSsgApprovals" data-page="ssg-approvals" data-permission="SSG_ACCESS_APPROVAL_VIEW"><span class="nav-icon">✓</span>Approval Requests</button>
       <div class="nav-label" style="margin-top:20px">Account</div>
       <button class="nav-item" data-page="notifications"><span class="nav-icon">◌</span>Notifications</button>
       <button class="nav-item" data-page="profile"><span class="nav-icon">○</span>Profile</button>
@@ -164,7 +164,7 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
   </aside>
   <div id="overlay" class="overlay"></div>
   <main class="main">
-    <header class="topbar"><div id="title" class="title"><h2>Dashboard</h2><p>Welcome to LVConnect Portal</p></div><div id="globalSearch" class="global-search"><input id="globalSearchInput" type="search" placeholder="Search student name or TALAAN Code"><button type="button" id="globalSearchButton">Search</button></div><div class="actions"><button id="menu" class="icon menu" type="button">☰</button><button class="icon" type="button" title="Notifications" data-page="notifications">◌</button><button id="logout" class="icon" type="button" title="Sign out">↪</button></div></header>
+    <header class="topbar"><div id="title" class="title"><h2>Dashboard</h2><p>Welcome to LVConnect Portal</p></div><div id="globalSearch" class="global-search" data-permission="STUDENT_SEARCH"><input id="globalSearchInput" type="search" placeholder="Search student name or TALAAN Code"><button type="button" id="globalSearchButton">Search</button></div><div class="actions"><button id="menu" class="icon menu" type="button">☰</button><button class="icon" type="button" title="Notifications" data-page="notifications">◌</button><button id="logout" class="icon" type="button" title="Sign out">↪</button></div></header>
     <div class="content">
       <section id="page-dashboard" class="page active">
   <div class="portal-welcome"><div><span class="eyebrow">LVCONNECT PORTAL</span><h1 id="welcome">Welcome to LVConnect</h1><p>Your unified portal for school services, records, and digital transactions.</p></div><button class="theme-btn" type="button" onclick="toggleTheme_()">◐</button></div>
@@ -177,25 +177,24 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
   </div>
 </section>
 <section id="page-eservices" class="page"><div class="portal-box"><div class="box-head"><div><span class="eyebrow">E-SERVICES</span><h1>Forms & Digital Services</h1><p>Complete available forms inside LVConnect. Submitted forms are generated as documents and entered into DRS.</p></div></div><div id="eserviceFillable" class="eservice-groups"></div><div class="portal-box downloadable-box"><div class="box-head"><div><span class="eyebrow">DOWNLOADABLE</span><h2>Forms that remain downloadable</h2><p>These documents are kept outside the digital form workflow because of privacy, sensitivity, or format requirements.</p></div></div><div id="downloadableForms" class="form-grid"></div></div></div></section>
-<section id="page-talaan" class="page">
-  <div class="portal-box">
-    <div class="box-head"><div><span class="eyebrow">TALAAN</span><h1>Attendance Management</h1><p>Integrated TALAAN attendance data for the access level assigned to your account.</p></div><button class="portal-btn secondary" onclick="loadTalaanPortal_()">↻ Refresh</button></div>
-    <div class="talaan-toolbar" style="margin-bottom:14px">
-      <input id="talaanDate" type="date">
-      <select id="talaanAttendanceYear"><option value="1">1st Year</option><option value="2">2nd Year</option><option value="3">3rd Year</option><option value="4">4th Year</option></select>
-      <button class="portal-btn secondary" type="button" id="loadTalaanAttendanceButton">Load Attendance</button>
-    </div>
-    <div id="talaanMetrics" class="talaan-summary-grid"></div>
-    <div class="portal-box-inner">
-      <div class="box-head"><div><span class="eyebrow">ATTENDANCE</span><h2>Attendance Records</h2></div></div>
-      <div id="talaanAttendanceTable"><div class="loading-inline">Select a year level to load attendance.</div></div>
-    </div>
-  </div>
-</section>
 <section id="page-drs" class="page"><div class="portal-box"><div class="box-head"><div><span class="eyebrow">DOCUMENT ROUTING SYSTEM</span><h1>Document Routing</h1><p>Open a request to view its movement, review the document, and perform actions permitted to your account.</p></div><button class="portal-btn secondary" onclick="loadPortalDrs_()">↻ Refresh</button></div><div id="drsDashboard" class="drs-dashboard"><div class="loading-inline">Loading requests…</div></div></div></section>
 <section id="page-announcements" class="page">
   <div class="portal-box">
     <div class="box-head"><div><span class="eyebrow">MESSAGES</span><h1>Bulletin Board</h1><p>Administrative messages and bulletin posts are controlled by your account authority.</p></div><button class="portal-btn secondary" onclick="loadPortalMessages_()">↻ Refresh</button></div>
+    <div class="announcement-admin-grid board-display-grid" id="boardDisplayGrid">
+      <div class="announcement-editor-card board-display-card" id="adminAnnouncementDisplay">
+        <div class="box-head"><div><span class="eyebrow">ADMINISTRATIVE ANNOUNCEMENT</span><h2>Important Updates</h2></div></div>
+        <div id="boardAdminAnnouncements" class="announcement-list"><div class="loading-inline">Loading announcements…</div></div>
+      </div>
+      <div class="announcement-editor-card board-display-card hidden-force" id="bulletinDisplay">
+        <div class="box-head"><div><span class="eyebrow">BULLETIN BOARD</span><h2>Bulletin Messages</h2></div></div>
+        <div id="boardBulletins" class="bulletin-list"><div class="loading-inline">Loading bulletin…</div></div>
+      </div>
+      <div class="announcement-editor-card board-display-card" id="upcomingDisplay">
+        <div class="box-head"><div><span class="eyebrow">UPCOMING EVENTS</span><h2>Upcoming Activities</h2></div></div>
+        <div id="boardUpcoming" class="upcoming-list"><div class="loading-inline">Loading activities…</div></div>
+      </div>
+    </div>
     <div class="announcement-admin-grid">
       <div class="announcement-editor-card" id="adminAnnouncementEditor">
         <div class="box-head"><div><span class="eyebrow">ADMINISTRATIVE</span><h2>Administrative Announcement</h2></div></div>
@@ -281,7 +280,7 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
   </div>
 </section>
 
-<section id="page-profile" class="page"><div class="profile portal-box"><div class="profile-hero"><div id="profilePicturePreview" class="profile-photo">LV</div><div><span class="eyebrow">MY PROFILE</span><h1>Account information</h1><p>Your current LVConnect identity and SSG assignments.</p><label class="portal-btn secondary upload-photo">Add Picture<input id="profilePictureInput" type="file" accept="image/*"></label></div></div><div class="profile-rows"><div class="row"><span>Name</span><span id="profileName">—</span></div><div class="row"><span>TALAAN Code</span><span id="profileTalaan">—</span></div><div class="row"><span>LV Email</span><span id="profileEmail">—</span></div><div class="row"><span>Account ID</span><span id="profileAccountId">—</span></div><div class="row"><span>Account Type</span><span id="profileType">—</span></div><div class="row"><span>SSG / Class Position</span><span id="profilePosition">—</span></div><div class="row"><span>Office</span><span id="profileOffice">—</span></div><div class="row"><span>Permissions</span><span id="profilePermissions">—</span></div></div><div class="request-access"><h3>Request Additional Access</h3><p>If you hold a class officer or SSG officer position, submit it for verification and approval.</p><button id="requestAccessButton" class="profile-btn" type="button">Request Additional Access</button></div></div></section>
+<section id="page-profile" class="page"><div class="profile portal-box"><div class="profile-hero"><div id="profilePicturePreview" class="profile-photo">LV</div><div><span class="eyebrow">MY PROFILE</span><h1>Account information</h1><p>Your current LVConnect identity and SSG assignments.</p><label class="portal-btn secondary upload-photo">Add Picture<input id="profilePictureInput" type="file" accept="image/*"></label></div></div><div class="profile-rows"><div class="row"><span>Name</span><span id="profileName">—</span></div><div class="row"><span>LV Email</span><span id="profileEmail">—</span></div><div class="row"><span>Account ID</span><span id="profileAccountId">—</span></div><div class="row"><span>Account Type</span><span id="profileType">—</span></div><div class="row"><span>SSG / Class Position</span><span id="profilePosition">—</span></div><div class="row"><span>Office</span><span id="profileOffice">—</span></div><div class="row"><span>Permissions</span><span id="profilePermissions">—</span></div></div><div class="request-access"><h3>Request Additional Access</h3><p>If you hold a class officer or SSG officer position, submit it for verification and approval.</p><button id="requestAccessButton" class="profile-btn" type="button">Request Additional Access</button></div></div></section>
           <section id="page-settings" class="page"><div class="portal-box settings-box"><div class="box-head"><div><span class="eyebrow">ACCOUNT</span><h1>Settings</h1><p>Only your LV email and password can be changed here.</p></div></div><div class="settings-section"><h2>Change Password</h2><p style="color:var(--muted);font-size:10px">12+ characters with uppercase, lowercase, number, and special character. Previous passwords cannot be reused.</p><div class="settings-grid"><div><label>Current Password</label><input id="setCurrentPassword" type="password"></div><div><label>New Password</label><input id="setNewPassword" type="password" minlength="12"></div><div><label>Confirm New Password</label><input id="setConfirmPassword" type="password" minlength="12"></div></div><button class="portal-btn" onclick="savePasswordSettings_()">Change Password</button></div><div class="settings-section"><h2>Change LV Email</h2><div class="settings-grid"><div><label>New LV Email</label><input id="setNewEmail" type="email" placeholder="yourname@laverdad.edu.ph"></div><div><label>Verification Code</label><input id="setEmailCode" inputmode="numeric" maxlength="6" placeholder="6-digit code"></div></div><div class="settings-actions"><button class="portal-btn secondary" onclick="requestEmailVerification_()">Send Verification</button><button class="portal-btn" onclick="confirmEmailSettings_()">Verify & Save Email</button></div><div id="settingsMessage" class="portal-status"></div></div></div></section>
 </div>
   </main>
@@ -306,8 +305,8 @@ function openApp(){$('loginScreen').style.display='none';$('app').classList.add(
 function ensurePostLoginNavigation_(){try{if(typeof ensureBottom==='function')ensureBottom()}catch(e){}}
 function clearSession(){session=null;access=null;localStorage.removeItem(STORAGE_KEY)}
 async function logout(){try{loading(true,'Signing out...');if(session?.sessionId)await post('LOGOUT',{sessionId:session.sessionId})}catch(e){}finally{clearSession();loading(false);$('app').classList.remove('active');$('loginScreen').style.display='flex';$('loginForm').reset()}}
-const titles={talaan:['TALAAN','Attendance management'],taskboard:['Event Tracker','SSG event tracker and task management'],dashboard:['Dashboard','Welcome to LVConnect Portal'],eservices:['E-Services','Digital institutional services'],drs:['Document Routing','Requests and document tracking'],notifications:['Notifications','Updates and transaction alerts'],profile:['My Profile','Account information and settings'],'ssg-approvals':['Approval Requests','Review and approve SSG access requests'],'taskboard':['Task Board','SSG event tracker and task management'],'settings':['Settings','Account settings']};
-function openPage(page){const target=$('page-'+page);if(!target)return;const restricted=document.querySelector('.nav-item[data-page="'+page+'"][data-permission]');if(restricted&&!hasPermission(restricted.dataset.permission))return;document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));target.classList.add('active');document.querySelectorAll('.nav-item').forEach(x=>x.classList.toggle('active',x.dataset.page===page));if(titles[page])$('title').innerHTML='<h2>'+titles[page][0]+'</h2><p>'+titles[page][1]+'</p>';closeMenu()}
+const titles={taskboard:['Event Tracker','SSG event tracker and task management'],dashboard:['Dashboard','Welcome to LVConnect Portal'],eservices:['E-Services','Digital institutional services'],drs:['Document Routing','Requests and document tracking'],notifications:['Notifications','Updates and transaction alerts'],profile:['My Profile','Account information and settings'],'ssg-approvals':['Approval Requests','Review and approve SSG access requests'],'taskboard':['Task Board','SSG event tracker and task management'],'settings':['Settings','Account settings']};
+function openPage(page){const target=$('page-'+page);if(!target)return;const links=Array.from(document.querySelectorAll('.nav-item[data-page="'+page+'"][data-permission]'));if(links.length&&!links.some(function(el){return !el.classList.contains('hidden')&&hasPermission(el.dataset.permission)}))return;document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));target.classList.add('active');document.querySelectorAll('.nav-item').forEach(x=>x.classList.toggle('active',x.dataset.page===page));if(titles[page])$('title').innerHTML='<h2>'+titles[page][0]+'</h2><p>'+titles[page][1]+'</p>';closeMenu()}
 function closeMenu(){$('sidebar').classList.remove('open');$('overlay').classList.remove('active')}
 function openModal(id){$(id).classList.add('show')}
 function closeModal(id){$(id).classList.remove('show')}
@@ -696,10 +695,9 @@ body.dark .drs-card:hover{border-color:#526675}
   window.performDrsUiAction_=async function(id,action){const remarks=prompt(action==='APPROVE'?'Approval remarks (optional):':'Remarks / reason (optional):');if(remarks===null)return;loading(true,'Processing DRS action…');try{const r=await portalPost('PERFORM_DRS_ACTION',{requestId:id,actionType:action,remarks:remarks});if(!r?.success)throw new Error(r?.message||'Unable to perform action.');alert('DRS action completed.');document.querySelectorAll('.modal.show').forEach(m=>m.remove());await loadPortalDrs_()}catch(e){alert(e.message||String(e))}finally{loading(false)}};
   function initEventTracker_(){const f=$('eventTrackerFrame');if(f&&!f.dataset.ready){f.dataset.ready='1';}}
   window.refreshEventTracker_=function(){const f=$('eventTrackerFrame');if(f){const src=f.src;f.src='about:blank';setTimeout(()=>f.src=src,30);}};
-  async function loadAccessUiExtras(){try{const r=await portalPost('CURRENT_USER');if(r?.account){access=r;const pic=r.account.profilePicture||'';setProfilePicture(pic);const assigns=r.assignments||[];const pos=assigns.map(a=>a.position).filter(Boolean).join(', ');const off=assigns.map(a=>a.office).filter(Boolean).join(', ');if($('profilePosition'))$('profilePosition').textContent=pos||'—';if($('profileOffice'))$('profileOffice').textContent=off||'—';}const tb=$('navTaskBoard');if(tb)tb.classList.toggle('hidden',!canTask())}catch(e){}}
   window.toggleTheme_=function(){document.body.classList.toggle('dark');localStorage.setItem('lvconnectTheme',document.body.classList.contains('dark')?'dark':'light')};
   if(localStorage.getItem('lvconnectTheme')==='dark')document.body.classList.add('dark');
-  const oldApply=window.applyUser;window.applyUser=function(){oldApply();loadAccessUiExtras();renderEservices();loadDashboardHome_();setTimeout(()=>{const pic=access?.account?.profilePicture||'';setProfilePicture(pic)},0)};
+  const oldApply=window.applyUser;window.applyUser=function(){oldApply();const assigns=access?.assignments||[];const pos=assigns.map(a=>a.position).filter(Boolean).join(', ');const off=assigns.map(a=>a.office).filter(Boolean).join(', ');if($('profilePosition'))$('profilePosition').textContent=pos||'—';if($('profileOffice'))$('profileOffice').textContent=off||'—';setProfilePicture(access?.account?.profilePicture||'');renderEservices();loadDashboardHome_();};
   const oldOpen=window.openPage;window.openPage=function(page){oldOpen(page);if(page==='dashboard')loadDashboardHome_();if(page==='eservices')renderEservices();if(page==='drs')loadPortalDrs_();if(page==='taskboard')setTimeout(initEventTracker_,30);if(page==='settings'){} };
   document.addEventListener('DOMContentLoaded',function(){
     renderEservices();
@@ -751,7 +749,6 @@ body.dark .drs-card:hover{border-color:#526675}
   };
   window.rejectSSGRequest_=async function(id){const remarks=prompt('Reason for declining (optional):');if(remarks===null)return;loading(true,'Declining request…');try{const r=await portalPost('REJECT_ADDITIONAL_ACCESS_REQUEST',{requestId:id,remarks:remarks});if(!r?.success)throw new Error(r?.message||'Unable to decline request.');await loadSSGApprovalRequests();}catch(e){alert(e.message||String(e))}finally{loading(false)}};
   // Profile picture should also be reflected in the sidebar/greeting after refresh.
-  setTimeout(loadAccessUiExtras,300);
 })();
 </script>
 
@@ -861,6 +858,23 @@ body.dark .drs-card:hover{border-color:#526675}
     }catch(e){const list=$('adminAnnouncementsList');if(list)list.innerHTML='<div class="empty-state">'+esc(e.message||String(e))+'</div>'}
   }
   window.loadPortalMessages_=loadPortalMessages_;
+  async function loadBoardDisplay_(){
+    try{
+      const r=await portalPost('GET_DASHBOARD_HOME');if(!r?.success)return;
+      const anns=r.announcements||[], evs=r.upcomingActivities||[];
+      const accountType=String(access?.account?.accountType||'').toUpperCase();
+      const isAdmin=accountType==='ADMIN';
+      const adminRows=anns.filter(x=>String(x.type||'').toUpperCase()!=='BULLETIN');
+      const bulletinRows=anns.filter(x=>String(x.type||'').toUpperCase()==='BULLETIN');
+      const a=$('boardAdminAnnouncements'), b=$('boardBulletins'), u=$('boardUpcoming');
+      if(a)a.innerHTML=adminRows.map(x=>'<div class="announcement-item"><h3>'+esc(x.title||'Announcement')+'</h3><p>'+esc(x.content||'')+'</p></div>').join('')||'<div class="empty-state">No active administrative announcements.</div>';
+      if(b)b.innerHTML=bulletinRows.map(x=>'<div class="bulletin-item"><strong>'+esc(x.title||'Bulletin')+'</strong><span>'+esc(x.content||'')+'</span></div>').join('')||'<div class="empty-state">No bulletin messages.</div>';
+      if(u)u.innerHTML=evs.slice(0,8).map(x=>'<div class="upcoming-item"><strong>'+esc(x.event||'Upcoming Event')+'</strong><span>'+esc(x.date||'')+(x.eventType?' · '+esc(x.eventType):'')+'</span></div>').join('')||'<div class="empty-state">No upcoming activities.</div>';
+      const ad=document.getElementById('adminAnnouncementDisplay'), bd=document.getElementById('bulletinDisplay');
+      if(ad)ad.classList.toggle('hidden-force',!isAdmin); if(bd)bd.classList.toggle('hidden-force',isAdmin);
+    }catch(e){}
+  }
+  window.loadBoardDisplay_=loadBoardDisplay_;
   window.reviewPortalAnnouncementUi_=async function(id,decision){const remarks=prompt('Remarks (optional):')||'';loading(true,'Processing review…');try{const r=await portalPost('REVIEW_PORTAL_ANNOUNCEMENT',{announcementId:id,decision:decision,remarks:remarks});if(!r?.success)throw new Error(r?.message||'Unable to process review.');await loadPortalMessages_()}catch(e){alert(e.message||String(e))}finally{loading(false)}};
   function prepareAnnouncementForms_(){
     const now=new Date();const ds=now.toISOString().slice(0,10);['adminAnnStart','adminBulletinStart'].forEach(id=>{const e=$(id);if(e&&!e.value)e.value=ds});
@@ -876,8 +890,31 @@ body.dark .drs-card:hover{border-color:#526675}
   async function loadNotifications_(){const box=$('notificationsList');if(!box)return;try{const r=await portalPost('GET_NOTIFICATIONS');if(!r?.success)throw new Error(r?.message||'Unable to load notifications.');const rows=r.notifications||[];box.innerHTML=rows.map(x=>'<div class="announcement-item"><h3>'+esc(x.title||x['Title']||'Notification')+'</h3><p>'+esc(x.message||x['Message']||'')+'</p><span>'+esc(x.createdAt||x['Created At']||'')+'</span></div>').join('')||'<div class="empty-state">No notifications.</div>'}catch(e){box.innerHTML='<div class="empty-state">'+esc(e.message||String(e))+'</div>'}}
   window.loadNotifications_=loadNotifications_;
 
-  const oldApply=window.applyUser;window.applyUser=function(){oldApply();initPasswordToggles_();initGlobalSearch_();setTimeout(function(){if(hasPermission('TALAAN_VIEW'))document.querySelector('[data-page="talaan"]')?.classList.remove('hidden');if(hasPermission('TASK_BOARD_VIEW'))document.querySelector('[data-page="taskboard"]')?.classList.remove('hidden');},50)};
-  const oldOpen=window.openPage;window.openPage=function(page){oldOpen(page);if(page==='talaan')setTimeout(loadTalaanPortal_,0);if(page==='taskboard')setTimeout(loadPortalEvents_,0);if(page==='announcements')setTimeout(loadPortalMessages_,0);if(page==='notifications')setTimeout(loadNotifications_,0)};
+  const oldApply=window.applyUser;window.applyUser=function(){oldApply();initPasswordToggles_();initGlobalSearch_();setTimeout(function(){
+    if(hasPermission('TASK_BOARD_VIEW'))document.querySelector('[data-page="taskboard"]')?.classList.remove('hidden');
+    const approval=document.getElementById('navSsgApprovals');
+    if(approval)approval.classList.toggle('hidden',!hasPermission('SSG_ACCESS_APPROVAL_VIEW'));
+    const accountType=String(access?.account?.accountType||'').toUpperCase();
+    const isAdmin=accountType==='ADMIN';
+    const isStaff=accountType==='STAFF';
+    const isSsg=(access?.assignments||[]).some(a=>/SSG|CHAIRPERSON|VICE CHAIR|TREASURER|OFFICER|ADVISER/i.test((a.position||'')+' '+(a.office||'')+' '+(a.assignmentName||'')));
+    const adminMsg=document.getElementById('navAdminMessages');
+    if(adminMsg)adminMsg.classList.toggle('hidden',!isAdmin);
+    const board=document.getElementById('navBulletinBoard');
+    if(board)board.classList.toggle('hidden',!(isAdmin||isStaff||isSsg||hasPermission('BULLETIN_BOARD_VIEW')));
+    const adminEditor=document.getElementById('adminAnnouncementEditor');
+    if(adminEditor)adminEditor.classList.toggle('hidden-force',!isAdmin);
+    const bulletinEditor=document.getElementById('bulletinEditor');
+    if(bulletinEditor)bulletinEditor.classList.toggle('hidden-force',!(isStaff||isSsg));
+    const adminDisplay=document.getElementById('adminAnnouncementDisplay');
+    if(adminDisplay)adminDisplay.classList.toggle('hidden-force',!isAdmin);
+    const bulletinDisplay=document.getElementById('bulletinDisplay');
+    if(bulletinDisplay)bulletinDisplay.classList.toggle('hidden-force',isAdmin);
+    const upcoming=document.getElementById('upcomingDisplay');
+    if(upcoming)upcoming.classList.remove('hidden-force');
+    setTimeout(loadBoardDisplay_,80);
+  },50)};
+  const oldOpen=window.openPage;window.openPage=function(page){oldOpen(page);if(page==='taskboard')setTimeout(loadPortalEvents_,0);if(page==='announcements'){setTimeout(loadPortalMessages_,0);setTimeout(loadBoardDisplay_,0);}if(page==='notifications')setTimeout(loadNotifications_,0)};
   initPasswordToggles_();initGlobalSearch_();prepareAnnouncementForms_();
   // Session keep-alive prevents long review screens from expiring.
   setInterval(async function(){if(session?.sessionId){try{const r=await portalPost('REFRESH_SESSION');if(!r?.success)throw new Error('expired')}catch(e){clearSession();location.reload()}}},10*60*1000);
