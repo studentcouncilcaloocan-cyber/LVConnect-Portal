@@ -336,37 +336,56 @@ async function post(action,data={}){
     document.body.appendChild(form);
 
     let done=false;
-    const timer=setTimeout(()=>finish(new Error('Request timed out. Please try again.')),30000);
+    let fallbackTimer=null;
+    const started=Date.now();
+    const maxWait=30000;
 
-    function cleanup(){
-      clearTimeout(timer);
+    const finish=(err,result)=>{
+      if(done)return;
+      done=true;
+      clearTimeout(timeoutTimer);
+      if(fallbackTimer)clearTimeout(fallbackTimer);
       window.removeEventListener('message',handleMessage);
       try{form.remove()}catch(e){}
       try{iframe.remove()}catch(e){}
-    }
+      if(err)reject(err);else resolve(result);
+    };
 
-    function finish(err,result){
-      if(done)return;
-      done=true;
-      cleanup();
-      if(err)reject(err);
-      else resolve(result);
-    }
-
-    function handleMessage(event){
+    const handleMessage=(event)=>{
       const message=event&&event.data;
       if(!message||message.type!=='LVCONNECT_API_RESPONSE')return;
       if(String(message.requestId||'')!==requestId)return;
       finish(null,message.payload);
-    }
+    };
 
     window.addEventListener('message',handleMessage);
 
-    try{
-      form.submit();
-    }catch(e){
-      finish(e);
-    }
+    // Redundant fallback: if the iframe completes but postMessage is lost,
+    // retrieve the short-lived result using only the opaque request ID.
+    const pollFallback=()=>{
+      if(done)return;
+      const callback='lvcb_'+requestId.replace(/[^A-Za-z0-9_$]/g,'_');
+      const script=document.createElement('script');
+      let cleaned=false;
+      const cleanupScript=()=>{
+        if(cleaned)return;cleaned=true;
+        try{script.remove()}catch(e){}
+        try{delete window[callback]}catch(e){window[callback]=undefined}
+      };
+      window[callback]=(result)=>{
+        cleanupScript();
+        if(result&&!result.pending)finish(null,result);
+      };
+      script.src=API_URL+'?action=GET_POST_RESULT&requestId='+encodeURIComponent(requestId)+'&callback='+encodeURIComponent(callback)+'&_='+Date.now();
+      script.onerror=cleanupScript;
+      document.head.appendChild(script);
+      if(!done && Date.now()-started<maxWait-1000)fallbackTimer=setTimeout(pollFallback,1200);
+    };
+
+    const timeoutTimer=setTimeout(()=>finish(new Error('Request timed out. Please try again.')),maxWait);
+    fallbackTimer=setTimeout(pollFallback,1800);
+
+    try{form.submit();}catch(e){finish(e);}
   });
 }
 async function login(code,password){const r=await post('LOGIN',{talaanCode:code,password});if(!r||r.success!==true)throw new Error(r?.message||'Invalid TALAAN Code or password.');session={sessionId:r.sessionId,account:r.account};localStorage.setItem(STORAGE_KEY,JSON.stringify(session));await loadAccess()}
