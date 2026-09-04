@@ -149,7 +149,7 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
       <div class="nav-label">Main</div>
       <button class="nav-item active" data-page="dashboard"><span class="nav-icon">⌂</span>Dashboard</button>
       <div class="nav-label" style="margin-top:20px">Services</div>
-      <button class="nav-item" data-page="eservices" data-permission="ESERVICES_VIEW"><span class="nav-icon">□</span>E-Services</button>
+      <button class="nav-item" id="navEservices" data-page="eservices" data-permission="ESERVICES_VIEW"><span class="nav-icon">□</span>E-Services</button>
       <button class="nav-item" data-page="drs" data-permission="DRS_VIEW"><span class="nav-icon">▤</span>Document Routing</button>
       <button class="nav-item hidden" id="navAdminMessages" data-page="announcements"><span class="nav-icon">!</span>Messages &amp; Announcements</button>
       <button class="nav-item hidden" id="navBulletinBoard" data-page="announcements"><span class="nav-icon">!</span>Bulletin Board</button>
@@ -298,7 +298,37 @@ function clearError(){$('loginError').textContent='';$('loginError').classList.r
 async function post(action,data={}){return new Promise((resolve,reject)=>{const callbackName='__lvconnectCallback_'+Date.now()+'_'+Math.random().toString(36).slice(2);const script=document.createElement('script');const query=new URLSearchParams();query.set('action',action);query.set('callback',callbackName);Object.keys(data).forEach(k=>query.set(k,String(data[k]??'')));let timer=setTimeout(()=>{cleanup();reject(new Error('Request timed out. Please try again.'))},20000);function cleanup(){clearTimeout(timer);delete window[callbackName];if(script.parentNode)script.parentNode.removeChild(script)}window[callbackName]=function(result){cleanup();resolve(result)};script.onerror=function(){cleanup();reject(new Error('Unable to connect to LVConnect Backend.'))};script.src=API_URL+(API_URL.includes('?')?'&':'?')+query.toString();document.head.appendChild(script)})}
 async function login(code,password){const r=await post('LOGIN',{talaanCode:code,password});if(!r||r.success!==true)throw new Error(r?.message||'Invalid TALAAN Code or password.');session={sessionId:r.sessionId,account:r.account};localStorage.setItem(STORAGE_KEY,JSON.stringify(session));await loadAccess()}
 async function loadAccess(){const r=await post('CURRENT_USER',{sessionId:session?.sessionId||''});if(!r||!r.account)throw new Error(r?.message||'Unable to load account access.');access=r;session.account=r.account;localStorage.setItem(STORAGE_KEY,JSON.stringify(session));applyUser()}
-function applyUser(){const a=access?.account;if(!a)return;const name=[a.firstName,a.middleInitial,a.surname].filter(Boolean).join(' ').trim()||'LVConnect User';$('sideUser').textContent=name;$('sideRole').textContent=a.accountType||'Account';$('welcome').textContent='Welcome, '+(a.firstName||'User')+'.';$('avatar').textContent=((a.firstName||'L')[0]+(a.surname||'V')[0]).toUpperCase();$('profileName').textContent=name;$('profileEmail').textContent=a.email||'—';$('profileAccountId').textContent=a.accountId||'—';$('profileType').textContent=a.accountType||'—';$('profilePermissions').textContent=(access.permissions||[]).length?access.permissions.join(', '):'None';applyPermissions()}
+function applyUser(){
+  const a=access?.account;if(!a)return;
+  const name=[a.firstName,a.middleInitial,a.surname].filter(Boolean).join(' ').trim()||'LVConnect User';
+  $('sideUser').textContent=name;$('sideRole').textContent=a.accountType||'Account';$('welcome').textContent='Welcome, '+(a.firstName||'User')+'.';$('avatar').textContent=((a.firstName||'L')[0]+(a.surname||'V')[0]).toUpperCase();$('profileName').textContent=name;$('profileEmail').textContent=a.email||'—';$('profileAccountId').textContent=a.accountId||'—';$('profileType').textContent=a.accountType||'—';$('profilePermissions').textContent=(access.permissions||[]).length?access.permissions.join(', '):'None';
+  applyPermissions();
+  applyRoleSpecificPortalAccess_();
+}
+function applyRoleSpecificPortalAccess_(){
+  const type=String(access?.account?.accountType||'').toUpperCase();
+  const assigns=access?.assignments||[];
+  const hasAssign=(re)=>assigns.some(a=>re.test(String((a.position||'')+' '+(a.office||'')+' '+(a.assignmentName||''))));
+  const isAdmin=type==='ADMIN';
+  const isTeacher=type==='TEACHER';
+  const isStudent=type==='STUDENT';
+  const isSsgAdviser=hasAssign(/SSG\s*ADVISER/i);
+  const isClassOfficer=hasAssign(/CLASS\s*(MAYOR|VICE MAYOR|SECRETARY)/i);
+  const es=$('navEservices');
+  if(es) es.classList.toggle('hidden', !(hasPermission('ESERVICES_VIEW') || isTeacher || isStudent || isSsgAdviser || isClassOfficer));
+  const board=$('navBulletinBoard');
+  if(board) board.classList.toggle('hidden', !(isAdmin || isTeacher || isSsgAdviser || type==='STAFF' || hasAssign(/SSG|CHAIRPERSON|VICE CHAIR|TREASURER|OFFICER/i)));
+  const adminDisplay=$('adminAnnouncementDisplay');
+  const bulletinDisplay=$('bulletinDisplay');
+  const upcomingDisplay=$('upcomingDisplay');
+  if(adminDisplay) adminDisplay.classList.toggle('hidden-force',!isAdmin);
+  if(bulletinDisplay) bulletinDisplay.classList.toggle('hidden-force',isAdmin);
+  if(upcomingDisplay) upcomingDisplay.classList.remove('hidden-force');
+  const adminEditor=$('adminAnnouncementEditor');
+  const bulletinEditor=$('bulletinEditor');
+  if(adminEditor) adminEditor.classList.toggle('hidden-force',!isAdmin);
+  if(bulletinEditor) bulletinEditor.classList.toggle('hidden-force',!(isTeacher || isSsgAdviser || type==='STAFF' || hasAssign(/SSG|CHAIRPERSON|VICE CHAIR|TREASURER|OFFICER/i)));
+}
 function hasPermission(p){return (access?.permissions||[]).map(x=>String(x).toUpperCase()).includes(String(p).toUpperCase())}
 function applyPermissions(){document.querySelectorAll('[data-permission]').forEach(el=>el.classList.toggle('hidden',!hasPermission(el.dataset.permission)))}
 function openApp(){$('loginScreen').style.display='none';$('app').classList.add('active');ensurePostLoginNavigation_();openPage('dashboard')}
@@ -870,8 +900,7 @@ body.dark .drs-card:hover{border-color:#526675}
       if(a)a.innerHTML=adminRows.map(x=>'<div class="announcement-item"><h3>'+esc(x.title||'Announcement')+'</h3><p>'+esc(x.content||'')+'</p></div>').join('')||'<div class="empty-state">No active administrative announcements.</div>';
       if(b)b.innerHTML=bulletinRows.map(x=>'<div class="bulletin-item"><strong>'+esc(x.title||'Bulletin')+'</strong><span>'+esc(x.content||'')+'</span></div>').join('')||'<div class="empty-state">No bulletin messages.</div>';
       if(u)u.innerHTML=evs.slice(0,8).map(x=>'<div class="upcoming-item"><strong>'+esc(x.event||'Upcoming Event')+'</strong><span>'+esc(x.date||'')+(x.eventType?' · '+esc(x.eventType):'')+'</span></div>').join('')||'<div class="empty-state">No upcoming activities.</div>';
-      const ad=document.getElementById('adminAnnouncementDisplay'), bd=document.getElementById('bulletinDisplay');
-      if(ad)ad.classList.toggle('hidden-force',!isAdmin); if(bd)bd.classList.toggle('hidden-force',isAdmin);
+      applyRoleSpecificPortalAccess_();
     }catch(e){}
   }
   window.loadBoardDisplay_=loadBoardDisplay_;
@@ -896,22 +925,9 @@ body.dark .drs-card:hover{border-color:#526675}
     if(approval)approval.classList.toggle('hidden',!hasPermission('SSG_ACCESS_APPROVAL_VIEW'));
     const accountType=String(access?.account?.accountType||'').toUpperCase();
     const isAdmin=accountType==='ADMIN';
-    const isStaff=accountType==='STAFF';
-    const isSsg=(access?.assignments||[]).some(a=>/SSG|CHAIRPERSON|VICE CHAIR|TREASURER|OFFICER|ADVISER/i.test((a.position||'')+' '+(a.office||'')+' '+(a.assignmentName||'')));
     const adminMsg=document.getElementById('navAdminMessages');
     if(adminMsg)adminMsg.classList.toggle('hidden',!isAdmin);
-    const board=document.getElementById('navBulletinBoard');
-    if(board)board.classList.toggle('hidden',!(isAdmin||isStaff||isSsg||hasPermission('BULLETIN_BOARD_VIEW')));
-    const adminEditor=document.getElementById('adminAnnouncementEditor');
-    if(adminEditor)adminEditor.classList.toggle('hidden-force',!isAdmin);
-    const bulletinEditor=document.getElementById('bulletinEditor');
-    if(bulletinEditor)bulletinEditor.classList.toggle('hidden-force',!(isStaff||isSsg));
-    const adminDisplay=document.getElementById('adminAnnouncementDisplay');
-    if(adminDisplay)adminDisplay.classList.toggle('hidden-force',!isAdmin);
-    const bulletinDisplay=document.getElementById('bulletinDisplay');
-    if(bulletinDisplay)bulletinDisplay.classList.toggle('hidden-force',isAdmin);
-    const upcoming=document.getElementById('upcomingDisplay');
-    if(upcoming)upcoming.classList.remove('hidden-force');
+    applyRoleSpecificPortalAccess_();
     setTimeout(loadBoardDisplay_,80);
   },50)};
   const oldOpen=window.openPage;window.openPage=function(page){oldOpen(page);if(page==='taskboard')setTimeout(loadPortalEvents_,0);if(page==='announcements'){setTimeout(loadPortalMessages_,0);setTimeout(loadBoardDisplay_,0);}if(page==='notifications')setTimeout(loadNotifications_,0)};
