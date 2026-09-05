@@ -165,10 +165,10 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
       <section id="page-dashboard" class="page active">
   <div class="portal-welcome"><div><span class="eyebrow">LVCONNECT PORTAL</span><h1 id="welcome">Welcome to LVConnect</h1><p>Your unified portal for school services, records, and digital transactions.</p></div><button class="theme-btn" type="button" onclick="toggleTheme_()">◐</button></div>
   <div class="dashboard-layout">
-    <div class="dashboard-announcement-box"><div class="box-head"><div><span class="eyebrow">ADMINISTRATIVE ANNOUNCEMENTS</span><h2>Important Updates</h2></div><span class="box-badge">IMPORTANT</span></div><div id="dashboardAnnouncements" class="announcement-list"><div class="loading-inline">Loading announcements…</div></div></div>
+    <div class="dashboard-announcement-box" id="dashboardAnnouncementsBox"><div class="box-head"><div><span class="eyebrow">ADMINISTRATIVE ANNOUNCEMENTS</span><h2>Important Updates</h2></div><span class="box-badge">IMPORTANT</span></div><div id="dashboardAnnouncements" class="announcement-list"><div class="loading-inline">Loading announcements…</div></div></div>
     <div class="dashboard-side-stack">
-      <div class="dashboard-bulletin-box"><div class="box-head"><div><span class="eyebrow">BULLETIN</span><h2>Bulletin Board</h2></div></div><div id="dashboardBulletin" class="bulletin-list"><div class="loading-inline">Loading bulletin…</div></div></div>
-      <div class="dashboard-upcoming-box"><div class="box-head"><div><span class="eyebrow">UPCOMING</span><h2>Activities</h2></div></div><div id="dashboardUpcoming" class="upcoming-list"><div class="loading-inline">Loading activities…</div></div></div>
+      <div class="dashboard-bulletin-box" id="dashboardBulletinBox"><div class="box-head"><div><span class="eyebrow">BULLETIN</span><h2>Bulletin Board</h2></div></div><div id="dashboardBulletin" class="bulletin-list"><div class="loading-inline">Loading bulletin…</div></div></div>
+      <div class="dashboard-upcoming-box" id="dashboardUpcomingBox"><div class="box-head"><div><span class="eyebrow">UPCOMING</span><h2>Activities</h2></div></div><div id="dashboardUpcoming" class="upcoming-list"><div class="loading-inline">Loading activities…</div></div></div>
     </div>
   </div>
 </section>
@@ -176,7 +176,7 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
 <section id="page-drs" class="page"><div class="portal-box"><div class="box-head"><div><span class="eyebrow">DOCUMENT ROUTING SYSTEM</span><h1>Document Routing</h1><p>Open a request to view its movement, review the document, and perform actions permitted to your account.</p></div><button class="portal-btn secondary" onclick="loadPortalDrs_()">↻ Refresh</button></div><div id="drsDashboard" class="drs-dashboard"><div class="loading-inline">Loading requests…</div></div></div></section>
 <section id="page-announcements" class="page">
   <div class="portal-box">
-    <div class="box-head"><div><span class="eyebrow">MESSAGES</span><h1>Bulletin Board</h1><p>Administrative messages and bulletin posts are controlled by your account authority.</p></div><button class="portal-btn secondary" onclick="loadPortalMessages_()">↻ Refresh</button></div>
+    <div class="box-head"><div><span class="eyebrow">MESSAGES</span><h1>Bulletin Board</h1><p>Only the message boxes authorized for your account are shown here. Upcoming Activities is display-only; activity management is handled through the SSG Task Board.</p></div><button class="portal-btn secondary" onclick="loadPortalMessages_()">↻ Refresh</button></div>
     <div class="announcement-admin-grid board-display-grid" id="boardDisplayGrid">
       <div class="announcement-editor-card board-display-card" id="adminAnnouncementDisplay">
         <div class="box-head"><div><span class="eyebrow">ADMIN ANNOUNCEMENT</span><h2>Administrative Announcement Message Box</h2></div></div>
@@ -223,26 +223,7 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
         </form>
       </div>
     </div>
-    <div class="announcement-admin-grid" id="upcomingEditorGrid">
-      <div class="announcement-editor-card" id="upcomingEditor">
-        <div class="box-head"><div><span class="eyebrow">UPCOMING</span><h2>Upcoming Activities Box</h2><p>Manage activities that appear in the Upcoming Activities Box and the integrated Event Tracker.</p></div></div>
-        <form id="upcomingEventForm" class="task-form">
-          <div><label>Title</label><input id="upcomingTitle" required></div>
-          <div><label>Organized By</label><input id="upcomingOrganizer" required></div>
-          <div><label>Venue</label><input id="upcomingVenue"></div>
-          <div><label>Limited To</label><select id="upcomingLimited"><option value="ALL">All</option><option value="STUDENTS ONLY">Students Only</option><option value="SPECIFIC STUDENTS">Specific Students</option></select></div>
-          <div><label>Specific Section</label><input id="upcomingSection"></div>
-          <div><label>Specific Year Level</label><select id="upcomingYear"><option value="">Any</option><option>1ST YEAR</option><option>2ND YEAR</option><option>3RD YEAR</option><option>4TH YEAR</option></select></div>
-          <div><label>Can Be Viewed By</label><select id="upcomingAudience"><option value="ALL">All</option><option value="STUDENT">Students Only</option><option value="TEACHER_STAFF">Teachers and Staff Only</option></select></div>
-          <div><label>Date</label><input id="upcomingDate" type="date" required></div>
-          <div><label>Time</label><input id="upcomingTime" type="time" required></div>
-          <div><label>Approval Code (SSG)</label><input id="upcomingApprovalCode"></div>
-          <div><label>DRS / Form Reference (SSG)</label><input id="upcomingDrsRef"></div>
-          <div class="full"><label>Short Description</label><textarea id="upcomingDescription"></textarea></div>
-          <div class="full"><button class="modal-btn" type="submit">Create Activity</button><div id="upcomingMessage" class="modal-message"></div></div>
-        </form>
-      </div>
-    </div>
+    <div id="upcomingEditorGrid" class="hidden-force"></div>
     <div id="portalPendingReview" class="portal-box-inner hidden-force" style="margin-top:16px">
       <div class="box-head"><div><span class="eyebrow">ADMIN REVIEW</span><h2>Messages Pending Approval</h2></div></div>
       <div id="portalPendingReviewList"></div>
@@ -296,7 +277,7 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
   </div>
 </section>
 
-<section id="page-profile" class="page"><div class="profile portal-box"><div class="profile-hero"><div id="profilePicturePreview" class="profile-photo">LV</div><div><span class="eyebrow">MY PROFILE</span><h1>Account information</h1><p>Your current LVConnect identity and SSG assignments.</p><label class="portal-btn secondary upload-photo">Add Picture<input id="profilePictureInput" type="file" accept="image/*"></label></div></div><div class="profile-rows"><div class="row"><span>Name</span><span id="profileName">—</span></div><div class="row"><span>LV Email</span><span id="profileEmail">—</span></div><div class="row"><span>Account ID</span><span id="profileAccountId">—</span></div><div class="row"><span>Account Type</span><span id="profileType">—</span></div><div class="row"><span>SSG Position</span><span id="profilePosition">—</span></div><div class="row"><span>Office</span><span id="profileOffice">—</span></div><div class="row"><span>Permissions</span><span id="profilePermissions">—</span></div></div><div class="request-access"><h3>Request SSG Access</h3><p>If you hold an SSG officer position that is not yet reflected in your account, submit it for verification and approval.</p><button id="requestAccessButton" class="profile-btn" type="button">Request Additional Access</button></div></div></section>
+<section id="page-profile" class="page"><div class="profile portal-box"><div class="profile-hero"><div id="profilePicturePreview" class="profile-photo">LV</div><div><span class="eyebrow">MY PROFILE</span><h1>Account information</h1><p>Your current LVConnect identity and SSG assignments.</p><label class="portal-btn secondary upload-photo">Add Picture<input id="profilePictureInput" type="file" accept="image/*"></label></div></div><div class="profile-rows"><div class="row"><span>Name</span><span id="profileName">—</span></div><div class="row"><span>LV Email</span><span id="profileEmail">—</span></div><div class="row"><span>Account ID</span><span id="profileAccountId">—</span></div><div class="row"><span>Account Type</span><span id="profileType">—</span></div><div class="row"><span>SSG Position</span><span id="profilePosition">—</span></div><div class="row"><span>Office</span><span id="profileOffice">—</span></div><div class="row"><span>Committee</span><span id="profileCommittee">—</span></div><div class="row"><span>Year Level</span><span id="profileYearLevel">—</span></div><div class="row"><span>Program</span><span id="profileProgram">—</span></div><div class="row"><span>Permissions</span><span id="profilePermissions">—</span></div></div><div class="request-access"><h3>Request SSG Access</h3><p>If you hold an SSG officer position that is not yet reflected in your account, submit it for verification and approval.</p><button id="requestAccessButton" class="profile-btn" type="button">Request Additional Access</button></div></div></section>
           <section id="page-settings" class="page"><div class="portal-box settings-box"><div class="box-head"><div><span class="eyebrow">ACCOUNT</span><h1>Settings</h1><p>Only your LV email and password can be changed here.</p></div></div><div class="settings-section"><h2>Change Password</h2><p style="color:var(--muted);font-size:10px">12+ characters with uppercase, lowercase, number, and special character. Previous passwords cannot be reused.</p><div class="settings-grid"><div><label>Current Password</label><input id="setCurrentPassword" type="password"></div><div><label>New Password</label><input id="setNewPassword" type="password" minlength="12"></div><div><label>Confirm New Password</label><input id="setConfirmPassword" type="password" minlength="12"></div></div><button class="portal-btn" onclick="savePasswordSettings_()">Change Password</button></div><div class="settings-section"><h2>Change LV Email</h2><div class="settings-grid"><div><label>New LV Email</label><input id="setNewEmail" type="email" placeholder="yourname@laverdad.edu.ph"></div><div><label>Verification Code</label><input id="setEmailCode" inputmode="numeric" maxlength="6" placeholder="6-digit code"></div></div><div class="settings-actions"><button class="portal-btn secondary" onclick="requestEmailVerification_()">Send Verification</button><button class="portal-btn" onclick="confirmEmailSettings_()">Verify & Save Email</button></div><div id="settingsMessage" class="portal-status"></div></div></div></section>
 </div>
   </main>
@@ -304,7 +285,7 @@ body.dark{--bg:#0e1821;--white:#15222d;--text:#edf3f7;--muted:#9caab6;--border:#
 <footer id="portalFooter" class="portal-footer"><div><div>All Rights Reserved 2026</div><div>La Verdad Christian College, Inc. - Caloocan</div><div>Supreme Student Government 2026-2027</div></div><div><div>For more information, contact us thru email via:</div><a href="mailto:studentcouncil.caloocan@laverdad.edu.ph">studentcouncil.caloocan@laverdad.edu.ph</a><div style="margin-top:7px">To learn more, visit:</div><a href="https://www.facebook.com/laverdad.cal" target="_blank" rel="noopener">https://www.facebook.com/laverdad.cal</a></div></footer>
 <div id="loading" class="loading"><div class="loader"><div class="spinner"></div><span id="loadingText">Please wait...</span></div></div>
 <script>
-const API_URL='https://script.google.com/macros/s/AKfycbzWJRWbgAQ1Rmyeew-ebv4ikuLPeb90xXUwRPgFS42fd80a8xYB1IC5n6DBtsJSMzBUsw/exec';
+const API_URL='https://script.google.com/a/macros/laverdad.edu.ph/s/AKfycbzWJRWbgAQ1Rmyeew-ebv4ikuLPeb90xXUwRPgFS42fd80a8xYB1IC5n6DBtsJSMzBUsw/exec';
 const STORAGE_KEY='lvconnectSession';
 let session=null,access=null;
 const $=id=>document.getElementById(id);
@@ -402,7 +383,9 @@ async function loadAccess(){const r=await post('CURRENT_USER',{sessionId:session
 function applyUser(){
   const a=access?.account;if(!a)return;
   const name=[a.firstName,a.middleInitial,a.surname].filter(Boolean).join(' ').trim()||'LVConnect User';
-  $('sideUser').textContent=name;$('sideRole').textContent=a.accountType||'Account';$('welcome').textContent='Welcome, '+(a.firstName||'User')+'.';$('avatar').textContent=((a.firstName||'L')[0]+(a.surname||'V')[0]).toUpperCase();$('profileName').textContent=name;$('profileEmail').textContent=a.email||'—';$('profileAccountId').textContent=a.accountId||'—';$('profileType').textContent=a.accountType||'—';$('profilePermissions').textContent=(access.permissions||[]).length?access.permissions.join(', '):'None';
+  const primary=access?.primaryAssignment||{};
+  const roleLabel=primary.position||a.accountType||'Account';
+  $('sideUser').textContent=name;$('sideRole').textContent=primary.position ? roleLabel+' · '+(primary.office||'') : (a.accountType||'Account');$('welcome').textContent='Welcome, '+(a.firstName||'User')+'.';$('avatar').textContent=((a.firstName||'L')[0]+(a.surname||'V')[0]).toUpperCase();$('profileName').textContent=name;$('profileEmail').textContent=a.email||'—';$('profileAccountId').textContent=a.accountId||'—';$('profileType').textContent=a.accountType||'—';$('profilePosition').textContent=primary.position||'—';$('profileOffice').textContent=primary.office||'—';$('profileCommittee').textContent=primary.committee||'—';$('profileYearLevel').textContent=primary.yearLevel||'—';$('profileProgram').textContent=primary.program||'—';$('profilePermissions').textContent=(access.permissions||[]).length?access.permissions.join(', '):'None';
   applyPermissions();
   applyRoleSpecificPortalAccess_();
 }
@@ -410,31 +393,38 @@ function applyRoleSpecificPortalAccess_(){
   const type=String(access?.account?.accountType||'').toUpperCase();
   const assigns=access?.assignments||[];
   const hasAssign=(re)=>assigns.some(a=>re.test(String((a.position||'')+' '+(a.office||'')+' '+(a.assignmentName||'')+' '+(a.committee||''))));
-  const isSsg=!!access?.isSsg||hasAssign(/SSG|CHAIRPERSON|VICE CHAIR|TREASURER|OFFICER|ADVISER/i);
-  const isAdmin=type==='ADMIN',isStaff=type==='STAFF',isTeacher=type==='TEACHER',isStudent=type==='STUDENT';
+  const isSsg=!!access?.isSsg || hasAssign(/SSG|CHAIRPERSON|VICE CHAIR|TREASURER|OFFICER|ADVISER/i);
+  const isAdmin=type==='ADMIN';
+  const isStaffAdmin=type==='STAFF' && assigns.some(a=>String(a.permissionSet||a['Permission Set']||'').toUpperCase().split(',').map(x=>x.trim()).includes('STAFF_ADMIN') || /OFFICE OF THE ADMINISTRATOR/i.test(String(a.office||'')));
   const canEservices=hasPermission('ESERVICES_VIEW');
   const canDrs=hasPermission('DRS_VIEW')||hasPermission('DRS_VIEW_ALL')||hasPermission('DRS_VIEW_DEPARTMENT');
+  const canAdminAnnouncement=hasPermission('ANNOUNCEMENT_VIEW') && (isAdmin||isStaffAdmin);
+  const canAdminAnnouncementEdit=hasPermission('ANNOUNCEMENT_MANAGE') && (isAdmin||isStaffAdmin);
   const canBulletinView=hasPermission('BULLETIN_BOARD_VIEW');
-  const canBulletinEdit=canBulletinView&&(isStaff||isTeacher||isSsg);
-  const canAdminAnnouncementEdit=isAdmin&&hasPermission('ANNOUNCEMENT_MANAGE');
-  const canUpcomingView=canBulletinView||hasPermission('TASK_BOARD_VIEW')||canAdminAnnouncementEdit;
-  const canUpcomingEdit=(isAdmin||isStaff||isTeacher||isSsg)&&canUpcomingView;
+  const canBulletinEdit=canBulletinView && (isStaffAdmin||type==='TEACHER'||isSsg);
+  const canUpcomingView=canAdminAnnouncement||canBulletinView;
+  const canTaskView=hasPermission('TASK_BOARD_VIEW');
+  const canTaskManage=hasPermission('TASK_BOARD_MANAGE');
   const setNav=(id,show)=>{const el=$(id);if(el)el.classList.toggle('hidden',!show);};
-  setNav('navEservices',canEservices);
-  setNav('navDrs',canDrs);
-  setNav('navBulletinBoard',canAdminAnnouncementEdit||canBulletinView||canUpcomingView);
-  setNav('navTaskBoard',hasPermission('TASK_BOARD_VIEW'));
-  setNav('navSsgApprovals',!!access?.canApproveAdditionalAccess);
-  const adminDisplay=$('adminAnnouncementDisplay'),bulletinDisplay=$('bulletinDisplay'),upcomingDisplay=$('upcomingDisplay');
-  if(adminDisplay)adminDisplay.classList.toggle('hidden-force',!canAdminAnnouncementEdit);
-  if(bulletinDisplay)bulletinDisplay.classList.toggle('hidden-force',!canBulletinView);
-  if(upcomingDisplay)upcomingDisplay.classList.toggle('hidden-force',!canUpcomingView);
-  const adminEditor=$('adminAnnouncementEditor'),bulletinEditor=$('bulletinEditor'),upcomingEditor=$('upcomingEditor');
-  if(adminEditor)adminEditor.classList.toggle('hidden-force',!canAdminAnnouncementEdit);
-  if(bulletinEditor)bulletinEditor.classList.toggle('hidden-force',!canBulletinEdit);
-  if(upcomingEditor)upcomingEditor.classList.toggle('hidden-force',!canUpcomingEdit);
+  setNav('navEservices',canEservices); setNav('navDrs',canDrs);
+  setNav('navBulletinBoard',canAdminAnnouncement||canBulletinView||canUpcomingView);
+  setNav('navTaskBoard',canTaskView); setNav('navSsgApprovals',!!access?.canApproveAdditionalAccess);
+  const toggle=(id,show)=>{const el=$(id);if(el)el.classList.toggle('hidden-force',!show);};
+  toggle('adminAnnouncementDisplay',canAdminAnnouncement); toggle('bulletinDisplay',canBulletinView); toggle('upcomingDisplay',canUpcomingView);
+  toggle('adminAnnouncementEditor',canAdminAnnouncementEdit); toggle('bulletinEditor',canBulletinEdit);
+  // Upcoming Activities is display-only in Bulletin Board. Creation/management belongs to Task Board.
+  toggle('upcomingEditorGrid',false);
   const taskForm=$('portalEventForm')?.closest('.portal-box-inner');
-  if(taskForm)taskForm.classList.toggle('hidden-force',!hasPermission('TASK_BOARD_VIEW'));
+  if(taskForm)taskForm.classList.toggle('hidden-force',!canTaskManage);
+  // Dashboard communication boxes follow the same authority matrix.
+  toggle('dashboardAnnouncementsBox',canAdminAnnouncement);
+  toggle('dashboardBulletinBox',canBulletinView);
+  toggle('dashboardUpcomingBox',canUpcomingView);
+  const reviewPost=$('portalPendingReview');
+  if(reviewPost)reviewPost.classList.toggle('hidden-force',!(isAdmin||canAdminAnnouncementEdit));
+  const bulletinSubmit=$('bulletinSubmitButton'); if(bulletinSubmit) bulletinSubmit.textContent=isStaffAdmin&&!isAdmin?'Submit for Review':'Post';
+  const adminSubmit=document.querySelector('#adminAnnouncementForm button[type="submit"]');
+  if(adminSubmit)adminSubmit.textContent=isStaffAdmin&&!isAdmin?'Submit for Review':'Post';
 }
 
 function hasPermission(p){return (access?.permissions||[]).map(x=>String(x).toUpperCase()).includes(String(p).toUpperCase())}
@@ -947,8 +937,12 @@ body.dark .drs-card:hover{border-color:#526675}
   async function loadPortalMessages_(){
     try{
       const r=await portalPost('GET_ANNOUNCEMENTS');if(!r?.success)throw new Error(r?.message||'Unable to load posts.');
-      const list=$('adminAnnouncementsList');const rows=r.announcements||[];
-      list.innerHTML=rows.map(x=>'<div class="announcement-posted"><h3>'+esc(x.title||x.Title||'Untitled')+'</h3><div class="meta">'+esc(x.priority||x.Priority||'NORMAL')+' · '+esc(x.startDate||x['Start Date']||'')+'</div><div style="white-space:pre-line">'+esc(x.content||x.Content||'')+'</div></div>').join('')||'<div class="empty-state">No active posts.</div>';
+      const list=$('adminAnnouncementsList');let rows=r.announcements||[];
+      const staffAdminNow=String(access?.account?.accountType||'').toUpperCase()==='STAFF'&&(access?.assignments||[]).some(a=>String(a.permissionSet||'').toUpperCase().split(',').map(v=>v.trim()).includes('STAFF_ADMIN'));
+      if(staffAdminNow){const mine=await portalPost('GET_MY_PORTAL_ANNOUNCEMENTS');if(mine?.success)rows=mine.items||[];}
+      list.innerHTML=rows.map(x=>{const creator=String(x.createdBy||x['Created By']||'');const mine=creator===String(access?.account?.accountId||'');const isStaffAdmin=String(access?.account?.accountType||'').toUpperCase()==='STAFF'&&(access?.assignments||[]).some(a=>String(a.permissionSet||'').toUpperCase().split(',').map(v=>v.trim()).includes('STAFF_ADMIN'));const controls=(isStaffAdmin&&mine)?'<div class="event-actions"><button class="portal-btn secondary ann-edit" data-id="'+esc(x.announcementId||x['Announcement ID'])+'">Edit</button><button class="portal-btn secondary ann-delete" data-id="'+esc(x.announcementId||x['Announcement ID'])+'">Delete</button></div>':'';return '<div class="announcement-posted"><h3>'+esc(x.title||x.Title||'Untitled')+'</h3><div class="meta">'+esc(x.priority||x.Priority||'NORMAL')+' · '+esc(x.startDate||x['Start Date']||'')+'</div><div style="white-space:pre-line">'+esc(x.content||x.Content||'')+'</div>'+controls+'</div>';}).join('')||'<div class="empty-state">No active posts.</div>';
+      list.querySelectorAll('.ann-delete').forEach(b=>b.onclick=async()=>{if(!confirm('Delete this post?'))return;try{loading(true,'Deleting post…');const r=await portalPost('DELETE_PORTAL_ANNOUNCEMENT',{announcementId:b.dataset.id});if(!r?.success)throw new Error(r?.message||'Unable to delete post.');await loadPortalMessages_()}catch(e){alert(e.message||String(e))}finally{loading(false)}});
+      list.querySelectorAll('.ann-edit').forEach(b=>b.onclick=async()=>{const title=prompt('Title:');if(title===null)return;const content=prompt('Message:', '');if(content===null)return;try{loading(true,'Updating post…');const r=await portalPost('UPDATE_PORTAL_ANNOUNCEMENT',{announcementId:b.dataset.id,type:'ADMINISTRATIVE',title:title,content:content});if(!r?.success)throw new Error(r?.message||'Unable to update post.');await loadPortalMessages_()}catch(e){alert(e.message||String(e))}finally{loading(false)}});
       const pb=$('portalPendingReview'),pl=$('portalPendingReviewList');
       if(isAdminHead()){
         const p=await portalPost('GET_PENDING_PORTAL_ANNOUNCEMENTS');
@@ -967,7 +961,8 @@ body.dark .drs-card:hover{border-color:#526675}
       const anns=r.announcements||[], evs=r.upcomingActivities||[];
       const accountType=String(access?.account?.accountType||'').toUpperCase();
       const isAdmin=accountType==='ADMIN';
-      const adminRows=anns.filter(x=>String(x.type||'').toUpperCase()!=='BULLETIN');
+      const canSeeAdmin=hasPermission('ANNOUNCEMENT_VIEW') && (isAdmin || (access?.assignments||[]).some(a=>String(a.permissionSet||'').toUpperCase().split(',').map(x=>x.trim()).includes('STAFF_ADMIN')));
+      const adminRows=canSeeAdmin ? anns.filter(x=>String(x.type||'').toUpperCase()==='ADMINISTRATIVE') : [];
       const bulletinRows=anns.filter(x=>String(x.type||'').toUpperCase()==='BULLETIN');
       const a=$('boardAdminAnnouncements'), b=$('boardBulletins'), u=$('boardUpcoming');
       if(a)a.innerHTML=adminRows.map(x=>'<div class="announcement-item"><h3>'+esc(x.title||'Announcement')+'</h3><p>'+esc(x.content||'')+'</p></div>').join('')||'<div class="empty-state">No active administrative announcements.</div>';
@@ -985,6 +980,8 @@ body.dark .drs-card:hover{border-color:#526675}
   }
   async function submitMessage_(type){
     const admin=type==='ADMINISTRATIVE';const prefix=admin?'adminAnn':'adminBulletin';
+    const typeIsSsg=!!access?.isSsg; const accountType=String(access?.account?.accountType||'').toUpperCase();
+    if(!admin && (typeIsSsg || accountType==='TEACHER')){ if(!confirm('Direct posting is authorized for this role. Administrators may remove unauthorized or improper posts. Continue?')) return; }
     const data={type:type,title:$(prefix+'Title').value.trim(),content:$(prefix+'Content').value.trim(),priority:$(prefix+'Priority').value,targetType:$(prefix+'Target').value,startDate:$(prefix+'Start').value,endDate:$(prefix+'End').value,time:$(prefix+'Time').value};
     const msg=admin?'adminAnnMsg':'adminBulletinMsg';if(!data.title||!data.content)return setMsg(msg,'Title and message are required.',false);
     try{loading(true,'Saving message…');const r=await portalPost('CREATE_PORTAL_ANNOUNCEMENT',data);if(!r?.success)throw new Error(r?.message||'Unable to save message.');setMsg(msg,r.message||'Saved.',true);$(admin?'adminAnnouncementForm':'adminBulletinForm').reset();await loadPortalMessages_()}catch(e){setMsg(msg,e.message||String(e),false)}finally{loading(false)}
